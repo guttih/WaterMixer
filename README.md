@@ -6,6 +6,10 @@ the flow from the hot water pipe and another electrical valve controls the cold
 water pipe.  A Temperature sensor is put into the 3/4" output water pipe to sense
 the current heat of the outgoing water.
 
+### Related links
+  - Project page (todo:)
+  - [Experiment page]
+  - [Hot-tub]
 
 ### Parts in project
 
@@ -62,3 +66,5 @@ Legend
 [DS18B20 Digital Temperature Sensor G3/4]:https://www.aliexpress.com/item/32881183992.html?spm=a2g0s.12269583.0.0.43c751fcxDyDbt
 [PWM to Voltage Converter Module]:https://www.aliexpress.com/item/4000169156580.html?spm=a2g0s.12269583.0.0.7faa1ca26zCgTQ
 [Proportional Valve Brass controllable with 0-5V]:https://www.aliexpress.com/item/33037988030.html?spm=a2g0s.12269583.0.0.49d04a42eL9zNl
+[Experiment page]: https://guttih.com/list/project-hottub-temp
+[Hot-tub]:http://192.168.1.79/list/project-hottub
