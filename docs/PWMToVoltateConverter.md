@@ -1,4 +1,20 @@
-#include <Arduino.h>
+# Setting up PWM to Voltage Converter
+
+When setting up the PWM to voltage converter module make sure that when you send
+190 of 255 PWM signal to the power pin 32 or 33 the VOUT is outputting 5 volts.
+You can adust the variable resistance on the module and there is also a jumber 
+on the module you change.  
+
+Here is a testing program you can use to test this.
+
+connect the esp and the PWM to voltage convert modules to pins 32 and 33 and
+type into the serial monitor numbers from 0 to 190 to test the VOUT of the
+ modules.
+
+```cpp
+/*
+ Gets a value from serial and writes it with PWM top pin 32 and 33
+*/
 
 const int POWERPIN_1 = 32;
 const int POWERPIN_2 = 33;
@@ -56,3 +72,4 @@ void loop() {
     }
     delay(200);
 }
+```

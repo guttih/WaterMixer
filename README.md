@@ -10,6 +10,7 @@ the current heat of the outgoing water.
   - Project page (todo:)
   - [Experiment page]
   - [Hot-tub]
+  - [Setting up PWM to Voltage Converter]
 
 ### Parts in project
 
@@ -23,6 +24,9 @@ the current heat of the outgoing water.
 
 
 ### Wiring the project
+
+When you setup the PWM to Voltage converter make sure that when the esp32 is 
+sending out PWM 190 of 
 
 ```
                  ╔═══════════╗
@@ -68,3 +72,4 @@ Legend
 [Proportional Valve Brass controllable with 0-5V]:https://www.aliexpress.com/item/33037988030.html?spm=a2g0s.12269583.0.0.49d04a42eL9zNl
 [Experiment page]: https://guttih.com/list/project-hottub-temp
 [Hot-tub]:http://192.168.1.79/list/project-hottub
+[Setting up PWM to Voltage Converter]:docs\PWMToVoltateConverter.md
