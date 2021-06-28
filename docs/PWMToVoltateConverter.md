@@ -13,8 +13,10 @@ type into the serial monitor numbers from 0 to 190 to test the VOUT of the
 
 ```cpp
 /*
- Gets a value from serial and writes it with PWM top pin 32 and 33
+ Gets a number (0- 190) from serial and writes it with PWM to pins 32 and 33.
 */
+
+#include <Arduino.h>
 
 const int POWERPIN_1 = 32;
 const int POWERPIN_2 = 33;

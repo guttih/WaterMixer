@@ -1,4 +1,9 @@
+/*
+ Gets a number (0- 190) from serial and writes it with PWM to pins 32 and 33.
+*/
+
 #include <Arduino.h>
+#include "valve.h"
 
 const int POWERPIN_1 = 32;
 const int POWERPIN_2 = 33;
@@ -28,6 +33,8 @@ void analogWrite(int power) {
     ledcAnalogWrite(CHANNEL_2, power, MAXINPUT);
 }
 void setup() {
+    Valve hot(1,2,3, "Hot valve");
+    Valve cold(4,5,5, "Cold valve");
     ledcAttachPin(POWERPIN_1, CHANNEL_1);
     ledcAttachPin(POWERPIN_2, CHANNEL_2);
     ledcSetup(CHANNEL_1, LEDC_BASE_FREQ, LEDC_TIMER_13_BIT);

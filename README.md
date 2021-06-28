@@ -21,8 +21,6 @@ the current heat of the outgoing water.
  - 2 x [PWM to Voltage Converter Module]
  - 2 x [Proportional Valve Brass controllable with 0-5V]
 
-
-
 ### Wiring the project
 
 When you setup the PWM to Voltage converter make sure that when the esp32 is 
@@ -64,6 +62,22 @@ Legend
  - <span style="background: white; color: black">(WT) = White wire</span>
 
 
+### Software development
+
+The software for this project was developed using [PlatformIO].
+
+#### Tests
+
+There are two kinds of tests in this project, *integration tests* and *unit tests*.
+
+__Integration tests__:
+*integration tests* are located in the `./test` directory.
+
+__Unit tests__:
+The *unit tests* are located in the `./unit_test` directory and in order to run 
+these tests, [cmake] needs to be installed and accessible from the command line.
+
+
 [HLK-PM01]:https://www.aliexpress.com/item/32504127465.html?spm=a2g0s.9042311.0.0.27424c4dOggB1n
 [ESP32 Development Board]:https://www.aliexpress.com/item/32801621054.html?spm=a2g0s.9042311.0.0.27424c4dOggB1n
 [DS18B20 Digital Temperature Sensor G1/2]:https://www.aliexpress.com/item/32827650291.html?spm=a2g0s.12269583.0.0.36871f7dTzfCfF
@@ -73,3 +87,5 @@ Legend
 [Experiment page]: https://guttih.com/list/project-hottub-temp
 [Hot-tub]:http://192.168.1.79/list/project-hottub
 [Setting up PWM to Voltage Converter]:docs/PWMToVoltateConverter.md
+[cmake]:https://cmake.org/download/#latest
+[PlatformIO]:https://platformio.org/
