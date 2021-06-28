@@ -1,13 +1,18 @@
 #ifndef WATERMIXER_H
 #define WATERMIXER_H
-#include "arduino.h"
+
+#include "valve.h"
 
 class WaterMixer
 {
 private:
-    void init();
+    Valve *_hotValve = NULL;
+    Valve *_coldValve = NULL;
+    void init(Valve *hotValve, Valve *coldValve);
 public:
-    WaterMixer();
+    WaterMixer(Valve *hotValve, Valve *coldValve);
+    Valve *getHotValve() {return _hotValve; }
+    Valve *getColdValve() {return _coldValve; }
 
 };
 #endif
