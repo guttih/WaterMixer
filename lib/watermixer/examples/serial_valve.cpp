@@ -13,7 +13,7 @@ Valve hotValve(pinHot, CHANNEL_1, FULL_DUTY, 0.0);
 
 void setup() {
     Serial.begin(115200);
-   Serial.println("Type in a real number from 0 to 1.\n");
+    Serial.println("Type in a real number from 0 to 1.\n");
     Serial.println("Where values:");
     Serial.println("    0 : Fully closes the valve.");
     Serial.println("  0.5 : Opens the valve half way.");
