@@ -21,13 +21,13 @@ void test_WaterMixerConstructor(void) {
     TEST_ASSERT_EQUAL(channel1, mixer.getHotValve()->getChannel());
     TEST_ASSERT_EQUAL(maxPWM1, mixer.getHotValve()->getMaxPWM());
     TEST_ASSERT_EQUAL(flow1, mixer.getHotValve()->getFlow());
-    TEST_ASSERT_EQUAL_STRING(strHot, mixer.getHotValve()->getName());
+    TEST_ASSERT_EQUAL_STRING(strHot, mixer.getHotValve()->getName().c_str());
 
     TEST_ASSERT_EQUAL(pin2, mixer.getColdValve()->getPin());
     TEST_ASSERT_EQUAL(channel2, mixer.getColdValve()->getChannel());
     TEST_ASSERT_EQUAL(maxPWM2, mixer.getColdValve()->getMaxPWM());
     TEST_ASSERT_EQUAL(flow2, mixer.getColdValve()->getFlow());
-    TEST_ASSERT_EQUAL_STRING(strCold, mixer.getColdValve()->getName());
+    TEST_ASSERT_EQUAL_STRING(strCold, mixer.getColdValve()->getName().c_str());
 }
 
 // void test_waterMixerChangeTemp() {

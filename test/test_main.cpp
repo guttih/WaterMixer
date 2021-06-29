@@ -10,7 +10,8 @@ void setup() {
     delay(2000);
     UNITY_BEGIN();    // IMPORTANT LINE!
     RUN_TEST(test_ValveConstructor);
-    RUN_TEST(test_ValveChangeFlow); 
+    RUN_TEST(test_ValveSetFlow); 
+    RUN_TEST(test_ValveSetFlowAndGetPWM); 
     RUN_TEST(test_WaterMixerConstructor); 
     RUN_TEST(test_ValveGetPWM);
     
