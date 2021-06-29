@@ -25,7 +25,11 @@ void setup() {
     
     hot.serialPrintInfo();
     cold.serialPrintInfo();
-    Serial.println("Type in a real number from 0 to 1.  For example 0.23");
+    Serial.println("Type in a real number from 0 to 1.\n");
+    Serial.println("Where values:");
+    Serial.println("    0 : Fully closes the valve.");
+    Serial.println("  0.5 : Opens the valve half way.");
+    Serial.println("    1 : Fully opens the valve.");
 }
 
 void loop() {
