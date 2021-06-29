@@ -1,5 +1,9 @@
 /*
-
+    serial_valves.cpp
+ Gets values (0 - 1) from serial and writes it with PWM to pins 32 and 33.
+ 
+ Type to the serial characheter c or h followed by a real number to 
+ change the opining of one of the two valves.
 */
 
 #include <Arduino.h>

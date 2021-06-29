@@ -68,10 +68,6 @@ void Valve::ledcAnalogWrite(uint8_t channel, uint32_t value, uint32_t valueMax)
                      " to channel:" + String(channel) +
                      " pin: " + String(_pin);
 
-        if (_name != NULL)
-        {
-            str += " , valve:" + getName();
-        }
         Serial.println(str);
     }
 
