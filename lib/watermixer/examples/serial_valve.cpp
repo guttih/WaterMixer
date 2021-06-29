@@ -7,10 +7,9 @@
 
 const int pinHot = 32;
 #define FULL_DUTY 255
-#define MAX_DUTY 190
 #define CHANNEL_1 1
 
-Valve hotValve(pinHot, CHANNEL_1, FULL_DUTY, MAX_DUTY, 0.0);
+Valve hotValve(pinHot, CHANNEL_1, FULL_DUTY, 0.0);
 
 void setup() {
     Serial.begin(115200);
