@@ -1,5 +1,9 @@
 /*
+    serial_valves.cpp
+ Gets values (0 - 1) from serial and writes it with PWM to pins 32 and 33.
 
+ Type to the serial character c or h followed by a real number to 
+ change the opining of one of the two valves.
 */
 
 #include <Arduino.h>
@@ -21,7 +25,7 @@ void setup()
 
     hot.serialPrintInfo();
     cold.serialPrintInfo();
-    Serial.println("Type characheter c or h followed by a real number to change the opining of one of the two valves.\n");
+    Serial.println("Type character c or h followed by a real number to change the opining of one of the two valves.\n");
     Serial.println("Where values:");
     Serial.println("   h0 : Fully closes the hot valve.");
     Serial.println(" c0.5 : Opens the cold valve half way.");
@@ -63,9 +67,8 @@ void loop()
                 {
                     Serial.println(" Invalid input");
                 }
-
-                strInput = "";
             }
+            strInput = "";
         }
         else
         {
