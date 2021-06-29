@@ -10,27 +10,27 @@ const int pinHot = 32;
 #define MAX_DUTY 190
 #define CHANNEL_1 1
 
-Valve hot (pinHot, CHANNEL_1, FULL_DUTY, MAX_DUTY, 0.0, "Hot valve");
+Valve hotValve(pinHot, CHANNEL_1, FULL_DUTY, MAX_DUTY, 0.0);
 
-void analogWrite(double flow) {
-    
-    hot.setFlow(flow);
-}
 void setup() {
     Serial.begin(115200);
-    hot.serialPrintInfo();
-
-    Serial.println("Type in a real number from 0 to 1.  For example 0.23");
+   Serial.println("Type in a real number from 0 to 1.\n");
+    Serial.println("Where values:");
+    Serial.println("    0 : Fully closes the valve.");
+    Serial.println("  0.5 : Opens the valve half way.");
+    Serial.println("    1 : Fully opens the valve.");
 }
 
 void loop() {
+
     while (Serial.available() > 0) {
         double didRead = Serial.parseFloat();
         if (Serial.read() == '\n') 
         {
             Serial.print("Got value : "); Serial.println(didRead );
         }
-        analogWrite(didRead);
+        hotValve.setFlow(didRead);
     }
+
     delay(200);
 }
