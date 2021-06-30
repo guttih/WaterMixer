@@ -44,10 +44,10 @@ sending out PWM 190 of
 │ │            │ ╔═══════════╗ │ ║   voltage   ║ │      ║   Valve 1  ║        │ 
 │ │            │ ║  -ESP32-  ║ │ ║ converter 1 ║ │      ║            ║        │
 │ │            │ ║           ║ │ ║         GND-╟─┘      ║    PWM Out-╟─(WT)─  │
-│ │            └─╢-D25  GND -╟─┴─╢-GND    VOUT-╟───(GR)─╢-LIN    ERR-╟─(YE)─  │
+│ │            └─╢-G25  GND -╟─┴─╢-GND    VOUT-╟───(GR)─╢-LIN    ERR-╟─(YE)─  │
 │ └──────────────╢-3V3       ║   ║             ║        ║            ║        │
-│ ╔══════════╗   ║      D32 -╟───╢-PWM     VCC-╟─┬─(RD)─╢-VCC    GND-╟─(BL)───┤
-│ ║-HLK-PM01-║   ║      D33 -╟─┐ ╚═════════════╝ │      ╚════════════╝        │
+│ ╔══════════╗   ║      G32 -╟───╢-PWM     VCC-╟─┬─(RD)─╢-VCC    GND-╟─(BL)───┤
+│ ║-HLK-PM01-║   ║      G33 -╟─┐ ╚═════════════╝ │      ╚════════════╝        │
 │ ║          ║   ║           ║ │                 │                      Power │  
 │ ║+Vo (+5V)-╟───╢-VIN       ║ │ ╔═════════════╗ │                      Source│  
 │ ║-Vo (GND)-╟─┬─╢-GND       ║ │ ║    PWM to   ║ ├───────────────────── +12V  │
@@ -66,6 +66,12 @@ Legend
  - <span style="background: yellow; color: black">(YE) = Yellow wire</span>
  - <span style="background: green; color: white">(GR) = Green wire (voltage signal)</span>
  - <span style="background: white; color: black">(WT) = White wire</span>
+ - GND    : Esp32 GND pin which is ground.
+ - 3V3    : Esp32 3.3 volts pin.
+ - G25    : Esp32 GPIO 25 pin which is used to communicate with the sensor.
+ - G32    : Esp32 GPIO 32 pin which is used control the hot water valve.
+ - G33    : Esp32 GPIO 33 pin which is used control the cold water valve.
+
 
 
 ### Software development

@@ -34,16 +34,10 @@ public:
              * @param pin Signal pin of the microcontroller which the signal wire on the valve is connected to.
              * @param channel Choose the pulse width modulation channel (0-7) which should be used to generate the PWM signal for the pin.
              * @param maxPWM What is the maximum duty cycle allowed to be sent to the pin.
-             * @param limitPWM If you do never want 100% duty cycle you can limit it with this value.  That is when flow is 1 then PWM is this number.
              * @param flow A number from 0 to 1, where 0 is fully closed, 0.5 is half open and 1 is fully closed.
-             * @param strName Gives the valve a name and activates the Valve debug mode, resulting an a Serial println statements when giving the valve a command.
-             * @example 
-             * @code {.language-cpp}
-             * Valve hot (POWERPIN_1, CHANNEL_1, 255, 190, 0.0,"Hot valve");
-             * @endcode
-             * 
+             * @param strName Gives the valve a name and activates the Valve debug mode, resulting an a Serial println statements when giving the valve a command. Pass NULL if you do not want debug mode
              */
-    Valve(uint16_t pin, uint16_t channel, uint16_t maxPWM, uint16_t limitPWM, double flow, const char *name = NULL);
+    Valve(uint16_t pin, uint16_t channel, uint16_t maxPWM, double flow, const char *strName = NULL);
 
     /**
              * @brief Construct a new Valve object and enable debugging.
@@ -51,10 +45,16 @@ public:
              * @param pin Signal pin of the microcontroller which the signal wire on the valve is connected to.
              * @param channel Choose the pulse width modulation channel (0-7) which should be used to generate the PWM signal for the pin.
              * @param maxPWM What is the maximum duty cycle allowed to be sent to the pin.
+             * @param limitPWM If you do never want 100% duty cycle you can limit it with this value.  That is when flow is 1 then PWM is this number.
              * @param flow A number from 0 to 1, where 0 is fully closed, 0.5 is half open and 1 is fully closed.
-             * @param strName Gives the valve a name and activates the Valve debug mode, resulting an a Serial println statements when giving the valve a command.
+             * @param strName Gives the valve a name and activates the Valve debug mode, resulting an a Serial println statements when giving the valve a command. Pass NULL if you do not want debug mode
+             * @example 
+             * @code {.language-cpp}
+             * Valve hot (POWERPIN_1, CHANNEL_1, 255, 190, 0.0,"Hot valve");
+             * @endcode
+             * 
              */
-    Valve(uint16_t pin, uint16_t channel, uint16_t maxPWM, double flow, const char *strName = NULL);
+    Valve(uint16_t pin, uint16_t channel, uint16_t maxPWM, uint16_t limitPWM, double flow, const char *name);
 
     /**
       * @brief How much water should be flowing through the valve. 

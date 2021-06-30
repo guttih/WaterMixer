@@ -1,6 +1,10 @@
 {
     "files.associations": {
         "cstdint": "cpp",
-        "sstream": "cpp"
+        "sstream": "cpp",
+        "*.tcc": "cpp",
+        "fstream": "cpp",
+        "istream": "cpp",
+        "ostream": "cpp"
     }
 }
