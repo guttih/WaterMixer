@@ -28,10 +28,15 @@ void header(const char *strHeader) {
     Serial.println(concat("│", repeat(" ", len-2), "│"));
     int spaceLeft = spaces/2;
     int spaceRight = spaces - spaceLeft;    
-    String frameLeft = concat("|", repeat(" ", spaceLeft), text);
-    Serial.println(concat(frameLeft, repeat(" ", spaceRight), "|"));
+    String frameLeft = concat("│", repeat(" ", spaceLeft), text);
+    Serial.println(concat(frameLeft, repeat(" ", spaceRight), "│"));
     Serial.println(concat("│", repeat(" ", len-2), "│"));
     Serial.println(concat("└", repeat("─", len-2), "┘"));
+}
+
+void testValveMocker(){
+    header("Valve and temperature mocker");
+    Serial.println("Not implemented yet!");
 }
 
 void testValve(){
@@ -55,6 +60,7 @@ void setup() {
     delay(2000);
     UNITY_BEGIN();    
         testValve();
+        testValveMocker();
         testWaterMixer();
     UNITY_END();
 }
