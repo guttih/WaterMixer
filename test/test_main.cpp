@@ -54,7 +54,8 @@ void testFlowMocker() {
     header("Thesting FlowMocker");
     RUN_TEST(test_FlowMockerConstructor);
     RUN_TEST(test_FlowMockerSetChangeRate);
-    RUN_TEST(test_FlowMockerExecuteChange);
+    RUN_TEST(test_FlowMockerCalTwicePerIterateChange);
+    RUN_TEST(test_FlowMockerTestChange);
 }
 
 void setup() {

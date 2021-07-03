@@ -14,8 +14,14 @@ void FlowMocker::init(double currentTemperature, unsigned long changeRate)
 void FlowMocker::setChangeRate(unsigned long changeRate)
 {
   _changeRate = changeRate;
-  _changeStepCount = (float)_changeRate / (float)_changeStepDeltaInterval;
+  _changeStepCount = (double)_changeRate / (double)_changeStepDeltaInterval;
 };
+
+void FlowMocker::setChangeStepInterval(unsigned long interval)
+{
+  _changeStepDeltaInterval = interval;
+  _changeStepCount = (double)_changeRate / (double)_changeStepDeltaInterval;
+}
 
 void FlowMocker::resetTemperatureChange()
 {
@@ -35,9 +41,6 @@ void FlowMocker::setTemperature(double temperature)
   }
 
   //dived time into steps
-
-  Serial.print("changeRate_changeStepCount : ");
-  Serial.println(_changeStepCount, 6);
 
   double totalChange = _targetTemperature - _currentTemperature;
   _changeStepDelta = totalChange / _changeStepCount;
@@ -62,11 +65,11 @@ void FlowMocker::calculateChange()
 
   // Now we need to find which step we are in
   unsigned int stepNo = (stepTime / _changeStepDeltaInterval);
+
+  if (stepNo < 1)
+    return; //We will not change current _currentTemperature until first interval is reached
+
   unsigned int stepsFromTarget = _changeStepCount - stepNo;
   _currentTemperature = _targetTemperature - ((double)stepsFromTarget * _changeStepDelta);
 };
 
-void FlowMocker::setChangeStepInterval(unsigned long interval)
-{
-  _changeStepDeltaInterval = interval;
-}
