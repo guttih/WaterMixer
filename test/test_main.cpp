@@ -1,6 +1,7 @@
 #include "arduino.h"
 #include "valve_test.h"
 #include "watermixer_test.h"
+#include "flowmocker_test.h"
 #include <unity.h>
 
 
@@ -34,11 +35,6 @@ void header(const char *strHeader) {
     Serial.println(concat("└", repeat("─", len-2), "┘"));
 }
 
-void testValveMocker(){
-    header("Valve and temperature mocker");
-    Serial.println("Not implemented yet!");
-}
-
 void testValve(){
     header("Testing Valve");
     RUN_TEST(test_ValveConstructor);
@@ -54,13 +50,20 @@ void testWaterMixer(){
     RUN_TEST(test_waterMixerChangeValues);
 }
 
+void testFlowMocker() {
+    header("Thesting FlowMocker");
+    RUN_TEST(test_FlowMockerConstructor);
+    RUN_TEST(test_FlowMockerSetChangeRate);
+    RUN_TEST(test_FlowMockerExecuteChange);
+}
+
 void setup() {
     // NOTE!!! Wait for >2 secs
     // if board doesn't support software reset via Serial.DTR/RTS
     delay(2000);
     UNITY_BEGIN();    
         testValve();
-        testValveMocker();
+        testFlowMocker();
         testWaterMixer();
     UNITY_END();
 }

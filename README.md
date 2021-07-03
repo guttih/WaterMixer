@@ -1,30 +1,31 @@
 # Water Mixer
 
 This project mixes water temperature from a 1/2" hot water pipe and a 1/2" cold
-water pipe out to a single 3/4" output water pipe.  A electrical valve controls 
+water pipe out to a single 3/4" output water pipe.  A electrical valve controls
 the flow from the hot water pipe and another electrical valve controls the cold
 water pipe.  A Temperature sensor is put into the 3/4" output water pipe to sense
 the current heat of the outgoing water.
 
 ### Related links
-  - Project page (todo:)
-  - [Experiment page]
-  - [Hot-tub]
-  - [Setting up PWM to Voltage Converter]
+
+- Project page (todo:)
+- [Experiment page]
+- [Hot-tub]
+- [Setting up PWM to Voltage Converter]
 
 ### Parts in project
 
- - 1 x 12V Power supply
- - 1 x [HLK-PM01]
- - 1 x [ESP32 Development Board]
- - 1 x [DS18B20 Digital Temperature Sensor G1/2] or 1 x [DS18B20 Digital Temperature Sensor G3/4]
- - 2 x [PWM to Voltage Converter Module]
- - 2 x [Proportional Valve Brass controllable with 0-5V]
+- 1 x 12V Power supply
+- 1 x [HLK-PM01]
+- 1 x [ESP32 Development Board]
+- 1 x [DS18B20 Digital Temperature Sensor G1/2] or 1 x [DS18B20 Digital Temperature Sensor G3/4]
+- 2 x [PWM to Voltage Converter Module]
+- 2 x [Proportional Valve Brass controllable with 0-5V]
 
 ### Wiring the project
 
-When you setup the PWM to Voltage converter make sure that when the esp32 is 
-sending out PWM 190 of 
+When you setup the PWM to Voltage converter make sure that when the esp32 is
+sending out PWM 190 of
 
 ```
                         ╔═══════════╗
@@ -60,19 +61,19 @@ sending out PWM 190 of
 │              │               │ ╚═════════════╝ │                            │
 └──────────────┴───────────────┴─────────────────┴────────────────────────────┘
 ```
+
 Legend
- - <span style="background: black; color: white">(BL) = Black wire (-Ground)</span>
- - <span style="background: red; color: white">(RD) = Red wire (+VCC)</span>
- - <span style="background: yellow; color: black">(YE) = Yellow wire</span>
- - <span style="background: green; color: white">(GR) = Green wire (voltage signal)</span>
- - <span style="background: white; color: black">(WT) = White wire</span>
- - GND    : Esp32 GND pin which is ground.
- - 3V3    : Esp32 3.3 volts pin.
- - G25    : Esp32 GPIO 25 pin which is used to communicate with the sensor.
- - G32    : Esp32 GPIO 32 pin which is used control the hot water valve.
- - G33    : Esp32 GPIO 33 pin which is used control the cold water valve.
 
-
+- <span style="background: black; color: white">(BL) = Black wire (-Ground)</span>
+- <span style="background: red; color: white">(RD) = Red wire (+VCC)</span>
+- <span style="background: yellow; color: black">(YE) = Yellow wire</span>
+- <span style="background: green; color: white">(GR) = Green wire (voltage signal)</span>
+- <span style="background: white; color: black">(WT) = White wire</span>
+- GND    : Esp32 GND pin which is ground.
+- 3V3    : Esp32 3.3 volts pin.
+- G25    : Esp32 GPIO 25 pin which is used to communicate with the sensor.
+- G32    : Esp32 GPIO 32 pin which is used control the hot water valve.
+- G33    : Esp32 GPIO 33 pin which is used control the cold water valve.
 
 ### Software development
 
@@ -85,9 +86,10 @@ There are two kinds of tests in this project, *integration tests* and *unit test
 __Integration tests__:
 *integration tests* are located in the `./test` directory.
 
-__Unit tests__:
-The *unit tests* are located in the `./unit_test` directory and in order to run 
-these tests, [cmake] needs to be installed and accessible from the command line.
+On windows 10, best would be if you would add this location to your PATH system environment variable __C:\Users\your_user_name\.platformio\penv\Scripts__ to get access to the pio.exe application.
+C:\Users\gudjons\.platformio\penv\Scripts
+Then you can run the tests with this command `pio test`
+
 
 
 [HLK-PM01]:https://www.aliexpress.com/item/32504127465.html?spm=a2g0s.9042311.0.0.27424c4dOggB1n
