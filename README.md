@@ -1,10 +1,9 @@
 # Water Mixer
 
-This project mixes water temperature from a 1/2" hot water pipe and a 1/2" cold
-water pipe out to a single 3/4" output water pipe.  A electrical valve controls
-the flow from the hot water pipe and another electrical valve controls the cold
-water pipe.  A Temperature sensor is put into the 3/4" output water pipe to sense
-the current heat of the outgoing water.
+This project mixes water temperature from a 1/2" hot water pipe and a 1/2" cold water pipe out to a single 3/4" output 
+water pipe.  A electrical valve controls the flow from the hot water pipe and another electrical valve controls the cold
+water pipe.  A Temperature sensor is put into the 3/4" output water pipe to sense the current heat of the outgoing water.
+Finally the third electrical valve is used to drain the hot tub. 
 
 ### Related links
 
@@ -12,7 +11,7 @@ the current heat of the outgoing water.
 - [Experiment page]
 - [Hot-tub]
 - [Setting up PWM to Voltage Converter]
-- [Project development]
+- [Project development documents]
 
 ### Parts in project
 
@@ -20,8 +19,9 @@ the current heat of the outgoing water.
 - 1 x [HLK-PM01]
 - 1 x [ESP32 Development Board]
 - 1 x [DS18B20 Digital Temperature Sensor G1/2] or 1 x [DS18B20 Digital Temperature Sensor G3/4]
-- 2 x [PWM to Voltage Converter Module]
-- 2 x [Proportional Valve Brass controllable with 0-5V]
+- 3 x [PWM to Voltage Converter Module]
+- 3 x [Proportional Valve Brass controllable with 0-5V]
+- 1 x [LCD touch display]
 
 ### Wiring the project
 
@@ -104,4 +104,5 @@ Then you can run the tests with this command `pio test`
 [Setting up PWM to Voltage Converter]:docs/Development/PWMToVoltateConverter.md
 [cmake]:https://cmake.org/download/#latest
 [PlatformIO]:https://platformio.org/
-[Project development]: docs/Development/Development.md
+[Project development documents]: docs/Development/Development.md
+[LCD touch display]: https://www.aliexpress.com/item/4000030399357.html?spm=a2g0s.12269583.0.0.687d6973QvjfAl

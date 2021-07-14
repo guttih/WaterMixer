@@ -21,7 +21,7 @@ To achieve this the unit will need to provide the user with information about it
 ## Features
 To be able to fulfill the purpose of this product the features will need to be described and implemented before release.  
 They need to be prioritized and later selected into releases.  High priority features will be released first, 
-and other lower priority features will be selected and released later.
+and other lower priority features will be released later.
 
 ### Users
 Description of the two main personas this product is intended for.
@@ -29,11 +29,11 @@ Description of the two main personas this product is intended for.
    * __John__ is a 30 years old DIY kind a guy.  John knows a little programming, knows about GitHub and knows 
    JavaScript.  He understands the concept of a API and what a PID controller does, but is no specialist.
 
-   * __Kamila__ is a non 11 years old non technical kind a girl.  She knows how to use a computer and a phone and 
-   knows how to use a web browser.
+   * __Kamila__ is a 11 years old non technical kind a girl.  She knows how to use a web browser on a phone and 
+   a computer.
 
 Table column description:
-  * __Feature Id__ Short one word name of feature
+  * __Feature Id__ A short, unique, one word name of a feature
   * __User Story__ As a [persona], I [want to], [so that]
   * __P__ Priority/Importance of the feature. Available values: `H` `N` `L`. Where H=High, N=Normal and L = Low.
   * __R__ Feature is selected into a release numbered something. Read about [Releases].
@@ -53,5 +53,10 @@ Table column description:
 | LCD_STATUS_WATER_LEVEL | As Kamila, I stand in front of the unit and want to know the current hot tub water level                | L | [1.0] |       |
 
 
-[Releases] :./Releases.md
-[VoffCon] :http://voffcon.com/
+[Releases]: ./Releases.md
+[0.5]: ./Releases.md#release-05---bare-minimum
+[0.6]: ./Releases.md#release-06--hardware-installed
+[0.7]: ./Releases.md#release-07---additional-features
+[0.8]: ./Releases.md#release-08---remote-access
+[0.9]: ./Releases.md#release-09---boxed
+[1.0]: ./Releases.md#release-10

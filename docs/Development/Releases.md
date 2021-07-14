@@ -12,9 +12,10 @@ is put on the remote part of the unit.  All hardware that should be connected to
 ## Release 0.6- Hardware installed
 All hardware devices are installed and wired to the unit but the software does not necessarily has a interface for them yet.
   * Date: unknown
+  * See [Requirements] for features in release.
 
 ## Release 0.7 - Additional features
-Additional features have been added to the bare minimum number of features.
+Additional features have been added to the bare minimum release.
   * Date: unknown
 
 ## Release 0.8 - Remote access
@@ -24,7 +25,12 @@ The user can get status from the unit and give it commands remotely.  This is do
 ## Release 0.9 - Boxed
 The unit has been put into a box and all wires hidden from the user.  The user can only touch the LSD display every
 thing else is protected from the user touch.
-  * Date: unknown
+  * Date: unknown 
+
 ## Release 1.0
 The unit has been packaged and tested and is ready for the world.
   * Date: unknown
+
+[VoffCon]: https://voffcon.com/
+[Hardware requirements]: https://github.com/guttih/WaterMixer/blob/main/docs/Development/HardwareProductRequirements.md
+[Requirements]: https://github.com/guttih/WaterMixer/blob/main/docs/Development/ProductRequirements.md
