@@ -2,6 +2,8 @@
 This document describes all user stories in more detail.  It should answer what is needs to finish the story.
 Each story has a unique identifier and this identifier will be the section name.
 
+## LCD_VALVE_STATUS
+As John, I stand in front of the unit and want know how much the hot and cold valves are open
 ## LCD_FILL
 As Kamila, I stand in front of the unit and want to fill the hot tub
 
