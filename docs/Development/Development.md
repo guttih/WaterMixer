@@ -11,8 +11,16 @@ What use cases will the product solve?  Who will be using it?
 Which [features] will be added to which releases.
 Read about the [project requirements here].
 
+### Related pages
+ * [Readme](../../README.md)
+ * [System requirements here](./SystemRequirements.md)
+ * [Product requirements](./ProductRequirements.md#features)
+ * [User stories](./UserStories.md)
+ * [Releases](./Releases.md)
+
+
 
 [project requirements here]: ./ProductRequirements.md
-[system requirements here]: ./SystemProductRequirements.md
+[system requirements here]: ./SystemRequirements.md
 [features]: ./ProductRequirements.md#features
 [releases]: ./Releases.md

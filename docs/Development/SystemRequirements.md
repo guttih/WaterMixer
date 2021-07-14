@@ -23,10 +23,13 @@ Table column description:
 | [PRESSURE_SENSOR]   | 5 psi pressure sensor                           |   1    | [1.0] | Needed to test the water level of the hot tub                       |
 
 
-### Related pages
- - [Readme]
- - [Product requirements]
- - [Releases]
+ ### Related pages
+ * [Readme](../../README.md)
+ * [Project requirements here](./ProductRequirements.md)
+ * [System requirements here](./SystemRequirements.md)
+ * [Product requirements](./ProductRequirements.md#features)
+ * [User stories](./UserStories.md)
+ * [Releases](./Releases.md)
 
 
 [PlatformIO]: https://platformio.org/
@@ -41,11 +44,5 @@ Table column description:
 
 [Readme]: ../../README.md
 [Releases]: ./Releases.md
-[0.5]: ./Releases.md#release-05---bare-minimum
-[0.6]: ./Releases.md#release-06--hardware-installed
-[0.7]: ./Releases.md#release-07---additional-features
-[0.8]: ./Releases.md#release-08---remote-access
-[0.9]: ./Releases.md#release-09---boxed
-[1.0]: ./Releases.md#release-10
 
 [Product requirements]: ./ProductRequirements.md
