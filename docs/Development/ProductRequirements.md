@@ -39,19 +39,21 @@ Table column description:
   * __R__ Feature is selected into a release numbered something. Read about [Releases].
   * __Notes__ Additional considerations or better explanation of the story.
 
-|  Feature Id            | User Story                                                                                                | P |   R   | Notes |
-|:----------------------:|-----------------------------------------------------------------------------------------------------------|---|-------|-------|
-| [LCD_VALVE_STATUS]       | As John, I stand in front of the unit and want know how much the hot and cold valves are open           | H | [0.5] |       |
-| [LCD_FILL]               | As Kamila, I stand in front of the unit and want to fill the hot tub                                    | H | [0.5] |       |
-| [LCD_STOP]               | As Kamila, I stand in front of the unit and want to stop the flow to the hot tub                        | H | [0.5] |       |
-| [LCD_DRAIN]              | As Kamila, I stand in front of the unit and want to drain the hot tub                                   | H | [0.5] |       |
-| [LCD_STATUS_TEMP]        | As Kamila, I stand in front of the unit and want to know the water temperature                          | N | [0.5] |       |
-| [LCD_TEMP]               | As Kamila, I stand in front of the unit and want to change the water temperature flowing to the hot tub | H | [0.5] |       |
-| [LCD_STATUS_FLOW]        | As Kamila, I stand in front of the unit and want to know the water flow rate                            | N | [0.7] |       |
-| [LCD_FLOW_SLOW]          | As Kamila, I stand in front of the unit and want to make water flow slowly to the hot tub               | N | [0.7] |       |
-| [LCD_STATUS_WHEN_FULL]   | As Kamila, I stand in front of the unit and want to know when the hot tub will be full                  | L | [1.0] |  This is after some one has initiated the filling process |
-| [LCD_STATUS_WHEN_EMPTY]  | As Kamila, I stand in front of the unit and want to know when the hot tub will be fully drained         | L | [1.0] |  This is after some one has initiated the draining process |
-| [LCD_STATUS_WATER_LEVEL] | As Kamila, I stand in front of the unit and want to know the current hot tub water level                | L | [1.0] |       |
+|  Feature Id             | User Story                                                                                                | P |   R   | Notes |
+|:------------------------:|-----------------------------------------------------------------------------------------------------------|---|-------|-------|
+| [lcd_pid_change]         | As John, I stand in front of the unit and want change the PID values                                    | H | [0.5] |       |
+| [lcd_valve_status]       | As John, I stand in front of the unit and want know how much the hot and cold valves are open           | H | [0.5] |       |
+| [lcd_fill]               | As Kamila, I stand in front of the unit and want to fill the hot tub                                    | H | [0.5] |       |
+| [lcd_stop]               | As Kamila, I stand in front of the unit and want to stop the flow to the hot tub                        | H | [0.5] |       |
+| [lcd_drain]              | As Kamila, I stand in front of the unit and want to drain the hot tub                                   | H | [0.5] |       |
+| [lcd_status_temp]        | As Kamila, I stand in front of the unit and want to know the water temperature                          | N | [0.5] |       |
+| [lcd_temp]               | As Kamila, I stand in front of the unit and want to change the water temperature flowing to the hot tub | H | [0.5] |       |
+| [lcd_status_flow]        | As Kamila, I stand in front of the unit and want to know the water flow rate                            | N | [0.7] |       |
+| [lcd_flow_slow]          | As Kamila, I stand in front of the unit and want to make water flow slowly to the hot tub               | N | [0.7] |       |
+| [lcd_pid_change_auto]    | As John, I stand in front of the unit and want auto tune the PID values                                 | H | [0.7] |       |
+| [lcd_status_when_full]   | As Kamila, I stand in front of the unit and want to know when the hot tub will be full                  | L | [1.0] |  This is after some one has initiated the filling process |
+| [lcd_status_when_empty]  | As Kamila, I stand in front of the unit and want to know when the hot tub will be fully drained         | L | [1.0] |  This is after some one has initiated the draining process |
+| [lcd_status_water_level] | As Kamila, I stand in front of the unit and want to know the current hot tub water level                | L | [1.0] |       |
 
 
 ### Related pages
@@ -70,14 +72,16 @@ Table column description:
 [0.9]: ./Releases.md#release-09---boxed
 [1.0]: ./Releases.md#release-10
 
-[LCD_VALVE_STATUS]: ./UserStories.md#lcd_valve_status
-[LCD_FILL]: ./UserStories.md#lcd_fill
-[LCD_STOP]: ./UserStories.md#lcd_stop
-[LCD_DRAIN]: ./UserStories.md#lcd_drain           
-[LCD_STATUS_TEMP]: ./UserStories.md#lcd_status_temp
-[LCD_TEMP]: ./UserStories.md#lcd_temp
-[LCD_STATUS_FLOW]: ./UserStories.md#lcd_status_flow
-[LCD_FLOW_SLOW]: ./UserStories.md#lcd_flow_slow
-[LCD_STATUS_WHEN_FULL]: ./UserStories.md#lcd_status_when_full
-[LCD_STATUS_WHEN_EMPTY]: ./UserStories.md#lcd_status_when_empty
-[LCD_STATUS_WATER_LEVEL]: ./UserStories.md#lcd_status_water_level
+[lcd_valve_status]: ./UserStories.md#lcd_valve_status
+[lcd_fill]: ./UserStories.md#lcd_fill
+[lcd_stop]: ./UserStories.md#lcd_stop
+[lcd_drain]: ./UserStories.md#lcd_drain           
+[lcd_status_temp]: ./UserStories.md#lcd_status_temp
+[lcd_temp]: ./UserStories.md#lcd_temp
+[lcd_status_flow]: ./UserStories.md#lcd_status_flow
+[lcd_flow_slow]: ./UserStories.md#lcd_flow_slow
+[lcd_status_when_full]: ./UserStories.md#lcd_status_when_full
+[lcd_status_when_empty]: ./UserStories.md#lcd_status_when_empty
+[lcd_status_water_level]: ./UserStories.md#lcd_status_water_level
+[lcd_pid_change]: ./UserStories.md#lcd_pid_change
+[lcd_pid_change_auto]: ./UserStories.md#lcd_pid_change_auto

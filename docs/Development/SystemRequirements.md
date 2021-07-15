@@ -32,6 +32,13 @@ Table column description:
  * [Releases](./Releases.md)
 
 
+[0.5]: ./Releases.md#release-05---bare-minimum
+[0.6]: ./Releases.md#release-06--hardware-installed
+[0.7]: ./Releases.md#release-07---additional-features
+[0.8]: ./Releases.md#release-08---remote-access
+[0.9]: ./Releases.md#release-09---boxed
+[1.0]: ./Releases.md#release-10
+
 [PlatformIO]: https://platformio.org/
 [VoffCon]: http://voffcon.com/
 [HLK-PM01]: https://www.aliexpress.com/item/32504127465.html?spm=a2g0s.9042311.0.0.27424c4dOggB1n

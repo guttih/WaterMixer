@@ -2,29 +2,29 @@
 This document describes all user stories in more detail.  It should answer what is needs to finish the story.
 Each story has a unique identifier and this identifier will be the section name.
 
-## LCD_VALVE_STATUS
+## lcd_valve_status
 As John, I stand in front of the unit and want know how much the hot and cold valves are open
-## LCD_FILL
+## lcd_fill
 As Kamila, I stand in front of the unit and want to fill the hot tub
 
 
-## LCD_STOP
+## lcd_stop
 As Kamila, I stand in front of the unit and want to stop the flow to the hot tub
 
 
-## LCD_DRAIN
+## lcd_drain
 As Kamila, I stand in front of the unit and want to drain the hot tub
 
 
-## LCD_STATUS_TEMP
+## lcd_status_temp
 As Kamila, I stand in front of the unit and want to know the water temperature
 
 
-## LCD_TEMP
+## lcd_temp
 As Kamila, I stand in front of the unit and want to change the water temperature flowing to the hot tub
 
 
-## LCD_STATUS_FLOW
+## lcd_status_flow
 As Kamila, I stand in front of the unit and want to know the water flow rate
 
 Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum 
@@ -34,21 +34,26 @@ Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ip
 Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum 
 Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum 
 
-## LCD_FLOW_SLOW
+## lcd_flow_slow
 As Kamila, I stand in front of the unit and want to make water flow slowly to the hot tub
 
 
-## LCD_STATUS_WHEN_FULL
+## lcd_status_when_full
 As Kamila, I stand in front of the unit and want to know when the hot tub will be full
 
 
-## LCD_STATUS_WHEN_EMPTY
+## lcd_status_when_empty
 As Kamila, I stand in front of the unit and want to know when the hot tub will be fully drained
 
 
-## LCD_STATUS_WATER_LEVEL
+## lcd_status_water_level
 As Kamila, I stand in front of the unit and want to know the current hot tub water level
 
+## lcd_pid_change
+As John, I stand in front of the unit and want change the PID values 
+
+# lcd_pid_change_auto
+As John, I stand in front of the unit and want auto tune the PID values.
 
 
 ### Related pages
