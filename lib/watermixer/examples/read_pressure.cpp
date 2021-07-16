@@ -6,18 +6,18 @@
     300 milli volts.  (0.3v)
 
     To read the sensor output on a esp32 we will need a voltage devider to convert
-    the output from 5V to 3V.  The devider consists of two resistors, R1 and R2.
-    R1 is a 3.3 kilo ohm and R2 is a 4.7 kilo ohm.
+    the output from 5V to 3V.  The devider consists of two resistors, R1 which is
+    3.3 kilo ohm and R2 which is 4.7 kilo ohm.
  
     Wire the sensor like this.
 
- GND                              5V
-  │                                │                                 
-  │                                │                    ╔══════════╗
-  │  ╔═══════════╗                 │                    ║ Pressure ║
-  │  ║   ESP32   ║                 │                    ║  Sensor  ║
-  │  ║           ║                 │                    ║          ║
-  │  ║      VIN -╟─────────────────┴────────────────────╢- Red     ║
+ GND                                5V
+  │                                  │
+  │                                  │                  ╔══════════╗
+  │  ╔═══════════╗                   │                  ║ Pressure ║
+  │  ║   ESP32   ║                   │                  ║  Sensor  ║
+  │  ║           ║                   │                  ║          ║
+  │  ║      VIN -╟───────────────────┴──────────────────╢- Red     ║
   │  ║      G34 -╟────────────────────┐                 ║          ║
   │  ║           ║     ╔═══════════╗  │  ╔═══════════╗  ║          ║
   │  ║           ║     ║-Resistor -║  │  ║-Resistor -║  ║          ║
