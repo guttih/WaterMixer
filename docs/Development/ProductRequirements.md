@@ -41,13 +41,13 @@ Table column description:
 
 |  Feature Id             | User Story                                                                                                | P |   R   | Notes |
 |:------------------------:|-----------------------------------------------------------------------------------------------------------|---|-------|-------|
-| [lcd_pid_change]         | As John, I stand in front of the unit and want change the PID values                                    | H | [0.5] |       |
 | [lcd_valve_status]       | As John, I stand in front of the unit and want know how much the hot and cold valves are open           | H | [0.5] |       |
 | [lcd_fill]               | As Kamila, I stand in front of the unit and want to fill the hot tub                                    | H | [0.5] |       |
 | [lcd_stop]               | As Kamila, I stand in front of the unit and want to stop the flow to the hot tub                        | H | [0.5] |       |
 | [lcd_drain]              | As Kamila, I stand in front of the unit and want to drain the hot tub                                   | H | [0.5] |       |
 | [lcd_status_temp]        | As Kamila, I stand in front of the unit and want to know the water temperature                          | N | [0.5] |       |
 | [lcd_temp]               | As Kamila, I stand in front of the unit and want to change the water temperature flowing to the hot tub | H | [0.5] |       |
+| [lcd_pid_change]         | As John, I stand in front of the unit and want change the PID values                                    | H | [0.5] |       |
 | [lcd_status_flow]        | As Kamila, I stand in front of the unit and want to know the water flow rate                            | N | [0.7] |       |
 | [lcd_flow_slow]          | As Kamila, I stand in front of the unit and want to make water flow slowly to the hot tub               | N | [0.7] |       |
 | [lcd_pid_change_auto]    | As John, I stand in front of the unit and want auto tune the PID values                                 | H | [0.7] |       |
