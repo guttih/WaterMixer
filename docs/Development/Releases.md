@@ -31,6 +31,14 @@ thing else is protected from the user touch.
 The unit has been packaged and tested and is ready for the world.
   * Date: unknown
 
+ ### Related pages
+ * [Readme](../../README.md)
+ * [Project requirements here](./ProductRequirements.md)
+ * [System requirements here](./SystemRequirements.md)
+ * [Product requirements](./ProductRequirements.md#features)
+ * [User stories](./UserStories.md)
+ * [Releases](./Releases.md)
+
 [VoffCon]: https://voffcon.com/
 [Hardware requirements]: https://github.com/guttih/WaterMixer/blob/main/docs/Development/HardwareProductRequirements.md
 [Requirements]: https://github.com/guttih/WaterMixer/blob/main/docs/Development/ProductRequirements.md

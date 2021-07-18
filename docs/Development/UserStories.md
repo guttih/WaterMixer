@@ -56,9 +56,10 @@ As John, I stand in front of the unit and want change the PID values
 As John, I stand in front of the unit and want auto tune the PID values.
 
 
-### Related pages
+ ### Related pages
  * [Readme](../../README.md)
  * [Project requirements here](./ProductRequirements.md)
  * [System requirements here](./SystemRequirements.md)
  * [Product requirements](./ProductRequirements.md#features)
+ * [User stories](./UserStories.md)
  * [Releases](./Releases.md)

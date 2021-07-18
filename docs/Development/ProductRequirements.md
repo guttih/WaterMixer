@@ -56,8 +56,9 @@ Table column description:
 | [lcd_status_water_level] | As Kamila, I stand in front of the unit and want to know the current hot tub water level                | L | [1.0] |       |
 
 
-### Related pages
+ ### Related pages
  * [Readme](../../README.md)
+ * [Project requirements here](./ProductRequirements.md)
  * [System requirements here](./SystemRequirements.md)
  * [Product requirements](./ProductRequirements.md#features)
  * [User stories](./UserStories.md)

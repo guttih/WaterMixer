@@ -22,6 +22,10 @@ Table column description:
 | [HLK-PM01]          | 5 volt power supply                             |   1    | [0.5] | Power [ESP32], [DS18B20] and [PRESSURE_SENSOR]                      |
 | [PRESSURE_SENSOR]   | 5 psi pressure sensor                           |   1    | [1.0] | Needed to test the water level of the hot tub                       |
 
+## The Plumbing
+
+This diagram shows the general idea, on where the electric valves and sensors should be located in the water pipe system.
+<img src="./pipeConnections.svg" alt="Overnew image of the whole system" />
 
  ### Related pages
  * [Readme](../../README.md)
