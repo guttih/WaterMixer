@@ -61,7 +61,7 @@ As John, I stand in front of the unit and want auto tune the PID values.
 
 [Readme]: ../../README.md
 [Product requirements]: ./productRequirements.md
-[System requirements]: ./SystemRequirements.md
+[System requirements]: ./sSystemRequirements.md
 [User stories]: ./userStories.md
 [Hardware]: ./hardware.md
 [Releases]: ./releases.md

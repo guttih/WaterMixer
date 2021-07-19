@@ -40,7 +40,7 @@ This diagram shows the general idea, on where the electric valves and sensors sh
 
 [Readme]: ../../README.md
 [Product requirements]: ./productRequirements.md
-[System requirements]: ./SystemRequirements.md
+[System requirements]: ./sSystemRequirements.md
 [User stories]: ./userStories.md
 [Hardware]: ./hardware.md
 [Releases]: ./releases.md
