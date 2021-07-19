@@ -12,7 +12,7 @@ is put on the remote part of the unit.  All hardware that should be connected to
 ## Release 0.6- Hardware installed
 All hardware devices are installed and wired to the unit but the software does not necessarily has a interface for them yet.
   * Date: unknown
-  * See [Requirements] for features in release.
+  * See [Product requirements] for features in release.
 
 ## Release 0.7 - Additional features
 Additional features have been added to the bare minimum release.
@@ -32,13 +32,20 @@ The unit has been packaged and tested and is ready for the world.
   * Date: unknown
 
  ### Related pages
- * [Readme](../../README.md)
- * [Project requirements here](./ProductRequirements.md)
- * [System requirements here](./SystemRequirements.md)
- * [Product requirements](./ProductRequirements.md#features)
- * [User stories](./UserStories.md)
- * [Releases](./Releases.md)
+ * [Readme]
+ * [Product requirements]
+ * [System requirements]
+ * [Product requirements]
+ * [User stories]
+ * [Hardware]
+ * [Releases]
+
+
+[Readme]: ../../README.md
+[Product requirements]: ./productRequirements.md
+[System requirements]: ./SystemRequirements.md
+[User stories]: ./userStories.md
+[Hardware]: ./hardware.md
+[Releases]: ./releases.md
 
 [VoffCon]: https://voffcon.com/
-[Hardware requirements]: https://github.com/guttih/WaterMixer/blob/main/docs/Development/HardwareProductRequirements.md
-[Requirements]: https://github.com/guttih/WaterMixer/blob/main/docs/Development/ProductRequirements.md

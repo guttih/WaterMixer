@@ -57,32 +57,41 @@ Table column description:
 
 
  ### Related pages
- * [Readme](../../README.md)
- * [Project requirements here](./ProductRequirements.md)
- * [System requirements here](./SystemRequirements.md)
- * [Product requirements](./ProductRequirements.md#features)
- * [User stories](./UserStories.md)
- * [Releases](./Releases.md)
+ * [Readme]
+ * [Product requirements]
+ * [System requirements]
+ * [Product requirements]
+ * [User stories]
+ * [Hardware]
+ * [Releases]
 
 
-[Releases]: ./Releases.md
-[0.5]: ./Releases.md#release-05---bare-minimum
-[0.6]: ./Releases.md#release-06--hardware-installed
-[0.7]: ./Releases.md#release-07---additional-features
-[0.8]: ./Releases.md#release-08---remote-access
-[0.9]: ./Releases.md#release-09---boxed
-[1.0]: ./Releases.md#release-10
+[Readme]: ../../README.md
+[Product requirements]: ./productRequirements.md
+[System requirements]: ./SystemRequirements.md
+[User stories]: ./userStories.md
+[Hardware]: ./hardware.md
+[Releases]: ./releases.md
 
-[lcd_valve_status]: ./UserStories.md#lcd_valve_status
-[lcd_fill]: ./UserStories.md#lcd_fill
-[lcd_stop]: ./UserStories.md#lcd_stop
-[lcd_drain]: ./UserStories.md#lcd_drain           
-[lcd_status_temp]: ./UserStories.md#lcd_status_temp
-[lcd_temp]: ./UserStories.md#lcd_temp
-[lcd_status_flow]: ./UserStories.md#lcd_status_flow
-[lcd_flow_slow]: ./UserStories.md#lcd_flow_slow
-[lcd_status_when_full]: ./UserStories.md#lcd_status_when_full
-[lcd_status_when_empty]: ./UserStories.md#lcd_status_when_empty
-[lcd_status_water_level]: ./UserStories.md#lcd_status_water_level
-[lcd_pid_change]: ./UserStories.md#lcd_pid_change
-[lcd_pid_change_auto]: ./UserStories.md#lcd_pid_change_auto
+
+[Releases]: ./releases.md
+[0.5]: ./releases.md#release-05---bare-minimum
+[0.6]: ./releases.md#release-06--hardware-installed
+[0.7]: ./releases.md#release-07---additional-features
+[0.8]: ./releases.md#release-08---remote-access
+[0.9]: ./releases.md#release-09---boxed
+[1.0]: ./releases.md#release-10
+
+[lcd_valve_status]: ./userStories.md#lcd_valve_status
+[lcd_fill]: ./userStories.md#lcd_fill
+[lcd_stop]: ./userStories.md#lcd_stop
+[lcd_drain]: ./userStories.md#lcd_drain           
+[lcd_status_temp]: ./userStories.md#lcd_status_temp
+[lcd_temp]: ./userStories.md#lcd_temp
+[lcd_status_flow]: ./userStories.md#lcd_status_flow
+[lcd_flow_slow]: ./userStories.md#lcd_flow_slow
+[lcd_status_when_full]: ./userStories.md#lcd_status_when_full
+[lcd_status_when_empty]: ./userStories.md#lcd_status_when_empty
+[lcd_status_water_level]: ./userStories.md#lcd_status_water_level
+[lcd_pid_change]: ./userStories.md#lcd_pid_change
+[lcd_pid_change_auto]: ./userStories.md#lcd_pid_change_auto

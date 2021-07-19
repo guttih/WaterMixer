@@ -8,19 +8,25 @@ Read about the [System requirements] for more details.
 
 ## Product Requirements
 What use cases will the product solve?  Who will be using it? 
-[Project requirements] document holds information about which [features] will be added to which releases.
+[User stories] document holds information about which [features] will be added to which releases.
 
  ### Related pages
- * [Readme](../../README.md)
- * [Project requirements]
+ * [Readme]
+ * [Product requirements]
  * [System requirements]
- * [Product requirements](./ProductRequirements.md#features)
- * [User stories](./UserStories.md)
- * [Releases](./Releases.md)
+ * [Product requirements]
+ * [User stories]
+ * [Hardware]
+ * [Releases]
 
 
-
-[Project requirements]: ./ProductRequirements.md
+[Readme]: ../../README.md
+[Product requirements]: ./productRequirements.md
 [System requirements]: ./SystemRequirements.md
-[features]: ./ProductRequirements.md#features
-[releases]: ./Releases.md
+[User stories]: ./userStories.md
+[Hardware]: ./hardware.md
+[Releases]: ./releases.md
+
+
+
+[features]: ./productRequirements.md#features
