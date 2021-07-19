@@ -31,6 +31,10 @@ thing else is protected from the user touch.
 The unit has been packaged and tested and is ready for the world.
   * Date: unknown
 
+## Release 1.1
+The unit has been released but some addons and new features have been maid.
+  * Date: unknown
+
  ### Related pages
  * [Readme]
  * [Product requirements]

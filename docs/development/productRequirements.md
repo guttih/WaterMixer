@@ -54,6 +54,7 @@ Table column description:
 | [lcd_status_when_full]   | As Kamila, I stand in front of the unit and want to know when the hot tub will be full                  | L | [1.0] |  This is after some one has initiated the filling process |
 | [lcd_status_when_empty]  | As Kamila, I stand in front of the unit and want to know when the hot tub will be fully drained         | L | [1.0] |  This is after some one has initiated the draining process |
 | [lcd_status_water_level] | As Kamila, I stand in front of the unit and want to know the current hot tub water level                | L | [1.0] |       |
+| [lcd_status_dim_backlight]  | As John, I stand in front of the unit and want to set the backlight brightness of the LCD display.      | L | [1.0] |       |
 
 
  ### Related pages
@@ -81,6 +82,7 @@ Table column description:
 [0.8]: ./releases.md#release-08---remote-access
 [0.9]: ./releases.md#release-09---boxed
 [1.0]: ./releases.md#release-10
+[1.1]: ./releases.md#release-11
 
 [lcd_valve_status]: ./userStories.md#lcd_valve_status
 [lcd_fill]: ./userStories.md#lcd_fill
@@ -95,3 +97,4 @@ Table column description:
 [lcd_status_water_level]: ./userStories.md#lcd_status_water_level
 [lcd_pid_change]: ./userStories.md#lcd_pid_change
 [lcd_pid_change_auto]: ./userStories.md#lcd_pid_change_auto
+[lcd_status_dim_backlight]: ./userStories.md#lcd_status_dim_backlight

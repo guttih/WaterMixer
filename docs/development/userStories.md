@@ -45,9 +45,17 @@ As Kamila, I stand in front of the unit and want to know the current hot tub wat
 ## lcd_pid_change
 As John, I stand in front of the unit and want change the PID values 
 
-# lcd_pid_change_auto
+## lcd_pid_change_auto
 As John, I stand in front of the unit and want auto tune the PID values.
 
+## lcd_status_dim_backlight
+As John, I stand in front of the unit and want to set the backlight brightness of the LCD display.
+
+This can be useful to lower the current draw of the display if needed, but this will also allow the device to go dim the
+display when it has not been in use for some period of time.
+
+In order for this to be possible a dimmer will need to be added and I would think that the [BC337] Transistor would be
+a good candidate.
 
 ### Related pages
  * [Readme]
@@ -65,3 +73,5 @@ As John, I stand in front of the unit and want auto tune the PID values.
 [User stories]: ./userStories.md
 [Hardware]: ./hardware.md
 [Releases]: ./releases.md
+
+[BC337]:./hardware.md#bc337_transistor

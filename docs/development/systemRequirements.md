@@ -22,6 +22,8 @@ Table column description:
 | [5v_power_supply]    | 5 volt power supply                             |   1    | [0.5] | Power [esp32], [temperature_sensor] and [pressure_sensor]           |
 | [3v3_power_supply]   | 3.3 volt power supply                           |   1    | [0.5] | Power [lcd_touch_display]                                           |
 | [pressure_sensor]    | 5 psi pressure sensor                           |   1    | [1.0] | Needed to test the water level of the hot tub                       |
+| [bc337_transistor]   | BC337 Transistor                                |   1    | [1.1] | Needed to dim the backlight on the LCD display                      |
+
 
 ## The Plumbing
 
@@ -51,6 +53,7 @@ This diagram shows the general idea, on where the electric valves and sensors sh
 [0.8]: ./releases.md#release-08---remote-access
 [0.9]: ./releases.md#release-09---boxed
 [1.0]: ./releases.md#release-10
+[1.1]: ./releases.md#release-11
 
 [esp32]: ./hardware.md#esp32
 [temperature_sensor]: ./hardware.md#temperature_sensor
@@ -61,3 +64,5 @@ This diagram shows the general idea, on where the electric valves and sensors sh
 [5v_power_supply]: ./hardware.md#5v_power_supply
 [3v3_power_supply]: ./hardware.md#3v3_power_supply
 [pressure_sensor]: ./hardware.md#pressure_sensor
+[bc337_transistor]: ./hardware.md#bc337_transistor
+
