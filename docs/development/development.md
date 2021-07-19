@@ -7,8 +7,9 @@ What is needed to make this product possible.  What environment? What hardware? 
 Read about the [System requirements] for more details.
 
 ## Product Requirements
-What use cases will the product solve?  Who will be using it? 
-[User stories] document holds information about which [features] will be added to which releases.
+What are the [Product requirements] for this project?
+What use cases will the project solve?  Who will be using it?
+Which [features] will be selected into which [Releases]?
 
  ### Related pages
  * [Readme]
