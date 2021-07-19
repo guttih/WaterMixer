@@ -11,7 +11,7 @@ Finally the third electrical valve is used to drain the hot tub.
 - [Experiment page]
 - [Hot-tub]
 - [Setting up PWM to Voltage Converter]
-- [Project development documents]
+- Project [Development documents]
 
 ### Parts in project
 
@@ -101,8 +101,8 @@ Then you can run the tests with this command `pio test`
 [Proportional Valve Brass controllable with 0-5V]:https://www.aliexpress.com/item/33037988030.html?spm=a2g0s.12269583.0.0.49d04a42eL9zNl
 [Experiment page]: https://guttih.com/list/project-hottub-temp
 [Hot-tub]:http://192.168.1.79/list/project-hottub
-[Setting up PWM to Voltage Converter]:docs/Development/pwmToVoltateConverter.md
+[Setting up PWM to Voltage Converter]:docs/development/pwmToVoltateConverter.md
 [cmake]:https://cmake.org/download/#latest
 [PlatformIO]:https://platformio.org/
-[Project development documents]: docs/Development/development.md
+[Development documents]: docs/development/development.md
 [LCD touch display]: https://www.aliexpress.com/item/4000030399357.html?spm=a2g0s.12269583.0.0.687d6973QvjfAl
