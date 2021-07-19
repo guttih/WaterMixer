@@ -68,7 +68,7 @@ Table column description:
 
 [Readme]: ../../README.md
 [Product requirements]: ./productRequirements.md
-[System requirements]: ./sSystemRequirements.md
+[System requirements]: ./systemRequirements.md
 [User stories]: ./userStories.md
 [Hardware]: ./hardware.md
 [Releases]: ./releases.md
