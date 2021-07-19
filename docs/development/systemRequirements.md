@@ -59,5 +59,5 @@ This diagram shows the general idea, on where the electric valves and sensors sh
 [lcd_touch_display]: ./hardware.md#lcd_touch_display
 [12v_power_supply]: ./hardware.md#12v_power_supply
 [5v_power_supply]: ./hardware.md#5v_power_supply
-[3v3_power_supply]: ./hardware.md#3v_power_supply
+[3v3_power_supply]: ./hardware.md#3v3_power_supply
 [pressure_sensor]: ./hardware.md#pressure_sensor
