@@ -39,8 +39,13 @@ As Kamila, I stand in front of the unit and want to know when the hot tub will b
 As Kamila, I stand in front of the unit and want to know when the hot tub will be fully drained
 
 
-## lcd_status_water_level
-As Kamila, I stand in front of the unit and want to know the current hot tub water level
+## lcd_water_level_predict
+As Kamila, I stand in front of the unit and want to know the projected hot tub water level.
+
+## lcd_water_level_current
+As Kamila, I stand in front of the unit and want to know the current hot tub water level.  This will be measured using
+the [pressure_sensor].
+
 
 ## lcd_pid_change
 As John, I stand in front of the unit and want change the PID values 
@@ -49,7 +54,7 @@ As John, I stand in front of the unit and want change the PID values
 As John, I stand in front of the unit and want auto tune the PID values.
 
 ## lcd_status_dim_backlight
-As John, I stand in front of the unit and want to set the backlight brightness of the LCD display.
+As John, I stand in front of the unit and want to change the backlight brightness of the LCD display.
 
 This can be useful to lower the current draw of the display if needed, but this will also allow the device to go dim the
 display when it has not been in use for some period of time.
@@ -75,3 +80,4 @@ a good candidate.
 [Releases]: ./releases.md
 
 [BC337]:./hardware.md#bc337_transistor
+[pressure_sensor]:./hardware.md#pressure_sensor
