@@ -9,6 +9,8 @@
 #include <Arduino.h>
 #include "valve.h"
 
+#include "globals.h"
+
 const int pinHot = 32;
 const int pinCold = 33;
 #define FULL_DUTY 255
@@ -22,6 +24,8 @@ Valve cold(pinCold, CHANNEL_2, FULL_DUTY, MAX_DUTY, 0.0, "Cold valve");
 void setup()
 {
     Serial.begin(115200);
+    values.pid.input = 23;
+    
 
     hot.serialPrintInfo();
     cold.serialPrintInfo();
