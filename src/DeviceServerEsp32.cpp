@@ -28,6 +28,7 @@ by regular post to the address Haseyla 27, 260 Reykjanesbar, Iceland.
 #include <HTTPClient.h>
 
 #include "setupMenu.h"
+#include "config.h"
 //#include <stddef.h>  //for linked list
 /*
     Board: ESP32 DEV Module
@@ -36,10 +37,10 @@ by regular post to the address Haseyla 27, 260 Reykjanesbar, Iceland.
 const char* deviceId = "61052c38bc1fdd0526aedf31";
 // Name of the wifi (accesspoint)network
 // example: "guttisWiFi"
-const char* ssid = "swingway";
+const char* ssid = getSsId();
 // Wifi password
 // example: "mypasswordToTheWifi"
-const char* password = "Radar781896!";
+const char* password = getPassword();
 // port number which this device will be operating on.
 // example: 5100
 const int   PORT = 80;
