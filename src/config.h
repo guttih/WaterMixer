@@ -1,5 +1,5 @@
 const char *getPassword() {
-    return "thepassword";
+    return "thepaddssword";
 }
 
 const char *getSsId() {
