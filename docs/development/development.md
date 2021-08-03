@@ -14,6 +14,10 @@ Which [features] will be selected into which [Releases]?
 ## Wire frame
 The [wireframe] for the project is created in figma, I do not have a professional account so I cannot share it here.
 
+## Tests
+See [tests] for information tests for this project.
+
+
  ### Related pages
  * [Readme]
  * [Product requirements]
@@ -34,3 +38,4 @@ The [wireframe] for the project is created in figma, I do not have a professiona
 
 
 [features]: ./productRequirements.md#features
+[tests]: ../../test/README.md

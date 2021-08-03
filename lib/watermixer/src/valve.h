@@ -62,7 +62,7 @@ public:
       * @param flow A number from 0 to 1, where 
       *               0   is fully closed, 
       *               0.5 is half open and 
-      *               1   is fully closed.
+      *               1   is fully opened.
       */
     void setFlow(double flow);
 

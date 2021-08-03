@@ -64,7 +64,7 @@ void setup() {
     delay(2000);
     UNITY_BEGIN();    
         testValve();
-        testFlowMocker();
+        //testFlowMocker();
         testWaterMixer();
     UNITY_END();
 }

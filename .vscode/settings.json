@@ -5,7 +5,8 @@
         "*.tcc": "cpp",
         "fstream": "cpp",
         "istream": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "array": "cpp"
     },
     "cSpell.words": [
         "Kamila"

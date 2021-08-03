@@ -28,6 +28,8 @@ by regular post to the address Haseyla 27, 260 Reykjanesbar, Iceland.
 #include <HTTPClient.h>
 
 #include "setupMenu.h"
+#include "sensors.h"
+
 #include "config.h"
 //#include <stddef.h>  //for linked list
 /* 
@@ -1147,6 +1149,7 @@ void setup() {
 
     Serial.println("");
 
+    setupSensors();
 
     touch_calibrate(false);
     setupMenu();
@@ -1156,6 +1159,9 @@ void setup() {
     DisplayLabel * pLabelHeading = pPage->getLabel(pPage->labelCount()-2);
     DisplayLabel * pLabelStatus = pPage->getLastLabel();
 
+    pLabelStatus->setText("Starting", true);
+    //Let's wait for two seconds before starting allowing voltage to stabelize after power on
+    delay(2000);
     sta_was_connected = connectWifi();
     if (sta_was_connected) {
         outString = "WiFi connected";
@@ -1183,7 +1189,9 @@ void setup() {
     server.begin();
     pLabelHeading->setText("Fetching monitors", true);
     tellServerToSendMonitors();
-    menu.showPage(2);
+
+
+    menu.showPage(4);
     
     
 }
@@ -1192,8 +1200,35 @@ void setup() {
 /// The program main loop which repeats forever.
 /// </summary>
 
+unsigned long timerUpdateScreen = 0;
+void drawLinkedButtonsAndLabels() {
+    unsigned long now = millis();
+    if (now < timerUpdateScreen)
+        return;
+    
+    DisplayPage *pVisable = menu.getVisablePage();
+    
+    DisplayButton *pButton;
+    DisplayLabel *pLabel;
+    for(int i = 0; i < pVisable->buttonCount(); i++){
+        pButton = pVisable->getButton(i);
+        if(pButton->getLinkedValue() || pButton->_values.onDrawDisplayButton)
+            pButton->draw();
+    }
+
+    for(int i = 0; i < pVisable->labelCount(); i++){
+        pLabel = pVisable->getLabel(i);
+        if(pLabel->getLinkedValue() || pLabel->_values.onDrawDisplayLabel)
+            pLabel->draw();
+    }
+
+    timerUpdateScreen = now+200;
+}
 void loop() {
+    checkAndUpdateSensors();
+    //Serial.printf("%.3f°  %.3f PSI\n", currentTemperature, currentPressure);
     menu.update();
+    drawLinkedButtonsAndLabels();
     //timerTwoSeconds();
     if (monitors.isAnyPinWatchDo()) {
         // One item did trigger so you could log

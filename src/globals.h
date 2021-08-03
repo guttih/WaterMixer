@@ -7,8 +7,13 @@
 
 #include <TFT_eSPI.h> // Hardware-specific library
 
-#include "DisplayMenu.h"
 
+#include <OneWire.h>
+#include <DallasTemperature.h>
+
+#include "DisplayMenu.h"
+#include "valve.h"
+#include "watermixer.h"
 
 #define CALIBRATION_FILE "/TouchCalData3"
 
@@ -23,6 +28,29 @@
 
   
  */
+
+const int PIN_PRESSURE = 34;
+const int PIN_TEMPERATURE = 25;
+
+const int PIN_HOT = 12;
+const int PIN_COLD = 14;
+const int PIN_DRAIN = 32;
+#define FULL_DUTY 255
+#define MAX_DUTY 190
+#define CHANNEL_1 1
+#define CHANNEL_2 2
+#define CHANNEL_3 3
+
+double currentTemperature = 0;
+double currentPressure = 0;
+
+OneWire oneWire(PIN_TEMPERATURE);
+DallasTemperature sensors(&oneWire);
+
+Valve   hot(PIN_HOT,  CHANNEL_1, FULL_DUTY, MAX_DUTY, 0.01, "Hot valve");
+Valve  cold(PIN_COLD, CHANNEL_2, FULL_DUTY, MAX_DUTY, 0.02, "Cold valve");
+Valve drain(PIN_DRAIN, CHANNEL_3, FULL_DUTY, 255,      0.03, "Drain valve");
+WaterMixer water(&hot, &cold, &drain, 24, 24);
 
 /**
  * @brief  Values used by the proportional integral derivative controller (PID controller).

@@ -28,6 +28,8 @@ Finally the third electrical valve is used to drain the hot tub.
 When you setup the PWM to Voltage converter make sure that when the esp32 is
 sending out PWM 190 of
 
+Old schematic
+
 ```
                         ╔═══════════╗
                         ║  DS18B20  ║
