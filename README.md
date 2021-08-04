@@ -25,8 +25,8 @@ Finally the third electrical valve is used to drain the hot tub.
 
 ## Wiring the project
 
-When you setup the PWM to Voltage converter make sure that when the esp32 is
-sending out PWM 190 of
+When you setup the PWM to Voltage converter make sure that when the esp32 is never sending more than 190 of 255 to the 
+PWM to voltage converts because that will result in a 5V output voltage to the valves.
 
 ### Main schematic
 
@@ -89,7 +89,7 @@ Legend
 - G32    : Esp32 GPIO 32 pin which is used control the drain water valve.
 
 ### Touch display schematic
-In this schematic we will only show how to connect the Touch display, how to provide it power and how to connect it to
+On this schematic is only shown how to connect the Touch display, how to provide it with power and how to connect it to
 the Esp32.  Wiring the four components *POWER SOURCE 12V*, *DC_STEPDOWN 5V*, *DC_STEPDOWN 3V3* and *Esp32* are also 
 shown in the **main schematic** above but here we only focus on connecting the display.
 
