@@ -57,22 +57,45 @@ PWM to voltage converts because that will result in a 5V output voltage to the v
 ┌───────╢-  4.7kΩ  -╟────┤  ║      G32 -╟─┐ │ ║         VCC-╟─┴─(RD)─╢-VCC    ERR-╟─(YE)─    │
 │       ╚═══════════╝    │  ║           ║ │ └─╢-PWM    VOUT-╟───(GR)─╢-LIN    GND-╟─(BL)──┐  │
 │       ╔═══════════╗    │  ║           ║ │ ┌─╢-GND     GND-╟─┐      ╚════════════╝       │  │
-│       ║  DS18B20  ║    │  ╚═══════════╝ │ │ ╚═════════════╝ ├───────────────────────────┤  │
-│       ║   Temp    ║    │                │ └─────────────────┘                           ┴  │
-│       ║  Sensor   ║    │                │   ╔═════════════╗                            GND │
-│       ║           ║    │                │   ║    PWM to   ║ ┌──────────────────────────────┤
-│       ║    SIGNAL-╟(YE)┘                │   ║   voltage   ║ │      ╔════════════╗          │
-├──(RD)─╢-VCC       ║                     │   ║ converter D ║ │      ║   Valve D  ║          │
-│ ┌(BL)─╢-GND       ║                     │   ║             ║ │      ║    PWM Out-╟─(WT)─    │
-│ │     ╚═══════════╝                     │   ║         VCC-╟─┴─(RD)─╢-VCC    ERR-╟─(YE)─    │
-│ │   ╔═════════════╗                     └───╢-PWM    VOUT-╟───(GR)─╢-LIN    GND-╟─(BL)──┐  │
-│ │   ║ DC_STEPDOWN ║                       ┌─╢-GND     GND-╟─┐      ╚════════════╝       │  │
-│ │   ║             ║                       │ ╚═════════════╝ │                           │  │
-│ └───╢- -Vo( GND) -╟                       ├─────────────────┴───────────────────────────┤  │
-└─────╢- +Vo(+3V3) -╟                       │                                             ┴  │
-      ║         GND-╟───────────────────────┘                                            GND │
-      ║         VIN-╟────────────────────────────────────────────────────────────────────────┘
-      ╚═════════════╝
+│       ║  DS18B20  ║    │  ║           ║ │ │ ╚═════════════╝ ├───────────────────────────┤  │
+│       ║   Temp    ║    │  ║           ║ │ └─────────────────┘                           ┴  │
+│       ║  Sensor   ║    │  ║           ║ │   ╔═════════════╗                            GND │
+│       ║           ║    │  ║           ║ │   ║    PWM to   ║ ┌──────────────────────────────┤
+│       ║    SIGNAL-╟(YE)┘  ║           ║ │   ║   voltage   ║ │      ╔════════════╗          │
+├──(RD)─╢-VCC       ║       ║           ║ │   ║ converter D ║ │      ║   Valve D  ║          │
+│ ┌(BL)─╢-GND       ║       ║  -ESP32-  ║ │   ║             ║ │      ║    PWM Out-╟─(WT)─    │
+│ │     ╚═══════════╝       ║           ║ │   ║         VCC-╟─┴─(RD)─╢-VCC    ERR-╟─(YE)─    │
+│ │                         ║           ║ └───╢-PWM    VOUT-╟───(GR)─╢-LIN    GND-╟─(BL)──┐  │
+│ ├───────────────────┬─────╢-GND       ║   ┌─╢-GND     GND-╟─┐      ╚════════════╝       │  │
+│ │  ╔══════════════╗ │     ║           ║   │ ╚═════════════╝ │                           │  │
+│ │  ║   LCD TOUCH  ║ │     ║           ║   ├─────────────────┴───────────────────────────┤  │
+│ │  ║    DISPLAY   ║ │     ║           ║   │                                             ┴  │
+│ │  ║          GND-╟─┘     ║           ║   │                                            GND │
+│ │  ║      SD_MOSI-╟─┐     ║           ║   │                                                │
+│ │  ║         MOSI-╟─┼───┐ ║           ║   │                                                │
+│ │  ║        T_DIN-╟─┘   │ ║           ║   │                                                │
+│ │  ║       SD_SCK-╟─┐   │ ║           ║   │                                                │
+│ │  ║          SCK-╟─┼─┐ │ ║           ║   │                                                │
+│ │  ║        T_CLK-╟─┘ │ └─╢-G23       ║   │                                                │
+│ │  ║         T_DO-╟─┐ └───╢-G18       ║   │                                                │
+│ │  ║      SD_MISO-╟─┴─────╢-G19       ║   │                                                │
+│ │  ║           CS-╟───────╢-G15       ║   │                                                │
+│ │  ║        RESET-╟───────╢-G4        ║   │                                                │
+│ │  ║           DC-╟───────╢-G2        ║   │                                                │
+│ │  ║        SD_CS-╟───────╢-G5        ║   │                                                │
+│ │  ║         T_CS-╟───────╢-G21       ║   │                                                │
+│ │  ║              ║       ║           ║   │                                                │
+│ │  ║          VCC-╟─┐     ║  -ESP32-  ║   │                                                │
+│ │  ║          LED-╟─┤     ╚═══════════╝   │                                                │
+│ │  ╚══════════════╝ │                     │                                                │
+│ │  ╔═════════════╗  │                     │                                                │
+│ │  ║ DC_STEPDOWN ║  │                     │                                                │
+│ │  ║             ║  │                     │                                                │
+│ └──╢- -Vo( GND) -╟  │                     │                                                │
+└────╢- +Vo(+3V3) -╟──┘                     │                                                │
+     ║         GND-╟────────────────────────┘                                                │
+     ║         VIN-╟─────────────────────────────────────────────────────────────────────────┘
+     ╚═════════════╝
 ```
 Legend
 
@@ -87,52 +110,6 @@ Legend
 - G12    : Esp32 GPIO 12 pin which is used control the hot water valve.
 - G14    : Esp32 GPIO 14 pin which is used control the cold water valve.
 - G32    : Esp32 GPIO 32 pin which is used control the drain water valve.
-
-### Touch display schematic
-On this schematic is only shown how to connect the Touch display, how to provide it with power and how to connect it to
-the Esp32.  Wiring the four components *POWER SOURCE 12V*, *DC_STEPDOWN 5V*, *DC_STEPDOWN 3V3* and *Esp32* are also 
-shown in the **main schematic** above but here we only focus on connecting the display.
-
-```
-                          ┌───────────────────┐
-        ╔══════════════╗  │ ╔═════════════╗   │   ╔═════════════╗
-        ║ POWER SOURCE ║  │ ║ DC_STEPDOWN ║   │   ║ DC_STEPDOWN ║
-        ║              ║  │ ║             ║   │   ║             ║
-    ────╢-    +12V    -╟──┘ ║         VIN-╟───┴───╢-VIN         ║
-    ────╢-    -GND    -╟────╢-GND     GND-╟───────╢-GND         ║
-        ║              ║  ──╢- -Vo( GND) -╟───┬───╢- -Vo( GND) -╟
-        ║              ║ ┌──╢- +Vo(+3V3) -╟   │ ┌─╢- +Vo(+5V)  -╟
-        ╚══════════════╝ │  ╚═════════════╝   │ │ ╚═════════════╝
-                         │  ┌─────────────────┘ │
-        ╔══════════════╗ │  │                   │
-        ║   LCD TOUCH  ║ │  │                   │
-        ║    DISPLAY   ║ │  │     ╔═══════════╗ │
-        ║              ║ │  │     ║  -ESP32-  ║ │
-        ║          VCC-╟─┤  │     ║           ║ │
-        ║          LED-╟─┘  │     ║           ║ │
-        ║          GND-╟────┴─────╢-GND  VIN -╟─┘
-        ║      SD_MOSI-╟─┐    PSI ╢-G34       ║
-        ║         MOSI-╟─┼───┐ C° ╢-G25       ║
-        ║        T_DIN-╟─┘   │    ║       G12-╟ -Hot PWM
-        ║       SD_SCK-╟─┐   │    ║       G14-╟ -Cold PWM
-        ║          SCK-╟─┼─┐ │    ║       G32-╟ -Drain PWM
-        ║        T_CLK-╟─┘ │ └────╢-G23       ║
-        ║         T_DO-╟─┐ └──────╢-G18       ║
-        ║      SD_MISO-╟─┴────────╢-G19       ║
-        ║           CS-╟──────────╢-G15       ║
-        ║        RESET-╟──────────╢-G4        ║
-        ║           DC-╟──────────╢-G2        ║
-        ║        SD_CS-╟──────────╢-G5        ║
-        ║         T_CS-╟──────────╢-G21       ║
-        ╚══════════════╝          ╚═══════════╝
-```
-Legend
-
-- PSI      : Wire with voltage from 0 - 3 volts with information about pressure in PSI
-- C°       : Data wire connected to the temperature sensor.
-- Hot PWM  : PWM connector on the PWM to voltage convertor controlling the hot valve.
-- Cold PWM : PWM connector on the PWM to voltage convertor controlling the cold valve.
-- Drain PWM: PWM connector on the PWM to voltage convertor controlling the drain valve.
 
 ## Software development
 
