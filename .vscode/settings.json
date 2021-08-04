@@ -9,6 +9,11 @@
         "array": "cpp"
     },
     "cSpell.words": [
-        "Kamila"
+        "Kamila",
+        "vout"
+    ],
+    "cSpell.ignoreWords": [
+        "mosi",
+        "sd"
     ]
 }

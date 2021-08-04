@@ -58,22 +58,25 @@ __Not selected yet__
 
 ## 5v_power_supply
 
-__HLK-PM01__ 
+__DC_STEPDOWN__ 
 
-This small 5V power supply is needed to supply the sensors and Esp32  with power.
+This small adjustable step down power supply is needed to supply the pressure sensor and the Esp32 with power.
+This unit will get power from the __12v_power_supply__ and will be be adjusted to give __5.05V__ output power.
 
-- Bought [HLK-PM01](https://www.aliexpress.com/item/32504127465.html?spm=a2g0s.9042311.0.0.27424c4dOggB1n)
-- Inventory [Here](http://parts.guttih.com/parts/view/5bfab8d3ec065a5ac2786938)
+- Bought [DC_STEPDOWN](https://www.aliexpress.com/item/32531438467.html?spm=a2g0s.9042311.0.0.27424c4dWJSXmG)
+- Inventory [Here](http://192.168.1.79:6300/parts/view/5bfae6c1ec065a5ac278698f)
 
 
 ## 3v3_power_supply
 
-__HLK-PM03__ 
+__DC_STEPDOWN__ 
 
-This small 3.3V power supply needed to supply the LCD display module with power.
+This small adjustable step down power supply is needed to supply the temperature sensor and the lcd touch display with power.
+This unit will get power from the __12v_power_supply__ and will be be adjusted to give __3.2V__ output power.
 
-- Bought [HLK-PM03](https://www.aliexpress.com/item/33017439935.html?spm=a2g0s.12269583.0.0.21d63b95WBx44E)
-- Inventory [Here](http://parts.guttih.com/parts/view/5f032e855025df04fc393494)
+- Bought [DC_STEPDOWN](https://www.aliexpress.com/item/32531438467.html?spm=a2g0s.9042311.0.0.27424c4dWJSXmG)
+- Inventory [Here](http://192.168.1.79:6300/parts/view/5bfae6c1ec065a5ac278698f)
+
 
 
 ## pressure_sensor
@@ -88,7 +91,7 @@ This sensor needs 5V power to work and provides information on the water pressur
 
 __BC337 Transistor__
 
-Needed to dim the backlight on the **lcd_touch_display**.  The transistor would be controlling the LED pin on the LCD display.
+To dim the backlight on the **lcd_touch_display**.  The transistor would be controlling the LED pin on the LCD display.  I am not entirely sure that I will need this feature.
 
 - Inventory [Here](http://parts.guttih.com/parts/view/5f1769dc6a252307c167c06b)
 
