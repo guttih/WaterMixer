@@ -12,9 +12,13 @@ enum WaterMixerMode {
     MANUAL     /*!< Mixer will only change opening on valves when drain and fill functions are used*/
 };
 
+const int RECORD_SYSTEM_WAIT_BEFORE_STARTING = 15000; //How long should should we wait until first sample can be collected.
+const int RECORD_SYSTEM_INTERVAL = 10000; //How long should pass until a new sample is recorded
 class WaterMixer
 {
     private:
+        unsigned long recordSystemTimer = 0;
+        int recordSystemSampleCount = 0;
         double _currentTemperature = 0;
         double _desiredTemperature = 0;
         WaterMixerMode _mode;
@@ -30,8 +34,8 @@ class WaterMixer
         /**
          * @brief Deactivates automatic mode, closes the drain valve and opens the hot and cold valve.
          * 
-         * @param hotflow   How much should the  hot valve be opened? Where 0 is fully closed and 1 is fully opened.
-         * @param coldflow  How much should the cold valve be opened? Where 0 is fully closed and 1 is fully opened.
+         * @param hotflow   How much should the  hot valve be opened? Where 0 is fully closed and 100 is fully opened.
+         * @param coldflow  How much should the cold valve be opened? Where 0 is fully closed and 100 is fully opened.
          */
         void fill(double hotflow, double coldflow);
 
@@ -47,9 +51,38 @@ class WaterMixer
         double setDesiredTemperature(double temperatureInCelsius);
         double getDesiredTemperature() { return _desiredTemperature; }
 
-        Valve *getHotValve() {return _hotValve; }
-        Valve *getColdValve() {return _coldValve; }
-        Valve *getDrainValve() {return _drainValve; }
+        // Valve *getHotValve() {return _hotValve; }
+        // Valve *getColdValve() {return _coldValve; }
+        // Valve *getDrainValve() {return _drainValve; }
 
+        double getHotValveFlow() {return _hotValve->getFlow() * 100; }
+        double getColdValveFlow() {return _coldValve->getFlow() * 100; }
+        double getDrainValveFlow() {return _drainValve->getFlow() * 100; }
+
+        /**
+         * @brief Set the Hot Valve Flow object
+         * 
+         * @param flow How much should the valve be opened? Where 0 is fully closed and 100 is fully opened.
+         */
+        void setHotValveFlow(double flow)   {
+            Serial.printf("setHotValveFlow: %.f -> %.4f\n", flow, flow /100);
+            _hotValve->setFlow(flow /100); 
+            }
+        /**
+         * @brief Set the Cold Valve Flow object
+         * 
+         * @param flow How much should the valve be opened? Where 0 is fully closed and 100 is fully opened.
+         */
+        void setColdValveFlow(double flow)  {_coldValve->setFlow(flow /100); }
+        /**
+         * @brief Set the Drain Valve Flow object
+         * 
+         * @param flow How much should the valve be opened? Where 0 is fully closed and 100 is fully opened.
+         */
+        void setDrainValveFlow(double flow) {_drainValve->setFlow(flow /100); }
+
+        bool startRecordingSystem();
+        bool updateRecordingSystem();
+        bool stopRecordingSystem();
 };
 #endif

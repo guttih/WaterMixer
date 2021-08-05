@@ -98,12 +98,16 @@ Legend
 - <span style="background: yellow; color: black">(YE) = Yellow wire</span>
 - <span style="background: green; color: white">(GR) = Green wire (voltage signal)</span>
 - <span style="background: white; color: black">(WT) = White wire</span>
-- GND    : Esp32 GND pin which is ground.
+- GND    : Ground.
+- ` ┴` 
+- `GND`  : Ground.  When there is no room to connect the GND on the drawing, this notation is used.  Note, *all grounds are connected together*.
+- VIN    : 5V pin on the esp32 pin.
 - G34    : Esp32 GPIO 34 pin which is used to measure voltage coming from pressure sensor.
 - G25    : Esp32 GPIO 25 pin which is used to communicate with the temperature sensor.
 - G12    : Esp32 GPIO 12 pin which is used control the hot water valve.
 - G14    : Esp32 GPIO 14 pin which is used control the cold water valve.
 - G32    : Esp32 GPIO 32 pin which is used control the drain water valve.
+- G##    : Other esp32 pins used to control the touch display and read and write to a sd card.
 
 ## Software development
 

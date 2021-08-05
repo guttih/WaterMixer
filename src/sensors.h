@@ -8,23 +8,36 @@ unsigned long timerReadTemperature;
 void setupSensors() {
     timerReadTemperature = 0;
     sensors.begin();
+    sensors.setWaitForConversion(false);
+    sensors.requestTemperatures(); 
 }
 
 
 /**
  * @brief Get the temperature
  * 
- * @return double number in C°(Celsius)
+ * @param value to store the temperature
+ * @return true when read a new value and stored it.
+ * @return false when no new value was read and therefore the value is unchanged.
  */
-double readTemperature() {
+bool readTemperature(double *value) {
+  
   unsigned long now = millis();
   if (now >= timerReadTemperature) {
-    sensors.requestTemperatures();
-    timerReadTemperature = now + 500; //read temperature twice per second
+    double readTemperature = sensors.getTempCByIndex(0); //this takes about 27 milliseconds 3 more ms are added when setWaitForConversion true
+    *value = readTemperature;
+    sensors.requestTemperatures();//this takes about 3 milliseconds when setWaitForConversion is false on otherwise 597 milliseconds
+    // default resolution is 9, and formula for needed delay = 750/ (1 << (12-resolution)) -> and there for 750/ (1 << 3) is equal to 93 ms
+    timerReadTemperature = now + 100; //read temperature tent times per second.
+    return true;
 }
-  return sensors.getTempCByIndex(0);
+  return false;
 
 }
+
+const int pressureSampleCount = 20;
+float pressureSamples[pressureSampleCount];
+unsigned long pressureSampleNumber = 0;
 
 /**
  * @brief Get the pressure
@@ -34,8 +47,19 @@ double readTemperature() {
 double readPressure() {
   
   // 5 psi should give full power that is 4096
-  double proportion = (double)analogRead(PIN_PRESSURE) / (double)4096;
-  return  (double)5 * proportion;
+
+  pressureSamples[pressureSampleNumber % pressureSampleCount] = ((float)analogRead(PIN_PRESSURE) / (float)4096) * 5;
+  //Serial.printf("%lu index:%d\n", pressureSampleNumber, pressureSampleNumber % pressureSampleCount);
+  pressureSampleNumber++;
+  int samplePull = pressureSampleNumber < pressureSampleCount? pressureSampleCount:pressureSampleCount;
+
+  //get the average
+  double res = 0;
+  for(int i = 0; i<samplePull; i++) {
+    res+=pressureSamples[i];
+  }
+  return res/samplePull;
+  
 }
 
 /**
@@ -44,14 +68,8 @@ double readPressure() {
  */
 void checkAndUpdateSensors() {
    
-   unsigned long now = millis();
-
    currentPressure = readPressure();
-
-  if (now >= timerReadTemperature) {
-    currentTemperature = readTemperature();
-    timerReadTemperature = now + 500; //read temperature twice per second
-  }
+   readTemperature(&currentTemperature);
 }
 
 #endif

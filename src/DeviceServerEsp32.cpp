@@ -1206,8 +1206,23 @@ void drawLinkedButtonsAndLabels() {
     if (now < timerUpdateScreen)
         return;
     
+    //We do not need to update all values for these pages, they handle their updates by them selves.
+
+    //We do not want to update specific pages like the edit page.
+    switch (menu.getVisablePageIndex()) {
+
+        //case 4: // valves     page at index 4
+        
+        case 0: // main menu page  at index 0 
+        case 1: // connection page at index 1
+        case 2: // start page page at index 2
+        case 3: // edit value page at index 3
+            return;
+    }
+
     DisplayPage *pVisable = menu.getVisablePage();
-    
+
+        
     DisplayButton *pButton;
     DisplayLabel *pLabel;
     for(int i = 0; i < pVisable->buttonCount(); i++){

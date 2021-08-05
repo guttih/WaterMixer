@@ -17,20 +17,17 @@ void onDrawLabelLinkedFloat(DisplayLabel *pLabelToBeDrawn)
 }
 
 void onDrawHotValveButton(DisplayButton *pButton) {
-    String str = String( water.getHotValve()->getFlow(), 3 );
-    //Serial.printf("onDrawHotValveButton:%s", str.c_str());
+    String str = String( water.getHotValveFlow(), 3 );
     pButton->setText( str );
 }
 
 void onDrawColdValveButton(DisplayButton *pButton) {
-   String str = String( water.getColdValve()->getFlow(), 3 );
-    //Serial.printf(" onDrawColdValveButton:%s", str.c_str());
+   String str = String( water.getColdValveFlow(), 3 );
     pButton->setText( str );
 }
 
 void onDrawDrainValveButton(DisplayButton *pButton) {
-    String str = String( water.getDrainValve()->getFlow(), 3 );
-    //Serial.printf(" onDrawDrainValveButton:%s\n", str.c_str());
+    String str = String( water.getDrainValveFlow(), 3 );
     pButton->setText( str );
 }
 
@@ -47,20 +44,17 @@ void onEditedValue(DisplayButton *btn) {
 
   if (btn->getLinkedValueName() == EDIT_TEXT_HOT_VALVE)
   {
-    Serial.println(" - Hot - ");
-    water.getHotValve()->setFlow(*btn->getLinkedValue());
+    water.setHotValveFlow(*btn->getLinkedValue());
     btn->getPage()->getMenu()->showPage(btn->getPageToOpen());
   }
   else if (btn->getLinkedValueName() == EDIT_TEXT_COLD_VALVE)
   {
-    Serial.println(" - Cold - ");
-    water.getColdValve()->setFlow(*btn->getLinkedValue());
+    water.setColdValveFlow(*btn->getLinkedValue());
     btn->getPage()->getMenu()->showPage(btn->getPageToOpen());
   }
   else if (btn->getLinkedValueName() == EDIT_TEXT_DRAIN_VALVE)
   {
-    Serial.println(" - Drain - ");
-    water.getDrainValve()->setFlow(*btn->getLinkedValue());
+    water.setDrainValveFlow(*btn->getLinkedValue());
     btn->getPage()->getMenu()->showPage(btn->getPageToOpen());
   }
 }
@@ -70,9 +64,9 @@ void onButtonChangeHotValveOpening(DisplayButton *btn)
   DisplayMenu *pMenu = btn->getPage()->getMenu();
   DisplayButton *valueButton = pMenu->getPage(3)->getLastButton();
   valueButton->setPageToOpen(pMenu->getPage(4));
-  editTempValue = water.getHotValve()->getFlow();
+  editTempValue = water.getHotValveFlow();
   valueButton->setLinkToValue(&editTempValue, EDIT_TEXT_HOT_VALVE);
-  valueButton->_values.buttonPressedFunction = onEditedValue;
+  valueButton->registerOnButtonPressedEvent(onEditedValue);
   pMenu->showPage(3);
 }
 
@@ -80,18 +74,18 @@ void onButtonChangeColdValveOpening(DisplayButton *btn) {
   DisplayMenu *pMenu = btn->getPage()->getMenu();
   DisplayButton *valueButton = pMenu->getPage(3)->getLastButton();
   valueButton->setPageToOpen(pMenu->getPage(4));
-  editTempValue = water.getColdValve()->getFlow();
+  editTempValue = water.getColdValveFlow();
   valueButton->setLinkToValue(&editTempValue, EDIT_TEXT_COLD_VALVE);
-  valueButton->_values.buttonPressedFunction = onEditedValue;
+  valueButton->registerOnButtonPressedEvent(onEditedValue);
   pMenu->showPage(3);
 }
 void onButtonChangeDrainValveOpening(DisplayButton *btn) {
   DisplayMenu *pMenu = btn->getPage()->getMenu();
   DisplayButton *valueButton = pMenu->getPage(3)->getLastButton();
   valueButton->setPageToOpen(pMenu->getPage(4));
-  editTempValue = water.getDrainValve()->getFlow();
+  editTempValue = water.getDrainValveFlow();
   valueButton->setLinkToValue(&editTempValue, EDIT_TEXT_DRAIN_VALVE);
-  valueButton->_values.buttonPressedFunction = onEditedValue;
+  valueButton->registerOnButtonPressedEvent(onEditedValue);
   pMenu->showPage(3);
 }
 
@@ -106,11 +100,11 @@ void setupMenu() {
   DisplayPage *pMainMenu, *pConnectionPage, *pStartPage, *pValvesPage, *pEditValuePage;
   DisplayLabel *pLabel;
   DisplayButton *pButton;
-  pMainMenu   = menu.addPage();              //adding page at index 0
-  pConnectionPage = menu.addPage();          //adding page at index 1
-  pStartPage  = menu.addPage();              //adding page at index 2
-  pEditValuePage  = addPageEditValue(&menu); //adding page at index 3
-  pValvesPage  = menu.addPage();             //adding page at index 4
+  pMainMenu   = menu.addPage();              //adding main menu page  at index 0 
+  pConnectionPage = menu.addPage();          //adding connection page at index 1
+  pStartPage  = menu.addPage();              //adding start page page at index 2
+  pEditValuePage  = addPageEditValue(&menu); //adding edit value page at index 3
+  pValvesPage  = menu.addPage();             //adding valves     page at index 4
 
   // Adding labels to pages
   pMainMenu->addPageLabel(centerHorizontal, 0, buttonWidth, buttonHeight, pMainMenu->getFillColor(), pMainMenu->getFillColor(), TFT_YELLOW, 1, "Main menu");
@@ -134,13 +128,13 @@ void setupMenu() {
   pValvesPage->addFunctionButton(1*(buttonWidth+buttonMarginX) , tft.height() - buttonHeight, buttonWidth, buttonHeight, TFT_WHITE, TFT_GREEN, TFT_GOLD, 1, "Fill", onButtonFillPressed);
   pValvesPage->addFunctionButton(2*(buttonWidth+buttonMarginX) , tft.height() - buttonHeight, buttonWidth, buttonHeight, TFT_WHITE, TFT_RED,   TFT_GOLD, 1, "Drain", onButtonDrainPressed);
   
-  pLabel = pValvesPage->addPageLabel(44, 104, 60, buttonHeight, pValvesPage->getFillColor(), pValvesPage->getFillColor(), TFT_GOLD, 1, "Temperature" );
-  pLabel = pValvesPage->addPageLabel(140, 104, 60, buttonHeight, pValvesPage->getFillColor(), pValvesPage->getFillColor(), TFT_GOLD, 1, "xx" );
+  pLabel = pValvesPage->addPageLabel(45, 103, 60, buttonHeight, pValvesPage->getFillColor(), pValvesPage->getFillColor(), TFT_GOLD, 1, "Temperature" );
+  pLabel = pValvesPage->addPageLabel(140, 103, 75, buttonHeight, pValvesPage->getFillColor(), pValvesPage->getFillColor(), TFT_GOLD, 1, "xx" );
   pLabel->setLinkToValue(&currentTemperature, "Temperature");
   pLabel->registerOnDrawEvent(onDrawLabelLinkedFloat);
   
-  pLabel =pValvesPage->addPageLabel (26, 139, 60, buttonHeight, pValvesPage->getFillColor(), pValvesPage->getFillColor(), TFT_GOLD, 1, "Pressure" );  
-  pLabel = pValvesPage->addPageLabel (140, 136, 60, buttonHeight, pValvesPage->getFillColor(), pValvesPage->getFillColor(), TFT_GOLD, 1, "xx" );
+  pLabel =pValvesPage->addPageLabel (27, 139, 60, buttonHeight, pValvesPage->getFillColor(), pValvesPage->getFillColor(), TFT_GOLD, 1, "Pressure" );  
+  pLabel = pValvesPage->addPageLabel (140, 136, 75, buttonHeight, pValvesPage->getFillColor(), pValvesPage->getFillColor(), TFT_GOLD, 1, "xx" );
   pLabel->setLinkToValue(&currentPressure, "Pressure");
   pLabel->registerOnDrawEvent(onDrawLabelLinkedFloat);
 
@@ -156,9 +150,7 @@ void setupMenu() {
   pButton->registerOnDrawEvent(onDrawColdValveButton);
   pButton =pValvesPage->addFunctionButton (215 , 67, 100, buttonHeight, pValvesPage->getFillColor(), pValvesPage->getFillColor(), TFT_RED, 1, "0", onButtonChangeDrainValveOpening);  
   pButton->registerOnDrawEvent(onDrawDrainValveButton);
-  //pLabel =pValvesPage->addPageLabel (26  , 77, 50, buttonHeight, pValvesPage->getFillColor(), pValvesPage->getFillColor(), TFT_RED, 1, "0.00" );  
-  //pLabel =pValvesPage->addPageLabel (140 , 77, 50, buttonHeight, pValvesPage->getFillColor(), pValvesPage->getFillColor(), TFT_RED, 1, "100" );  
-  //pLabel =pValvesPage->addPageLabel (240 , 77, 50, buttonHeight, pValvesPage->getFillColor(), pValvesPage->getFillColor(), TFT_RED, 1, "50" );  
+
 
 
 

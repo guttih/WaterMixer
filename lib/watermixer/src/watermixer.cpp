@@ -42,6 +42,17 @@ void WaterMixer::fill(double hotFlow, double coldFlow)
 {
     setMode(MANUAL);
     _drainValve->setFlow(0);
-    _hotValve->setFlow(hotFlow);
-    _coldValve->setFlow(coldFlow);
+    _hotValve->setFlow(hotFlow/100);
+    _coldValve->setFlow(coldFlow/100);
+}
+
+bool WaterMixer::startRecordingSystem() {
+    return false;
+}
+bool WaterMixer::updateRecordingSystem() {
+
+    return false;
+}
+bool WaterMixer::stopRecordingSystem() {
+    return false;
 }

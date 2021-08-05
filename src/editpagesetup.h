@@ -58,7 +58,7 @@ String convertToDoubleAndBackToSameString(String str)
     int dotPos = str.indexOf('.');
     int fractionLength = dotPos < 0 ? 0 : str.length() - (dotPos + 1);
     String diffString = String(d, fractionLength);
-
+    diffString.trim();
     diffString = removeUnNecessaryDoubleEnding(diffString);
 
     if (diffString.equals(removeUnNecessaryDoubleEnding(str)))
@@ -111,8 +111,10 @@ void pageEditKeyPressed(DisplayButton *btn)
         if (valueButton->getLinkedValue())
         {
             newStr = convertToDoubleAndBackToSameString(currentValue);
+            
             double newVal = newStr.toDouble();
             *(valueButton->getLinkedValue()) = newVal;
+            Serial.printf("currentValue: %s NewString %s newVal = %.f", currentValue.c_str(), newStr.c_str(), newVal);
         }
         if (valueButton->_values.buttonPressedFunction)
             valueButton->_values.buttonPressedFunction(valueButton);

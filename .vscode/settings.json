@@ -6,7 +6,8 @@
         "fstream": "cpp",
         "istream": "cpp",
         "ostream": "cpp",
-        "array": "cpp"
+        "array": "cpp",
+        "algorithm": "cpp"
     },
     "cSpell.words": [
         "Kamila",
