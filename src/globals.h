@@ -2,7 +2,7 @@
 #define GLOBALS_H
 
 #include <FS.h>
-
+#include "SD.h"
 #include <SPI.h>
 
 #include <TFT_eSPI.h> // Hardware-specific library

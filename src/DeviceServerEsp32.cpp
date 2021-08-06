@@ -1011,7 +1011,7 @@ void printWiFiInfo() {
     Serial.println("----------------------------------");
 }
 bool connectWifiHelper(String ssid, String password, uint32_t uiDelay) {
-    DisplayPage * pPage = menu.getPage(1);
+    DisplayPage * pPage = menu.getPage(PAGE_INDEX_CONNECTION);
     DisplayLabel * pLabelHeading = pPage->getLabel(pPage->labelCount()-2);
     DisplayLabel * pLabelStatus = pPage->getLastLabel();
     Serial.println();
@@ -1135,13 +1135,85 @@ static void timerTwoSeconds(void) {
     }
 }
 
+unsigned long timerUpdateScreen = 0;
+void drawLinkedButtonsAndLabels() {
+    unsigned long now = millis();
+    if (now < timerUpdateScreen)
+        return;
+    
+    //We do not need to update all values for these pages, they handle their updates by them selves.
+
+    //We do not want to update specific pages like the edit page.
+    switch (menu.getVisablePageIndex()) {
+
+        //we want draw for these pages
+        //case PAGE_INDEX_VALVES we want redraw for valve page
+        //case PAGE_INDEX_START: 
+        
+
+        //We do not want draw for these pages
+        case PAGE_INDEX_MAINMENU:
+        case PAGE_INDEX_CONNECTION:
+        case PAGE_INDEX_EDITVALUE:
+        //case PAGE_INDEX_SYSTEM:
+            return;
+    }
+
+    DisplayPage *pVisable = menu.getVisablePage();
+
+        
+    DisplayButton *pButton;
+    DisplayLabel *pLabel;
+    for(int i = 0; i < pVisable->buttonCount(); i++){
+        pButton = pVisable->getButton(i);
+        if(pButton->getLinkedValue() || pButton->_values.onDrawDisplayButton)
+            pButton->draw();
+    }
+
+    for(int i = 0; i < pVisable->labelCount(); i++){
+        pLabel = pVisable->getLabel(i);
+        if(pLabel->getLinkedValue() || pLabel->_values.onDrawDisplayLabel)
+            pLabel->draw();
+    }
+
+    timerUpdateScreen = now+200;
+
+    switch (water.update())
+    {
+    case SYSTEM_RECORDING_IN_PROGRESS:
+        pLabel = pVisable->getLastLabel();
+
+        if (pLabel)
+        {
+            char output[50];
+            snprintf(output, 50, "Scanning: %.1f%%", water.getHotValveFlow());
+            pLabel->setText(output, true);
+        }
+        break;
+    case SYSTEM_RECORDING_FINISHED:
+        pButton = pVisable->getButtonByText("Menu");
+        if (pButton) {
+            pButton->show();
+        pButton = pVisable->getButtonByText("Stop scan");
+        if (pButton)
+            pButton->setText("Scan system", true);
+        }
+         pLabel = pVisable->getLastLabel();
+         pLabel->setText("System scan complete", true);
+        break;
+    }
+}
+
 void setup() {
     //Initialize serial and wait for port to open:
     Serial.begin(115200);
+    digitalWrite(22, HIGH); // Touch controller chip select (if used)
+    digitalWrite(15, HIGH); // TFT screen chip select
+    digitalWrite( 5, HIGH); // SD card chips select, must use GPIO 5 (ESP32 SS)
     while (!Serial) {
         ; // wait for serial port to connect. Needed for native USB port only
     }
-    
+
     whiteList.add("192.168.1.79");
     whiteList.add("192.168.1.198");
 
@@ -1152,16 +1224,23 @@ void setup() {
     setupSensors();
 
     touch_calibrate(false);
+    if(!SD.begin()){
+        Serial.println("Unable to open sd card");
+    } else {
+        Serial.println("SD card available");
+    }
+
     setupMenu();
 
     String outString;
-    DisplayPage * pPage = menu.getPage(1);
+    DisplayPage * pPage = menu.getPage(PAGE_INDEX_CONNECTION);
     DisplayLabel * pLabelHeading = pPage->getLabel(pPage->labelCount()-2);
     DisplayLabel * pLabelStatus = pPage->getLastLabel();
 
     pLabelStatus->setText("Starting", true);
     //Let's wait for two seconds before starting allowing voltage to stabelize after power on
     delay(2000);
+    checkAndUpdateSensors();
     sta_was_connected = connectWifi();
     if (sta_was_connected) {
         outString = "WiFi connected";
@@ -1191,7 +1270,8 @@ void setup() {
     tellServerToSendMonitors();
 
 
-    menu.showPage(4);
+    menu.showPage(PAGE_INDEX_START);
+    //water.startRecordingSystem();
     
     
 }
@@ -1200,50 +1280,12 @@ void setup() {
 /// The program main loop which repeats forever.
 /// </summary>
 
-unsigned long timerUpdateScreen = 0;
-void drawLinkedButtonsAndLabels() {
-    unsigned long now = millis();
-    if (now < timerUpdateScreen)
-        return;
-    
-    //We do not need to update all values for these pages, they handle their updates by them selves.
-
-    //We do not want to update specific pages like the edit page.
-    switch (menu.getVisablePageIndex()) {
-
-        //case 4: // valves     page at index 4
-        
-        case 0: // main menu page  at index 0 
-        case 1: // connection page at index 1
-        case 2: // start page page at index 2
-        case 3: // edit value page at index 3
-            return;
-    }
-
-    DisplayPage *pVisable = menu.getVisablePage();
-
-        
-    DisplayButton *pButton;
-    DisplayLabel *pLabel;
-    for(int i = 0; i < pVisable->buttonCount(); i++){
-        pButton = pVisable->getButton(i);
-        if(pButton->getLinkedValue() || pButton->_values.onDrawDisplayButton)
-            pButton->draw();
-    }
-
-    for(int i = 0; i < pVisable->labelCount(); i++){
-        pLabel = pVisable->getLabel(i);
-        if(pLabel->getLinkedValue() || pLabel->_values.onDrawDisplayLabel)
-            pLabel->draw();
-    }
-
-    timerUpdateScreen = now+200;
-}
 void loop() {
     checkAndUpdateSensors();
     //Serial.printf("%.3f°  %.3f PSI\n", currentTemperature, currentPressure);
     menu.update();
     drawLinkedButtonsAndLabels();
+    
     //timerTwoSeconds();
     if (monitors.isAnyPinWatchDo()) {
         // One item did trigger so you could log

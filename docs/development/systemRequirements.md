@@ -21,7 +21,7 @@ Table column description:
 | [12v_power_supply]   | 12 volt power supply                            |   1    | [0.5] | Power the three [pwm_to_voltage] and the three [proportional_valve] |
 | [5v_power_supply]    | 5 volt power supply                             |   1    | [0.5] | Power [esp32], [temperature_sensor] and [pressure_sensor]           |
 | [3v3_power_supply]   | 3.3 volt power supply                           |   1    | [0.5] | Power [lcd_touch_display]                                           |
-| [pressure_sensor]    | 5 psi pressure sensor                           |   1    | [1.1] | Needed to test the water level of the hot tub                       |
+| [pressure_sensor]    | 60 psi pressure sensor                          |   1    | [1.1] | Needed to test the water level of the hot tub                       |
 | [bc337_transistor]   | BC337 Transistor                                |   1    | [1.1] | Needed to dim the backlight on the LCD display                      |
 
 

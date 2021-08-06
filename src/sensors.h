@@ -10,6 +10,7 @@ void setupSensors() {
     sensors.begin();
     sensors.setWaitForConversion(false);
     sensors.requestTemperatures(); 
+    sensors.setResolution(9);
 }
 
 
@@ -25,11 +26,13 @@ bool readTemperature(double *value) {
   unsigned long now = millis();
   if (now >= timerReadTemperature) {
     double readTemperature = sensors.getTempCByIndex(0); //this takes about 27 milliseconds 3 more ms are added when setWaitForConversion true
-    *value = readTemperature;
+    bool readWithSuccess = readTemperature != -127;
+    if (readWithSuccess)
+      *value = readTemperature;
     sensors.requestTemperatures();//this takes about 3 milliseconds when setWaitForConversion is false on otherwise 597 milliseconds
     // default resolution is 9, and formula for needed delay = 750/ (1 << (12-resolution)) -> and there for 750/ (1 << 3) is equal to 93 ms
-    timerReadTemperature = now + 100; //read temperature tent times per second.
-    return true;
+    timerReadTemperature = millis() + (750/ (1 << (12-sensors.getResolution()))); //read temperature tent times per second.
+    return readWithSuccess;
 }
   return false;
 
@@ -47,6 +50,8 @@ unsigned long pressureSampleNumber = 0;
 double readPressure() {
   
   // 5 psi should give full power that is 4096
+  // todo: bought a new sensor which is 60 psi which is on it's way from china.
+  // todo: this scale should be in bars not PSI when the new sensor arrives
 
   pressureSamples[pressureSampleNumber % pressureSampleCount] = ((float)analogRead(PIN_PRESSURE) / (float)4096) * 5;
   //Serial.printf("%lu index:%d\n", pressureSampleNumber, pressureSampleNumber % pressureSampleCount);
@@ -69,7 +74,11 @@ double readPressure() {
 void checkAndUpdateSensors() {
    
    currentPressure = readPressure();
+   water.setCurrentPressure(currentPressure);
+
    readTemperature(&currentTemperature);
+   water.setCurrentTemperature(currentTemperature);
+   
 }
 
 #endif

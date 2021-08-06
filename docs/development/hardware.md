@@ -83,7 +83,8 @@ This unit will get power from the __12v_power_supply__ and will be be adjusted t
 
 This sensor needs 5V power to work and provides information on the water pressure in the pipe connected to the hot tub.
 
-- Bought [Pressure Sensor 5V 1/8" 5 Psi](https://www.aliexpress.com/item/4000263209249.html?spm=a2g0s.12269583.0.0.5dd91d80iwCJ6y)
+- Bought ~~[Pressure Sensor 5V 1/8" 5 Psi](https://www.aliexpress.com/item/4000263209249.html?spm=a2g0s.12269583.0.0.5dd91d80iwCJ6y)~~ which is incorrect because it woks on 0-0.345 bars
+- Should have bought [Pressure Sensor 5V 1/8" 60 Psi](https://www.aliexpress.com/item/4000263209249.html?spm=a2g0s.12269583.0.0.5dd91d80iwCJ6y) which works on 0-4 bars.
 - Inventory [Here](http://parts.guttih.com/parts/view/60cc6e7b395390058cb396d8)
 
 

@@ -1,18 +1,21 @@
 #include "watermixer.h"
 
 
-WaterMixer::WaterMixer(Valve *hotValve, Valve *coldValve, Valve *drainValve, double currentTemperature, double desiredTemperature)
+#define SYSTEM_RECORDING_FILE_NAME "/system.csv"
+
+WaterMixer::WaterMixer(Valve *hotValve, Valve *coldValve, Valve *drainValve, double currentTemperature, double desiredTemperature, double currentPressure)
 {
-    init(hotValve, coldValve, drainValve, currentTemperature, desiredTemperature, MANUAL);
+    init(hotValve, coldValve, drainValve, currentTemperature, desiredTemperature, currentPressure, MANUAL);
 }
 
-void WaterMixer::init(Valve *hotValve, Valve *coldValve, Valve *drainValve, double currentTemperature, double desiredTemperature,  WaterMixerMode mode)
+void WaterMixer::init(Valve *hotValve, Valve *coldValve, Valve *drainValve, double currentTemperature, double desiredTemperature, double currentPressure,  WaterMixerMode mode)
 {
     _hotValve = hotValve;
     _coldValve = coldValve;
     _drainValve = drainValve;
     _currentTemperature = currentTemperature;
     _desiredTemperature = desiredTemperature;
+    _currentPressure = currentPressure;
     setMode(mode);
 }
 
@@ -21,13 +24,18 @@ void WaterMixer::setMode(WaterMixerMode mode)
     _mode = mode;
 }
 
-double WaterMixer::setCurrentTemperature(double temperatureInCelsius)
+void WaterMixer::setCurrentTemperature(double temperatureInCelsius)
 {
-    return _currentTemperature = temperatureInCelsius;
+    _currentTemperature = temperatureInCelsius;
 }
-double WaterMixer::setDesiredTemperature(double temperatureInCelsius)
+void WaterMixer::setDesiredTemperature(double temperatureInCelsius)
 {
-    return _desiredTemperature = temperatureInCelsius;
+    _desiredTemperature = temperatureInCelsius;
+}
+
+void WaterMixer::setCurrentPressure(double pressure)
+{
+    _currentPressure = pressure;
 }
 
 void WaterMixer::drain()
@@ -45,14 +53,174 @@ void WaterMixer::fill(double hotFlow, double coldFlow)
     _hotValve->setFlow(hotFlow/100);
     _coldValve->setFlow(coldFlow/100);
 }
+void WaterMixer::fillDesired()
+{
+    setMode(AUTOMATIC);
+    SYSTEM_SAMPLE sample = getSavedSystemRecordingClosestTo(TEMPERATURE, _desiredTemperature);
+    fill(sample.hotValveFlow, sample.coldValveFlow);
+}
 
-bool WaterMixer::startRecordingSystem() {
-    return false;
+String WaterMixer::recordingSystemHeader(){
+    return "Hot;Cold;Pressure;Temperature;time\n";
+}
+String WaterMixer::recordingSystemValuesToString(double hotValveFlow, double coldValveFlow, double pressure, double temperature){
+    char output[200];
+    snprintf(output, 200, "%f;%f;%f;%f;%lu\n", hotValveFlow, coldValveFlow, pressure, temperature, millis());
+    Serial.println(output);
+    String ret(output);
+    return ret;
+}
+
+void WaterMixer::startRecordingSystem() {
+    
+    updateRecordingCount = 0;
+    File file = SD.open(SYSTEM_RECORDING_FILE_NAME, FILE_WRITE);
+    file.print(recordingSystemHeader());
+    file.close();
+    fill(100, 100);
+    recordSystemTimer = millis()+ RECORD_SYSTEM_WAIT_BEFORE_STARTING/2;
 }
 bool WaterMixer::updateRecordingSystem() {
+    if (updateRecordingCount == 0) {
+        //first call so we will set the hot valve to zero
+        setHotValveFlow(0);
+        recordSystemTimer = millis()+ RECORD_SYSTEM_WAIT_BEFORE_STARTING;
+        updateRecordingCount++;
+        return true;
+    }
 
-    return false;
+    File file = SD.open(SYSTEM_RECORDING_FILE_NAME, FILE_APPEND);
+    updateRecordingCount++;
+    file.print(recordingSystemValuesToString(getHotValveFlow(), getColdValveFlow(), getCurrentPressure(), getCurrentTemperature()));
+    file.close();
+
+    double flow = getHotValveFlow();
+    if (flow >= 100)
+    {
+        stopRecordingSystem();
+        return false;
+    }
+    else
+    {
+        setHotValveFlow(flow + 0.5);
+        recordSystemTimer = millis() + RECORD_SYSTEM_INTERVAL;
+        return true;
+    }
 }
-bool WaterMixer::stopRecordingSystem() {
-    return false;
+
+void WaterMixer::stopRecordingSystem() {
+    recordSystemTimer = 0;
+    updateRecordingCount = 0;
+    setHotValveFlow(0);
+    setColdValveFlow(0);
+    setDrainValveFlow(0);
+}
+
+SYSTEM_SAMPLE WaterMixer::extractDataFromString(String line){
+   SYSTEM_SAMPLE sample;
+   sample.coldValveFlow = 0;
+   sample.hotValveFlow = 0;
+   sample.pressure = 0;
+   sample.temperature = 0;
+   int index = line.indexOf(';');
+   int column = 0;
+   String str;
+   while (index > 0) {
+       String str = line.substring(0, index);
+       switch(column) {
+           case 0: sample.hotValveFlow = str.toFloat(); break;
+           case 1: sample.coldValveFlow = str.toFloat(); break;
+           case 2: sample.pressure = str.toFloat(); break;
+           case 3: sample.temperature = str.toFloat(); break;
+       }
+       
+       line.remove(0, index+1);
+       index = line.indexOf(';');
+       column++;
+   }
+    //Serial.printf("leftstring(%s)\n", line.c_str()); contains time
+   return sample; 
+}
+
+String WaterMixer::readLine(File file)
+{
+    String ret;
+    int c;
+    while (file.available())
+    {
+        c = file.read();
+        if (c == '\n' || c == EOF)
+            return ret;
+        ret += (char)c;
+    }
+    return ret;
+}
+SYSTEM_SAMPLE WaterMixer::getSavedSystemRecordingClosestTo(SYSTEM_RECORDING_COLUM column, double value) {
+    Serial.printf("Searching for value:%f\n",value);
+    File file = SD.open(SYSTEM_RECORDING_FILE_NAME, FILE_READ);
+    String line = readLine(file); //reading the header
+    SYSTEM_SAMPLE ret;
+    SYSTEM_SAMPLE sample;
+    ret.hotValveFlow = -1;
+    ret.coldValveFlow = -1;
+    ret.pressure = -1;
+    ret.temperature = -1;
+    double diffRet, diffSample;
+    if (line.length() > 8 )
+    {
+        line = readLine(file);
+        
+        // Shortest valid string is 9 chars in length. e.g. "1;1;1;1;1"
+        if (line.length() > 8){
+            Serial.printf("first val: %s\n", line.c_str());
+            ret = extractDataFromString(line);
+        }
+        while (line.length() > 8)
+        {
+            sample = extractDataFromString(line);
+            Serial.printf("sample: %s", line.c_str());
+            switch (column)
+            {
+            case 0: //Hot valve flow
+                diffRet = ret.hotValveFlow > value ? ret.hotValveFlow - value : value - ret.hotValveFlow;
+                diffSample = sample.hotValveFlow > value ? sample.hotValveFlow - value : value - sample.hotValveFlow;
+                break;
+            case 1: // Cold valve flow
+                diffRet = ret.coldValveFlow > value ? ret.coldValveFlow - value : value - ret.coldValveFlow;
+                diffSample = sample.coldValveFlow > value ? sample.coldValveFlow - value : value - sample.coldValveFlow;
+                break;
+            case 2: // pressure
+                diffRet = ret.pressure > value ? ret.pressure - value : value - ret.pressure;
+                diffSample = sample.pressure > value ? sample.pressure - value : value - sample.pressure;
+                break;
+            case 3: // temperature
+                diffRet = ret.temperature > value ? ret.temperature - value : value - ret.temperature;
+                diffSample = sample.temperature > value ? sample.temperature - value : value - sample.temperature;
+                break;
+            }
+            if (diffSample < diffRet)
+            {
+                Serial.println(" Selecting this one");
+                    ret = sample;
+            }
+            else
+                Serial.println();
+            line = readLine(file);
+        }
+    }
+    file.close();
+
+    return ret;
+
+}
+
+
+WATER_MIXER_UPDATE WaterMixer::update(){
+    if (recordSystemTimer && millis() > recordSystemTimer) {
+        if (updateRecordingSystem())
+            return SYSTEM_RECORDING_IN_PROGRESS;
+        else
+            return SYSTEM_RECORDING_FINISHED;
+    }
+    return IDLE;
 }
