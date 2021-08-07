@@ -48,6 +48,7 @@ Table column description:
 | [lcd_status_temp]           | As Kamila, I stand in front of the unit and want to know the water temperature                          | N | [0.5] |       |
 | [lcd_temp]                  | As Kamila, I stand in front of the unit and want to change the water temperature flowing to the hot tub | H | [0.5] |       |
 | [lcd_pid_change]            | As John, I stand in front of the unit and want change the PID values                                    | H | [0.5] |       |
+| [lcd_system_scan]           | As John, I stand in front of the unit and want the system to learn how to get desired temperature       | H | [0.5] |       |
 | [lcd_status_flow]           | As Kamila, I stand in front of the unit and want to know the water flow rate                            | N | [0.7] |       |
 | [lcd_flow_slow]             | As Kamila, I stand in front of the unit and want to make water flow slowly to the hot tub               | N | [0.7] |       |
 | [lcd_pid_change_auto]       | As John, I stand in front of the unit and want auto tune the PID values                                 | H | [0.7] |       |
@@ -100,3 +101,4 @@ Table column description:
 [lcd_pid_change]: ./userStories.md#lcd_pid_change
 [lcd_pid_change_auto]: ./userStories.md#lcd_pid_change_auto
 [lcd_status_dim_backlight]: ./userStories.md#lcd_status_dim_backlight
+[lcd_system_scan]: ./userStories.md#lcd_system_scan

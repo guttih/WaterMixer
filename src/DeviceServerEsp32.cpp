@@ -31,6 +31,7 @@ by regular post to the address Haseyla 27, 260 Reykjanesbar, Iceland.
 #include "sensors.h"
 
 #include "config.h"
+#include "upload-ota.h"
 //#include <stddef.h>  //for linked list
 /* 
     Board: ESP32 DEV Module
@@ -1253,6 +1254,7 @@ void setup() {
         pLabelStatus->setText(outString, true);
         ESP.restart();
     }
+    setupArduinoOTA(deviceId);
     printWiFiInfo();
     pLabelHeading->setText("Reporting in to VoffCon");
     pLabelStatus->setText("");
@@ -1281,6 +1283,7 @@ void setup() {
 /// </summary>
 
 void loop() {
+    ArduinoOTA.handle();
     checkAndUpdateSensors();
     //Serial.printf("%.3f°  %.3f PSI\n", currentTemperature, currentPressure);
     menu.update();

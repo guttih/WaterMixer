@@ -32,8 +32,8 @@ proportional valve understands.
 ## proportional_valve
 __12V Proportional Valve__
 
-There are three valves in this project, one 1/2" and two 3/4" valves.  They work exactly the same so we will consider 
-them all three units of the same device.  The 1/2" unit will be controlling the cold water flow.
+There are three valves in this project, one 3/8" and two 3/4" valves.  They work exactly the same so we will consider 
+them all three units of the same device.  The 3/8" unit will be controlling the drain water flow.
 
 - Bought 2 x [Voltage: DC9V to DC24V, Specification: DN20 BSP Thread, Wiring Control: 0V to 5V Signal](https://www.aliexpress.com/item/32819881011.html?spm=a2g0s.12269583.0.0.112c1eaeyGDt8f)
 - Bought 1 x [Voltage:DC9V-24V 0-5V, Specification: DN10 Brass Valve, Thread Type: NPT](https://www.aliexpress.com/item/33037988030.html?spm=a2g0s.12269583.0.0.6c674a42N25diC)

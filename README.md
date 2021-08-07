@@ -18,7 +18,7 @@ Finally the third electrical valve is used to drain the hot tub.
 - 1 x 12V Power supply
 - 2 x [DC_STEPDOWN]
 - 1 x [ESP32 Development Board]
-- 1 x [DS18B20 Digital Temperature Sensor G1/2] or 1 x [DS18B20 Digital Temperature Sensor G3/4]
+- 1 x [DS18B20 Digital Temperature Sensor G3/4]
 - 3 x [PWM to Voltage Converter Module]
 - 3 x [Proportional Valve Brass controllable with 0-5V]
 - 1 x [LCD touch display]
@@ -128,7 +128,6 @@ Then you can run the tests with this command `pio test`
 
 [DC_STEPDOWN]:https://www.aliexpress.com/item/32531438467.html?spm=a2g0s.9042311.0.0.27424c4dWJSXmG
 [ESP32 Development Board]:https://www.aliexpress.com/item/32801621054.html?spm=a2g0s.9042311.0.0.27424c4dOggB1n
-[DS18B20 Digital Temperature Sensor G1/2]:https://www.aliexpress.com/item/32827650291.html?spm=a2g0s.12269583.0.0.36871f7dTzfCfF
 [DS18B20 Digital Temperature Sensor G3/4]:https://www.aliexpress.com/item/32881183992.html?spm=a2g0s.12269583.0.0.43c751fcxDyDbt
 [PWM to Voltage Converter Module]:https://www.aliexpress.com/item/4000169156580.html?spm=a2g0s.12269583.0.0.7faa1ca26zCgTQ
 [Proportional Valve Brass controllable with 0-5V]:https://www.aliexpress.com/item/33037988030.html?spm=a2g0s.12269583.0.0.49d04a42eL9zNl

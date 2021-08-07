@@ -62,6 +62,11 @@ display when it has not been in use for some period of time.
 In order for this to be possible a dimmer will need to be added and I would think that the [BC337] Transistor would be
 a good candidate.
 
+## lcd_system_scan
+As John, I stand in front of the unit and want to make the unit learn how much valves need to open to get desired temperature.
+This feature I call "System scan" and it will test and store the results in a file called `system.csv` on a sd card which 
+can be later used to search for valve settings for a desired temperature. example file [system.csv](./system.csv)
+
 ### Related pages
  * [Readme]
  * [Product requirements]
