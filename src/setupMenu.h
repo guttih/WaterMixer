@@ -33,12 +33,13 @@ void onDrawHotValveButton(DisplayButton *pButton)
 void onDrawFillButton(DisplayButton *pButton)
 {
   String text = pButton->getText();
-  if (water.isStopped() || water.isDraining())
+  bool fillingText = water.isStopped() || water.isDraining();
+  pButton->_values.fillColor = fillingText? TFT_GREEN : TFT_YELLOW;
+  pButton->_values.textColor = fillingText? TFT_GOLD: TFT_RED;
+  if (fillingText)
   {
     if (text != "Fill")
     {
-      pButton->_values.fillColor = TFT_GREEN;
-      pButton->_values.textColor = TFT_GOLD;
       pButton->setText("Fill", true);
     }
   }
@@ -46,11 +47,10 @@ void onDrawFillButton(DisplayButton *pButton)
   {
     if (text != "Stop")
     {
-      pButton->_values.fillColor = TFT_YELLOW;
-      pButton->_values.textColor = TFT_RED;
       pButton->setText("Stop", true);
     }
   }
+
 }
 
 void onDrawColdValveButton(DisplayButton *pButton)

@@ -958,6 +958,10 @@ void handleCustom(WiFiClient* client, unsigned int postMethod, String callingUrl
                                                   +"}";
                                     }
                                 }
+                            } else {
+                                //there is not temperature parameter, let's use the current desired tempeature.
+                                strSend = "{\"message\":\"Filling with currently desired temperature\",\"temperature\":" + String(water.getDesiredTemperature()) +"}";
+                                water.fillDesired();
                             }
                         }
                     }
