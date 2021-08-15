@@ -58,34 +58,80 @@ As Kamila, I want to fill the hot tub via web browser.
 
 #### How to implement
 
-- Create the get request */flow* which takes two parameters.
+- Use the custom post request route with these three parameters.
   - __parameters__
+    - __cmd__ "flow"
     - __hot__ how much in percentages do you want to open the *hot* valve.
     - __cold__ how much in percentages do you want to open the *cold* valve.
-  - __example request__ `http://192.168.1.79:6100/open?hot=26.12&cold=100`
 
-- A get request */fill* which takes one parameter.
+__example post request__ 
+__path__: `http://192.168.1.79:6100/custom`
+
+__request object__
+```
+{
+    "cmd":"flow",
+    "hot":27.67,
+    "cold":100
+}
+```
+
+- Use the custom post request route with these two parameters.
   - __parameters__
+    - __cmd__ "fill"
     - __temperature__ how hot in celsius should the water be, flowing to the hot tub.
-  - __example request__ `http://192.168.1.79:6100/fill?temperature=41.5`
 
+__example post request__ 
+__path__: `http://192.168.1.79:6100/custom`
+
+__request object__
+```
+{
+    "cmd":"fill",
+    "temperature":41.67
+}
+```
 
 ## wifi_stop
 As Kamila, I want to stop flow, to and from the hot tub via web browser. 
 
 #### How to implement
-The */flow* get request shown in feature above [wifi_fill](#wifi_fill) can be called with both parameters as 0.
-- __example request__ `http://192.168.1.79:6100/open?hot=0&cold=0`
+
+- Use the custom post request route with this parameter.
+  - __parameters__
+    - __cmd__ "stop"
+
+__example post request__ 
+__path__: `http://192.168.1.79:6100/custom`
+
+__request object__
+```
+{
+    "cmd":"stop"
+}
+```
 
 
 
 
 ## wifi_drain
-As Kamila, I want to drain  the hot tub via web browser. 
+As Kamila, I want to drain the hot tub via web browser. 
 
 #### How to implement
-- Create the get request */drain* which takes no parameter.
-  - __example request__ `http://192.168.1.79:6100/drain`
+
+- Use the custom post request route with this parameter.
+  - __parameters__
+    - __cmd__ "drain"
+
+__example post request__ 
+__path__: `http://192.168.1.79:6100/custom`
+
+__request object__
+```
+{
+    "cmd":"drain"
+}
+```
 
 ## lcd_status_dim_backlight
 As John, I stand in front of the unit and want to change the backlight brightness of the LCD display.

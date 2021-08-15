@@ -63,6 +63,31 @@ class WaterMixer
          */
         void fill(double hotflow, double coldflow);
 
+        
+        /**
+         * @brief Checks if the hot or cold valves are flowing
+         * 
+         * @return true if eather the hot or cold valves are flowing
+         * @return false the cold valve is not flowing and the hot valve is not flowing
+         */
+        bool isFlowing() { return (_hotValve->getFlow() > 0 || _coldValve->getFlow() > 0);  }
+
+
+        /**
+         * @brief Check if draining is in process
+         * 
+         * @return true the drain valve is open
+         * @return false the drain valve is closed
+         */
+        bool isDraining() { return _drainValve->getFlow() > 0; }
+
+        /**
+         * @brief Check if all valves are closed
+         * 
+         * @return true all valves are not flowing(closed)
+         * @return false one or more valves are flowing
+         */
+        bool isStopped() { return _drainValve->getFlow() == 0 && _hotValve->getFlow() == 0 && _coldValve->getFlow() == 0; }
 
         /**
          * @brief Opens opens valves and adjusts them so they will mix water to the desired temperature.
@@ -134,6 +159,13 @@ class WaterMixer
         String recordingSystemHeader();
         String recordingSystemValuesToString(double hotValveFlow, double coldValveFlow, double pressure, double temperature);
         
+        /**
+         * @brief Get the Saved System Recording Closest To object
+         * 
+         * @param column 
+         * @param value 
+         * @return SYSTEM_SAMPLE If there is an error reading values the hotValveFlow and/or coldValveFlow contain the values -1;
+         */
         SYSTEM_SAMPLE getSavedSystemRecordingClosestTo(SYSTEM_RECORDING_COLUM column, double value);
 
 

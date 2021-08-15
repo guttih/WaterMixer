@@ -30,6 +30,29 @@ void onDrawHotValveButton(DisplayButton *pButton)
   pButton->setText(str);
 }
 
+void onDrawFillButton(DisplayButton *pButton)
+{
+  String text = pButton->getText();
+  if (water.isStopped() || water.isDraining())
+  {
+    if (text != "Fill")
+    {
+      pButton->_values.fillColor = TFT_GREEN;
+      pButton->_values.textColor = TFT_GOLD;
+      pButton->setText("Fill", true);
+    }
+  }
+  else
+  {
+    if (text != "Stop")
+    {
+      pButton->_values.fillColor = TFT_YELLOW;
+      pButton->_values.textColor = TFT_RED;
+      pButton->setText("Stop", true);
+    }
+  }
+}
+
 void onDrawColdValveButton(DisplayButton *pButton)
 {
   String str = String(water.getColdValveFlow(), 3);
@@ -45,13 +68,14 @@ void onDrawDrainValveButton(DisplayButton *pButton)
 
 void onButtonFillPressed(DisplayButton *btn)
 {
-  bool fill = btn->getText() == "Fill";
-  if (fill){
-    water.fillDesired();
-    btn->setText("Stop", true);
-  } else {
+  
+  if (water.isFlowing()){
     water.stop();
-    btn->setText("Fill",true);
+    //btn->setText("Fill",true);
+  } else {
+    
+    water.fillDesired();
+    //btn->setText("Stop", true);
   }
 }
 
@@ -199,7 +223,9 @@ void setupMenu()
   //Starting page
   pStartPage->addPageLabel(centerHorizontal, 0, buttonWidth, buttonHeight, pMainMenu->getFillColor(), pMainMenu->getFillColor(), TFT_YELLOW, 1, "Hot tub");
   pStartPage->addPageButton(0, tft.height()-buttonHeight, buttonWidth, buttonHeight, TFT_WHITE, TFT_RED, TFT_GOLD, 1, "Menu", pMainMenu);
-  pStartPage->addFunctionButton(110, tft.height() - buttonHeight, buttonWidth, buttonHeight, TFT_WHITE, TFT_GREEN, TFT_GOLD, 1, "Fill", onButtonFillPressed);
+  pButton = pStartPage->addFunctionButton(110, tft.height() - buttonHeight, buttonWidth, buttonHeight, TFT_WHITE, TFT_GREEN, TFT_GOLD, 1, "Fill", onButtonFillPressed);
+  pButton->registerOnDrawEvent(onDrawFillButton);
+
   pStartPage->addFunctionButton(110+buttonWidth+10, tft.height() - buttonHeight, buttonWidth, buttonHeight, TFT_WHITE, TFT_GREEN, TFT_GOLD, 1, "Drain", onButtonDrainPressed);
   pStartPage->addPageLabel(15, 103, 60, buttonHeight, pStartPage->getFillColor(), pStartPage->getFillColor(), TFT_GOLD, 1, "Temperature");
   pLabel = pStartPage->addPageLabel(140, 103, 75, buttonHeight, pStartPage->getFillColor(), pStartPage->getFillColor(), TFT_GOLD, 1, "xx");

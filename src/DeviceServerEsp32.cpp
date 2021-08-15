@@ -894,7 +894,9 @@ void handleMonitors(WiFiClient* client, unsigned int postMethod) {
 }
 
 void handleCustom(WiFiClient* client, unsigned int postMethod, String callingUrl) {
-    String strSend;
+    Serial.println("handleCustom");
+    int httpResponseCode = 400; //bad request
+    String strSend = "{\"code\":"+String(httpResponseCode) +",\"message\":\"Bad request\"}";
     METHODS method = (METHODS)(unsigned int)postMethod;
     Serial.println(postMethod);
     Serial.println("Calling url " + callingUrl);
@@ -909,7 +911,59 @@ void handleCustom(WiFiClient* client, unsigned int postMethod, String callingUrl
             if (method == METHOD_POST) {
                 Serial.println("Valid post object parsed");
                 //to access the first key in a object of keys
-                //Serial.println(parser.getRootObject()->getChildAt(0)->getValue());
+                Serial.println(parser.getRootObject()->getChildAt(0)->getValue());
+                JsonData *pCommandKey, *pCommand;
+                pCommandKey = parser.getRootObject()->getChild("cmd");
+                if (pCommandKey) {
+                    //Found the command key, let's get which command
+                    pCommand = pCommandKey->getChildAt(0);
+                    if (pCommand) {
+                        JsonData *pParam1,*pParam2;
+                        if (pCommand->getValueAsString() == "drain") {
+                                strSend =  "{\"message\":\"Draining the hot tub\"}";
+                                water.drain();
+                        } else if (pCommand->getValueAsString() == "stop") {
+                                strSend =  "{\"message\":\"Stoppig flow to and from the hot tub\"}";
+                                water.stop();
+                        } else if (pCommand->getValueAsString() == "flow") {
+                            //Opening water valves command
+                            pParam1 =  parser.getRootObject()->getChild("hot");
+                            pParam2 =  parser.getRootObject()->getChild("cold");
+                            if (pParam1 && pParam2) {
+                                double hot = pParam1->getValueAsFloat();
+                                double cold = pParam2->getValueAsFloat();
+                                if (hot != JSONDATA_ERRORNUMBER && cold != JSONDATA_ERRORNUMBER) {
+                                    strSend =  "{\"message\":\"Opening valves\",\"hot\":" + String(hot) +",\"cold\":" + String(cold) + "}";
+                                    water.fill(hot, cold);
+                                }
+                            }
+                        } else if (pCommand->getValueAsString() == "fill") {
+                            //opening water valves to match a specific temperature
+                            pParam1 =  parser.getRootObject()->getChild("temperature");
+                            if (pParam1) {
+                                double temperature = pParam1->getValueAsFloat();
+                                if (temperature != JSONDATA_ERRORNUMBER) {
+                                    water.setDesiredTemperature(temperature);
+                                    SYSTEM_SAMPLE sample =  water.getSavedSystemRecordingClosestTo(TEMPERATURE, temperature);
+                                    if (sample.hotValveFlow == -1 || sample.coldValveFlow == -1)
+                                    {
+                                        strSend = "{\"message\":\"Filling with temperature\",\"reason\":\"Failed because no system scan sample could be found.  Please run System Scan before using this command.\"}";
+                                    }
+                                    else
+                                    {
+                                        water.fill(sample.hotValveFlow, sample.coldValveFlow);
+
+                                        strSend = "{\"message\":\"Filling with temperature\",\"temperature\":" + String(temperature) +
+                                                  ",\"hot\":" + String(sample.hotValveFlow) + ",\"cold\":" + String(sample.coldValveFlow) +
+                                                  +"}";
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    Serial.println();
+                }
+
 
             }
             else if (method == METHOD_DELETE) {
@@ -921,10 +975,9 @@ void handleCustom(WiFiClient* client, unsigned int postMethod, String callingUrl
         }
     }
 
-    strSend = "{\"custom\":\"Some responce for getting started\",\"val\":123}";
-
-    client->println(makeJsonResponseString(200, strSend));
-    Serial.println("Sending custom response-----");
+    
+    client->println(makeJsonResponseString(httpResponseCode, strSend));
+    Serial.println("Sending response-----");
     Serial.println(strSend);
 
 }
