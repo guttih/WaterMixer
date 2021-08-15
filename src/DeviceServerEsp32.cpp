@@ -264,6 +264,8 @@ public:
     String jsonKeyValue(String key, int value);
     String jsonObjectType(unsigned int uiType);
     String makeStatusResponceJson(String jsonPins, String jsonWhitelist, String jsonDate);
+    String makeStatusResponceJson(String jsonPins, String jsonWhitelist, String jsonDate, String jsonMixer);
+    
     String makePostLogPinsJson(String deviceId, String jsonPins);
     String makeHttpStatusCodeString(unsigned int uiStatusCode);
     String jsonRoot(unsigned int uiType, String key, String value);
@@ -920,9 +922,11 @@ void handleCustom(WiFiClient* client, unsigned int postMethod, String callingUrl
                     if (pCommand) {
                         JsonData *pParam1,*pParam2;
                         if (pCommand->getValueAsString() == "drain") {
+                                httpResponseCode = 200;
                                 strSend =  "{\"message\":\"Draining the hot tub\"}";
                                 water.drain();
                         } else if (pCommand->getValueAsString() == "stop") {
+                                httpResponseCode = 200;
                                 strSend =  "{\"message\":\"Stoppig flow to and from the hot tub\"}";
                                 water.stop();
                         } else if (pCommand->getValueAsString() == "flow") {
@@ -933,6 +937,7 @@ void handleCustom(WiFiClient* client, unsigned int postMethod, String callingUrl
                                 double hot = pParam1->getValueAsFloat();
                                 double cold = pParam2->getValueAsFloat();
                                 if (hot != JSONDATA_ERRORNUMBER && cold != JSONDATA_ERRORNUMBER) {
+                                    httpResponseCode = 200;
                                     strSend =  "{\"message\":\"Opening valves\",\"hot\":" + String(hot) +",\"cold\":" + String(cold) + "}";
                                     water.fill(hot, cold);
                                 }
@@ -947,12 +952,13 @@ void handleCustom(WiFiClient* client, unsigned int postMethod, String callingUrl
                                     SYSTEM_SAMPLE sample =  water.getSavedSystemRecordingClosestTo(TEMPERATURE, temperature);
                                     if (sample.hotValveFlow == -1 || sample.coldValveFlow == -1)
                                     {
+                                        httpResponseCode = 200;
                                         strSend = "{\"message\":\"Filling with temperature\",\"reason\":\"Failed because no system scan sample could be found.  Please run System Scan before using this command.\"}";
                                     }
                                     else
                                     {
                                         water.fill(sample.hotValveFlow, sample.coldValveFlow);
-
+                                        httpResponseCode = 200;
                                         strSend = "{\"message\":\"Filling with temperature\",\"temperature\":" + String(temperature) +
                                                   ",\"hot\":" + String(sample.hotValveFlow) + ",\"cold\":" + String(sample.coldValveFlow) +
                                                   +"}";
@@ -960,6 +966,7 @@ void handleCustom(WiFiClient* client, unsigned int postMethod, String callingUrl
                                 }
                             } else {
                                 //there is not temperature parameter, let's use the current desired tempeature.
+                                httpResponseCode = 200;
                                 strSend = "{\"message\":\"Filling with currently desired temperature\",\"temperature\":" + String(water.getDesiredTemperature()) +"}";
                                 water.fillDesired();
                             }
@@ -986,6 +993,8 @@ void handleCustom(WiFiClient* client, unsigned int postMethod, String callingUrl
 
 }
 
+
+
 void handleStatus(WiFiClient* client) {
 
     //if (!isAuthorized()) return;
@@ -993,7 +1002,8 @@ void handleStatus(WiFiClient* client) {
         whiteList.add(voffconServerIp);
     }
 
-    String str = urlTool.makeStatusResponceJson(devicePins.toJson(), whiteList.toJson(), startTime.toJson());
+    String str = urlTool.makeStatusResponceJson(devicePins.toJson(), whiteList.toJson(), startTime.toJson(), water.toJson());
+
     client->println(makeJsonResponseString(200, str));
 }
 String makeJsonPostString(String host, String url, String jsonString) {
@@ -2350,6 +2360,17 @@ String GUrl::jsonObjectType(unsigned int uiType) {
         str = "-1";
 
     return jsonKeyValue("type", str);
+}
+
+String GUrl::makeStatusResponceJson(String jsonPins, String jsonWhitelist, String jsonDate, String jsonMixer) {
+    String str = "{" +
+        jsonObjectType(OBJECTTYPE_STATUS) + "," +
+        jsonKeyValue("pins", jsonPins) + "," +
+        jsonKeyValue("whitelist", jsonWhitelist) + "," +
+        jsonKeyValue("date", jsonDate) + "," +
+        jsonKeyValue("mixer", jsonMixer) +
+        "}";
+    return str;
 }
 
 String GUrl::makeStatusResponceJson(String jsonPins, String jsonWhitelist, String jsonDate) {

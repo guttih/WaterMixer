@@ -169,6 +169,12 @@ class WaterMixer
         SYSTEM_SAMPLE getSavedSystemRecordingClosestTo(SYSTEM_RECORDING_COLUM column, double value);
 
 
+        /**
+         * @brief Returns mixer values a json string
+         * 
+         * @return String 
+         */
+        String toJson();
         WATER_MIXER_UPDATE update();
 };
 #endif

@@ -214,6 +214,20 @@ SYSTEM_SAMPLE WaterMixer::getSavedSystemRecordingClosestTo(SYSTEM_RECORDING_COLU
 
 }
 
+String WaterMixer::toJson() {
+    
+    String str = "{\"hotValveFlow\":" + String(getHotValveFlow()) +
+                 ", \"coldValveFlow\":" + String(getColdValveFlow())  +
+                 ", \"drainValveFlow\":" + String(getDrainValveFlow())  +
+                 ", \"currentTemperature\":" + String(getCurrentTemperature())  +
+                 ", \"desiredTemperature\":" + String(getDesiredTemperature())  +
+                 ", \"currentPressure\":" + String(getCurrentPressure())  +
+                 ", \"mode\":" + String(getMode())  +
+                "}";
+
+    return str;
+}
+
 
 WATER_MIXER_UPDATE WaterMixer::update(){
     if (recordSystemTimer && millis() > recordSystemTimer) {
