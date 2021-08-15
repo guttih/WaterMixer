@@ -75,7 +75,7 @@ struct PID_STRUCT {
  */
 struct GLOBAL_STRUCT {
     float temperature = 0;   // Current temperature read from the Temperature sensor.
-    float desiredTemp = 24;  // The desired temperature which should be fed as the setpoint to the PID controller.
+    float desiredTemp = 41;  // The desired temperature which should be fed as the setpoint to the PID controller.
     float coldValveFlow = 0; // A number from 0 to 100 describing the opening of the COLD valve, 0 is fully closed and 100 fully open.
     float hotValveFlow = 0;  // A number from 0 to 100 describing the opening of the HOT  valve, 0 is fully closed and 100 fully open.
     PID_STRUCT pid;

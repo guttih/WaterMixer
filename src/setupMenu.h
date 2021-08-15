@@ -190,24 +190,26 @@ void setupMenu()
   // Adding labels to pages
   pMainMenu->addPageLabel(centerHorizontal, 0, buttonWidth, buttonHeight, pMainMenu->getFillColor(), pMainMenu->getFillColor(), TFT_YELLOW, 1, "Main menu");
   pMainMenu->addPageLabel(centerHorizontal, tft.height() - buttonHeight, buttonWidth, buttonHeight, pMainMenu->getFillColor(), pMainMenu->getFillColor(), TFT_ORANGE, 1, "Hello world demo");
-  pConnectionPage->addPageLabel(0, 0, tft.width(), buttonHeight, pMainMenu->getFillColor(), pMainMenu->getFillColor(), TFT_YELLOW, 1, "Connecting to VoffCon");
-  pConnectionPage->addPageLabel(0, buttonHeight * 1, tft.width(), buttonHeight, pMainMenu->getFillColor(), pMainMenu->getFillColor(), TFT_RED, 1, "");
-  pConnectionPage->addPageLabel(0, buttonHeight * 2, tft.width(), buttonHeight, pMainMenu->getFillColor(), pMainMenu->getFillColor(), TFT_RED, 1, "yyyy");
+
+  //Connection Page
+  pConnectionPage->addPageLabel(0, 0, tft.width(), buttonHeight, pMainMenu->getFillColor(), pMainMenu->getFillColor(), TFT_YELLOW, 1, "Connecting to VoffCon", ALIGN_CENTER);
+  pConnectionPage->addPageLabel(0, buttonHeight * 1, tft.width(), buttonHeight, pMainMenu->getFillColor(), pMainMenu->getFillColor(), TFT_RED, 1, "", ALIGN_CENTER);
+  pConnectionPage->addPageLabel(0, buttonHeight * 2, tft.width(), buttonHeight, pMainMenu->getFillColor(), pMainMenu->getFillColor(), TFT_RED, 1, "yyyy", ALIGN_CENTER);
 
   //Starting page
   pStartPage->addPageLabel(centerHorizontal, 0, buttonWidth, buttonHeight, pMainMenu->getFillColor(), pMainMenu->getFillColor(), TFT_YELLOW, 1, "Hot tub");
   pStartPage->addPageButton(0, tft.height()-buttonHeight, buttonWidth, buttonHeight, TFT_WHITE, TFT_RED, TFT_GOLD, 1, "Menu", pMainMenu);
   pStartPage->addFunctionButton(110, tft.height() - buttonHeight, buttonWidth, buttonHeight, TFT_WHITE, TFT_GREEN, TFT_GOLD, 1, "Fill", onButtonFillPressed);
   pStartPage->addFunctionButton(110+buttonWidth+10, tft.height() - buttonHeight, buttonWidth, buttonHeight, TFT_WHITE, TFT_GREEN, TFT_GOLD, 1, "Drain", onButtonDrainPressed);
-  pStartPage->addPageLabel(45, 103, 60, buttonHeight, pStartPage->getFillColor(), pStartPage->getFillColor(), TFT_GOLD, 1, "Temperature");
+  pStartPage->addPageLabel(15, 103, 60, buttonHeight, pStartPage->getFillColor(), pStartPage->getFillColor(), TFT_GOLD, 1, "Temperature");
   pLabel = pStartPage->addPageLabel(140, 103, 75, buttonHeight, pStartPage->getFillColor(), pStartPage->getFillColor(), TFT_GOLD, 1, "xx");
   pLabel->setLinkToValue(&currentTemperature, "Temperature");
   pLabel->registerOnDrawEvent(onDrawLabelLinkedFloat);
-  pStartPage->addPageLabel(27, 139, 60, buttonHeight, pStartPage->getFillColor(), pStartPage->getFillColor(), TFT_GOLD, 1, "Pressure");
+  pStartPage->addPageLabel(15, 139, 139, buttonHeight, pStartPage->getFillColor(), pStartPage->getFillColor(), TFT_GOLD, 1, "Pressure");
   pLabel = pStartPage->addPageLabel(140, 136, 75, buttonHeight, pStartPage->getFillColor(), pStartPage->getFillColor(), TFT_GOLD, 1, "xx");
   pLabel->setLinkToValue(&currentPressure, "Pressure");
   pLabel->registerOnDrawEvent(onDrawLabelLinkedFloat);
-  pStartPage->addPageLabel(40, 49, 150, buttonHeight, pMainMenu->getFillColor(), pMainMenu->getFillColor(), TFT_YELLOW, 1, "Desired temperature");
+  pStartPage->addPageLabel(15, 49, 150, buttonHeight, pMainMenu->getFillColor(), pMainMenu->getFillColor(), TFT_YELLOW, 1, "Desired temperature");
   pButton = pStartPage->addFunctionButton(230, 49, 80,  buttonHeight, pStartPage->getFillColor(), pStartPage->getFillColor(), TFT_RED, 1, "XXXX", onButtonChangeDesiredTemperature);
   pStartPage->registerOnShowEvent(onShowStartPage);
 
