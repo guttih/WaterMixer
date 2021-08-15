@@ -53,6 +53,40 @@ As John, I stand in front of the unit and want change the PID values
 ## lcd_pid_change_auto
 As John, I stand in front of the unit and want auto tune the PID values.
 
+## wifi_fill
+As Kamila, I want to fill the hot tub via web browser. 
+
+#### How to implement
+
+- Create the get request */flow* which takes two parameters.
+  - __parameters__
+    - __hot__ how much in percentages do you want to open the *hot* valve.
+    - __cold__ how much in percentages do you want to open the *cold* valve.
+  - __example request__ `http://192.168.1.79:6100/open?hot=26.12&cold=100`
+
+- A get request */fill* which takes one parameter.
+  - __parameters__
+    - __temperature__ how hot in celsius should the water be, flowing to the hot tub.
+  - __example request__ `http://192.168.1.79:6100/fill?temperature=41.5`
+
+
+## wifi_stop
+As Kamila, I want to stop flow, to and from the hot tub via web browser. 
+
+#### How to implement
+The */flow* get request shown in feature above [wifi_fill](#wifi_fill) can be called with both parameters as 0.
+- __example request__ `http://192.168.1.79:6100/open?hot=0&cold=0`
+
+
+
+
+## wifi_drain
+As Kamila, I want to drain  the hot tub via web browser. 
+
+#### How to implement
+- Create the get request */drain* which takes no parameter.
+  - __example request__ `http://192.168.1.79:6100/drain`
+
 ## lcd_status_dim_backlight
 As John, I stand in front of the unit and want to change the backlight brightness of the LCD display.
 

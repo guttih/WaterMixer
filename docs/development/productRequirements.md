@@ -52,6 +52,9 @@ Table column description:
 | [lcd_status_flow]           | As Kamila, I stand in front of the unit and want to know the water flow rate                            | N | [0.7] |       |
 | [lcd_flow_slow]             | As Kamila, I stand in front of the unit and want to make water flow slowly to the hot tub               | N | [0.7] |       |
 | [lcd_pid_change_auto]       | As John, I stand in front of the unit and want auto tune the PID values                                 | H | [0.7] |       |
+| [wifi_fill]                 | As Kamila, I want to fill the hot tub via web browser.                                                  | H | [0.8] |       |
+| [wifi_stop]                 | As Kamila, I want to stop flow, to and from the hot tub via web browser.                                | H | [0.8] |       |
+| [wifi_drain]                | As Kamila, I want to drain  the hot tub via web browser.                                                | H | [0.8] |       |
 | [lcd_status_when_full]      | As Kamila, I stand in front of the unit and want to know when the hot tub will be full                  | L | [1.0] |  This is after some one has initiated the filling process |
 | [lcd_status_when_empty]     | As Kamila, I stand in front of the unit and want to know when the hot tub will be fully drained         | L | [1.0] |  This is after some one has initiated the draining process |
 | [lcd_water_level_predict]   | As Kamila, I stand in front of the unit and want to know the projected hot tub water level.             | L | [1.0] |       |
@@ -100,5 +103,8 @@ Table column description:
 [lcd_water_level_current]: ./userStories.md#lcd_water_level_current
 [lcd_pid_change]: ./userStories.md#lcd_pid_change
 [lcd_pid_change_auto]: ./userStories.md#lcd_pid_change_auto
+[wifi_fill]: ./userStories.md#wifi_fill
+[wifi_stop]: ./userStories.md#wifi_stop
+[wifi_drain]: ./userStories.md#wifi_drain 
 [lcd_status_dim_backlight]: ./userStories.md#lcd_status_dim_backlight
 [lcd_system_scan]: ./userStories.md#lcd_system_scan
