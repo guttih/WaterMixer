@@ -24,6 +24,12 @@ void onDrawLabelLinkedFloat(DisplayLabel *pLabelToBeDrawn)
   pLabelToBeDrawn->setText(val);
 }
 
+void onDrawButtonDesiredTemperature(DisplayButton *pButtonToBeDrawn)
+{
+  String val = String(water.getDesiredTemperature(), 2);
+  pButtonToBeDrawn->setText(val);
+}
+
 void onDrawHotValveButton(DisplayButton *pButton)
 {
   String str = String(water.getHotValveFlow(), 3);
@@ -231,12 +237,14 @@ void setupMenu()
   pLabel = pStartPage->addPageLabel(140, 103, 75, buttonHeight, pStartPage->getFillColor(), pStartPage->getFillColor(), TFT_GOLD, 1, "xx");
   pLabel->setLinkToValue(&currentTemperature, "Temperature");
   pLabel->registerOnDrawEvent(onDrawLabelLinkedFloat);
+
   pStartPage->addPageLabel(15, 139, 139, buttonHeight, pStartPage->getFillColor(), pStartPage->getFillColor(), TFT_GOLD, 1, "Pressure");
   pLabel = pStartPage->addPageLabel(140, 136, 75, buttonHeight, pStartPage->getFillColor(), pStartPage->getFillColor(), TFT_GOLD, 1, "xx");
   pLabel->setLinkToValue(&currentPressure, "Pressure");
   pLabel->registerOnDrawEvent(onDrawLabelLinkedFloat);
   pStartPage->addPageLabel(15, 49, 150, buttonHeight, pMainMenu->getFillColor(), pMainMenu->getFillColor(), TFT_YELLOW, 1, "Desired temperature");
   pButton = pStartPage->addFunctionButton(230, 49, 80,  buttonHeight, pStartPage->getFillColor(), pStartPage->getFillColor(), TFT_RED, 1, "XXXX", onButtonChangeDesiredTemperature);
+  pButton->registerOnDrawEvent(onDrawButtonDesiredTemperature);
   pStartPage->registerOnShowEvent(onShowStartPage);
 
   //add a open page buttons to main menu;

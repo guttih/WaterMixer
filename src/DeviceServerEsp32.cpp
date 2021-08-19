@@ -952,12 +952,11 @@ void handleCustom(WiFiClient* client, unsigned int postMethod, String callingUrl
                                     SYSTEM_SAMPLE sample =  water.getSavedSystemRecordingClosestTo(TEMPERATURE, temperature);
                                     if (sample.hotValveFlow == -1 || sample.coldValveFlow == -1)
                                     {
-                                        httpResponseCode = 200;
                                         strSend = "{\"message\":\"Filling with temperature\",\"reason\":\"Failed because no system scan sample could be found.  Please run System Scan before using this command.\"}";
                                     }
                                     else
                                     {
-                                        water.fill(sample.hotValveFlow, sample.coldValveFlow);
+                                        water.fillDesired();
                                         httpResponseCode = 200;
                                         strSend = "{\"message\":\"Filling with temperature\",\"temperature\":" + String(temperature) +
                                                   ",\"hot\":" + String(sample.hotValveFlow) + ",\"cold\":" + String(sample.coldValveFlow) +
