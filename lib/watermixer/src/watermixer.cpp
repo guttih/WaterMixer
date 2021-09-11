@@ -3,16 +3,40 @@
 
 #define SYSTEM_RECORDING_FILE_NAME "/system.csv"
 
-WaterMixer::WaterMixer(Valve *hotValve, Valve *coldValve, Valve *drainValve, double currentTemperature, double desiredTemperature, double currentPressure)
+WaterMixer::WaterMixer(channel hotValve, channel coldValve, channel drainValve, double currentTemperature, double desiredTemperature, double currentPressure)
 {
     init(hotValve, coldValve, drainValve, currentTemperature, desiredTemperature, currentPressure, MANUAL);
 }
+WaterMixer::~WaterMixer(){
+    if (_dac)
+        delete _dac;
+}
 
-void WaterMixer::init(Valve *hotValve, Valve *coldValve, Valve *drainValve, double currentTemperature, double desiredTemperature, double currentPressure,  WaterMixerMode mode)
+void WaterMixer::begin(int sdaPin, int sclPin){
+    Wire.begin(sdaPin, sclPin);
+    _dac = new Adafruit_MCP4728();
+    const uint8_t  address = 0x60;
+    if (!_dac->begin(address))
+    {
+        Serial.println("!!!!!   ERROR  - Failed to find MCP4728 chip   !!!!!\n");
+        Serial.printf("  - SDA should be connected to pin %d on the Esp32 and SCL should be connected to %d\n", sdaPin, sclPin);
+        while (1)
+        {
+            delay(10);
+        }
+    }
+    Serial.printf("dac MCP4728 is connected.  Address:0x%02X, SDA:%d, SCL:%d pointer:%p\n", address, sdaPin, sclPin, _dac);
+    _hotValve.setDac(_dac);
+    _coldValve.setDac(_dac);
+    _drainValve.setDac(_dac);
+}
+
+void WaterMixer::init(channel hotValve, channel coldValve, channel drainValve, double currentTemperature, double desiredTemperature, double currentPressure,  WaterMixerMode mode)
 {
-    _hotValve = hotValve;
-    _coldValve = coldValve;
-    _drainValve = drainValve;
+    _dac = NULL;
+    _hotValve.init(hotValve, 0);
+    _coldValve.init(coldValve, 0);
+    _drainValve.init(drainValve, 0);
     _currentTemperature = currentTemperature;
     _desiredTemperature = desiredTemperature;
     _currentPressure = currentPressure;
@@ -41,17 +65,17 @@ void WaterMixer::setCurrentPressure(double pressure)
 void WaterMixer::drain()
 {
     setMode(MANUAL);
-    _drainValve->setFlow(1);
-    _hotValve->setFlow(0);
-    _coldValve->setFlow(0);
+    _drainValve.setFlow(100);
+    _hotValve.setFlow(0);
+    _coldValve.setFlow(0);
 }
 
 void WaterMixer::fill(double hotFlow, double coldFlow)
 {
     setMode(MANUAL);
-    _drainValve->setFlow(0);
-    _hotValve->setFlow(hotFlow/100);
-    _coldValve->setFlow(coldFlow/100);
+    _drainValve.setFlow(0);
+    _hotValve.setFlow(hotFlow);
+    _coldValve.setFlow(coldFlow);
 }
 void WaterMixer::fillDesired()
 {

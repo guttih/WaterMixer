@@ -6,6 +6,7 @@
 unsigned long timerReadTemperature;
 
 void setupSensors() {
+    Serial.println("Setting up sensors");
     timerReadTemperature = 0;
     sensors.begin();
     sensors.setWaitForConversion(false);

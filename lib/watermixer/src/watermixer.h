@@ -1,9 +1,10 @@
 #ifndef WATERMIXER_H
 #define WATERMIXER_H
 
-#include "valve.h"
-
 #include "SD.h"
+#include <Adafruit_MCP4728.h>   
+
+#include "valve.h"
 /**
  * @brief Is the watermixer in manual or automatic mode
  * 
@@ -44,14 +45,17 @@ class WaterMixer
         double _desiredTemperature = 0;
         double _currentPressure = 0;
         WaterMixerMode _mode;
-        Valve *_hotValve = NULL;
-        Valve *_coldValve = NULL;
-        Valve *_drainValve = NULL;
+        Adafruit_MCP4728 *_dac;
+        Valve _hotValve;
+        Valve _coldValve;
+        Valve _drainValve;
         String readLine(File file);
         SYSTEM_SAMPLE extractDataFromString(String line);
-        void init(Valve *hotValve, Valve *coldValve, Valve *drainValve, double currentTemperature, double desiredTemperature, double currentPressure, WaterMixerMode mode);
+        void init(channel hotValve, channel coldValve, channel drainValve, double currentTemperature, double desiredTemperature, double currentPressure,  WaterMixerMode mode);
     public:
-        WaterMixer(Valve *hotValve, Valve *coldValve, Valve *drainValve, double currentTemperature = 0, double desiredTemperature = 0, double currentPressure = 0);
+        WaterMixer(channel hotValve, channel coldValve, channel drainValve, double currentTemperature = 0, double desiredTemperature = 0, double currentPressure = 0);
+        void begin(int sdaPin = 21, int sclPin = 22);
+        ~WaterMixer();
         void setMode(WaterMixerMode mode);
         WaterMixerMode getMode() { return _mode; };
 
@@ -70,7 +74,7 @@ class WaterMixer
          * @return true if eather the hot or cold valves are flowing
          * @return false the cold valve is not flowing and the hot valve is not flowing
          */
-        bool isFlowing() { return (_hotValve->getFlow() > 0 || _coldValve->getFlow() > 0);  }
+        bool isFlowing() { return (_hotValve.getFlow() > 0 || _coldValve.getFlow() > 0);  }
 
 
         /**
@@ -79,7 +83,7 @@ class WaterMixer
          * @return true the drain valve is open
          * @return false the drain valve is closed
          */
-        bool isDraining() { return _drainValve->getFlow() > 0; }
+        bool isDraining() { return _drainValve.getFlow() > 0; }
 
         /**
          * @brief Check if all valves are closed
@@ -87,7 +91,7 @@ class WaterMixer
          * @return true all valves are not flowing(closed)
          * @return false one or more valves are flowing
          */
-        bool isStopped() { return _drainValve->getFlow() == 0 && _hotValve->getFlow() == 0 && _coldValve->getFlow() == 0; }
+        bool isStopped() { return _drainValve.getFlow() == 0 && _hotValve.getFlow() == 0 && _coldValve.getFlow() == 0; }
 
         /**
          * @brief Opens opens valves and adjusts them so they will mix water to the desired temperature.
@@ -99,7 +103,7 @@ class WaterMixer
          * @brief Closes all valves
          * 
          */
-        void stop() { _hotValve->setFlow(0); _coldValve->setFlow(0); _drainValve->setFlow(0);};
+        void stop() { _hotValve.setFlow(0); _coldValve.setFlow(0); _drainValve.setFlow(0);};
         
 
         /**
@@ -117,13 +121,13 @@ class WaterMixer
         void setCurrentPressure(double pressure); 
         double getCurrentPressure() { return _currentPressure; }
 
-        // Valve *getHotValve() {return _hotValve; }
-        // Valve *getColdValve() {return _coldValve; }
-        // Valve *getDrainValve() {return _drainValve; }
-
-        double getHotValveFlow() {return _hotValve->getFlow() * 100; }
-        double getColdValveFlow() {return _coldValve->getFlow() * 100; }
-        double getDrainValveFlow() {return _drainValve->getFlow() * 100; }
+        Valve *getHotValve() { return &_hotValve; }
+        Valve *getColdValve() { return &_coldValve; }
+        Valve *getDrainValve() { return &_drainValve; }
+        
+        double getHotValveFlow() { return _hotValve.getFlow(); }
+        double getColdValveFlow() { return _coldValve.getFlow(); }
+        double getDrainValveFlow() { return _drainValve.getFlow(); }
 
         /**
          * @brief Set the Hot Valve Flow object
@@ -131,21 +135,21 @@ class WaterMixer
          * @param flow How much should the valve be opened? Where 0 is fully closed and 100 is fully opened.
          */
         void setHotValveFlow(double flow)   {
-            Serial.printf("setHotValveFlow: %f -> %.4f\n", flow, flow /100);
-            _hotValve->setFlow(flow /100); 
+            Serial.printf("setHotValveFlow: %f\n", flow);
+            _hotValve.setFlow(flow); 
             }
         /**
          * @brief Set the Cold Valve Flow object
          * 
          * @param flow How much should the valve be opened? Where 0 is fully closed and 100 is fully opened.
          */
-        void setColdValveFlow(double flow)  {_coldValve->setFlow(flow /100); }
+        void setColdValveFlow(double flow)  {_coldValve.setFlow(flow); }
         /**
          * @brief Set the Drain Valve Flow object
          * 
          * @param flow How much should the valve be opened? Where 0 is fully closed and 100 is fully opened.
          */
-        void setDrainValveFlow(double flow) {_drainValve->setFlow(flow /100); }
+        void setDrainValveFlow(double flow) {_drainValve.setFlow(flow); }
 
         void startRecordingSystem();
         /**
