@@ -1345,8 +1345,6 @@ void setup() {
 
     menu.showPage(PAGE_INDEX_START);
     //water.startRecordingSystem();
-    
-    water.setHotValveFlow(50);
 }
 
 /// <summary>
