@@ -10,7 +10,6 @@ Finally the third electrical valve is used to drain the hot tub.
 - Project page (todo:)
 - [Experiment page]
 - [Hot-tub]
-- [Setting up PWM to Voltage Converter]
 - Project [Development documents]
 
 ## Parts in project
@@ -19,77 +18,77 @@ Finally the third electrical valve is used to drain the hot tub.
 - 2 x [DC_STEPDOWN]
 - 1 x [ESP32 Development Board]
 - 1 x [DS18B20 Digital Temperature Sensor G3/4]
-- 3 x [PWM to Voltage Converter Module]
+- 1 x [Logic level converter]
+- 1 x [Dac MCP4728]
 - 3 x [Proportional Valve Brass controllable with 0-5V]
 - 1 x [LCD touch display]
 
 ## Wiring the project
 
-When you setup the PWM to Voltage converter make sure that when the esp32 is never sending more than 190 of 255 to the 
-PWM to voltage converts because that will result in a 5V output voltage to the valves.
-
 ### Schematic
 
 ```
-                          ╔═════════════╗ ╔══════════════╗
-  +5V                     ║ DC_STEPDOWN ║ ║ POWER SOURCE ║
-   ┌──────────────────────╢-  +Vo(+5V) -╟ ║              ║
-   │  ┌─────────────────┬─╢-  -Vo(GND) -╟ ║              ║
-   │  │ ╔═══════════╗   │ ║             ║ ║              ║                                +12V
-   │  │ ║ Resistor  ║   │ ║         VIN-╟─╢-    +12V    -╟───────────────────────────────────┐
-   │  ├─╢-  4.7kΩ  -╟─┐ │ ║         GND-╟─╢-    -GND    -╟────────────────────────────────┐  │
-   │  │ ╚═══════════╝ │ │ ╚═════════════╝ ╚══════════════╝                                │  │
-   │  │ ╔═══════════╗ │ └─────────────────┬───────────────────┬───────────────────────────┤  │
-   │  │ ║ Pressure  ║ │                   │   ╔═════════════╗ │                           │  │
-   │  │ ║  Sensor   ║ │                   │   ║   PWM to    ║ │      ╔════════════╗       │  │
-   │  │ ║           ║ │                   │   ║ converter H ║ │      ║            ║       │  │
-   │  └─╢-Black     ║ │                   │   ║   voltage   ║ │      ║   Valve H  ║       │  │
-   ├────╢-Red       ║ │                   │   ║         GND-╟─┘      ║    PWM Out-╟─(WT)─ │  │
-   │ ┌──╢-Green     ║ │                   ├───╢-GND    VOUT-╟───(GR)─╢-LIN    ERR-╟─(YE)─ │  │
-   │ │  ╚═══════════╝ │     ╔═══════════╗ │ ┌─╢-PWM     VCC-╟─┬─(RD)─╢-VCC    GND-╟─(BL)──┤  │
-   │ │  ╔═══════════╗ │     ║  -ESP32-  ║ │ │ ╚═════════════╝ │      ╚════════════╝       ┴  │
-   │ │  ║ Resistor  ║ │     ║           ║ │ │                 │                          GND │
-   │ └──╢-  3.3kΩ  -╟─┴─────╢-G34  GND -╟─┘ │ ╔═════════════╗ │                              │
-   │    ╚═══════════╝       ║           ║   │ ║    PWM to   ║ ├──────────────────────────────┤
-   └────────────────────────╢-VIN       ║   │ ║   voltage   ║ │      ╔════════════╗          │
-        ╔═══════════╗     ┌─╢-G25  G12 -╟───┘ ║ converter C ║ │      ║   Valve C  ║          │
-+3V3    ║  Resistor ║     │ ║      G14 -╟───┐ ║             ║ │      ║    PWM Out-╟─(WT)─    │
-┌───────╢-  4.7kΩ  -╟─────┤ ║      G32 -╟─┐ │ ║         VCC-╟─┴─(RD)─╢-VCC    ERR-╟─(YE)─    │
-│       ╚═══════════╝     │ ║           ║ │ └─╢-PWM    VOUT-╟───(GR)─╢-LIN    GND-╟─(BL)──┐  │
-│       ╔═══════════╗     │ ║           ║ │ ┌─╢-GND     GND-╟─┐      ╚════════════╝       │  │
-│       ║  DS18B20  ║     │ ║           ║ │ │ ╚═════════════╝ ├───────────────────────────┤  │
-│       ║   Temp    ║     │ ║           ║ │ └─────────────────┘                           ┴  │
-│       ║  Sensor   ║     │ ║           ║ │   ╔═════════════╗                            GND │
-│       ║           ║     │ ║  -ESP32-  ║ │   ║    PWM to   ║ ┌──────────────────────────────┤
-│       ║    SIGNAL-╟─(YE)┘ ║           ║ │   ║   voltage   ║ │      ╔════════════╗          │
-├──(RD)─╢-VCC       ║       ║           ║ │   ║ converter D ║ │      ║   Valve D  ║          │
-│ ┌(BL)─╢-GND       ║       ║           ║ │   ║             ║ │      ║    PWM Out-╟─(WT)─    │
-│ │     ╚═══════════╝       ║           ║ │   ║         VCC-╟─┴─(RD)─╢-VCC    ERR-╟─(YE)─    │
-│ ├─────────────────────┬───╢-GND       ║ └───╢-PWM    VOUT-╟───(GR)─╢-LIN    GND-╟─(BL)──┐  │
-│ │  ╔══════════════╗   │   ║           ║   ┌─╢-GND     GND-╟─┐      ╚════════════╝       │  │
-│ │  ║   LCD TOUCH  ║   │   ║           ║   │ ╚═════════════╝ │                           │  │
-│ │  ║    DISPLAY   ║   │   ║           ║   └─────────────────┴───────────────────────────┤  │
-│ │  ║              ║   │   ║           ║                                                 │  │
-│ │  ║          GND-╟───┘   ║  -ESP32-  ║                                                 │  │
-│ │  ║      SD_MOSI-╟─┐     ║           ║                                                 │  │
-│ │  ║         MOSI-╟─┼───┐ ║           ║                                                 │  │
-│ │  ║        T_DIN-╟─┘   │ ║           ║                                                 │  │
-│ │  ║       SD_SCK-╟─┐   │ ║           ║                                                 │  │
-│ │  ║          SCK-╟─┼─┐ │ ║           ║                                                 │  │
-│ │  ║        T_CLK-╟─┘ │ └─╢-G23       ║                                                 │  │
-│ │  ║         T_DO-╟─┐ └───╢-G18       ║                                                 │  │
-│ │  ║      SD_MISO-╟─┴─────╢-G19       ║                                                 │  │
-│ │  ║           CS-╟───────╢-G15       ║                                                 │  │
-│ │  ║        RESET-╟───────╢-G4        ║                                                 │  │
-│ │  ║           DC-╟───────╢-G2        ║  ┌─────────────────────────┐                    │  │
-│ │  ║        SD_CS-╟───────╢-G5        ║  │        ╔═════════════╗  │                    │  │
-│ │  ║         T_CS-╟───────╢-G21       ║  │        ║ DC_STEPDOWN ║  │                    │  │
-│ │  ║              ║       ║  -ESP32-  ║  │        ║             ║  │                    │  │
-│ │  ║          VCC-╟─┐     ╚═══════════╝  │  ┌─────╢- -Vo( GND) -╟  │                    │  │
-│ │  ║          LED-╟─┴────────────────────┘  │  ┌──╢- +Vo(+3V3) -╟──┘                    │  │
-│ │  ╚══════════════╝                         │  │  ║         GND-╟───────────────────────┘  │
-│ └───────────────────────────────────────────┘  │  ║         VIN-╟──────────────────────────┘
-└────────────────────────────────────────────────┘  ╚═════════════╝
+
+                          ╔═════════════╗     ╔══════════════╗
+  +5V                     ║ DC_STEPDOWN ║     ║ POWER SOURCE ║
+   ┌──────────────────────╢-  +Vo(+5V) -╟     ║              ║
+   │  ┌─────────────────┬─╢-  -Vo(GND) -╟     ║              ║
+   │  │ ╔═══════════╗   │ ║             ║     ║              ║                          +12V
+   │  │ ║ Resistor  ║   │ ║         VIN-╟─────╢-    +12V    -╟─────────────────────────────┐
+   │  ├─╢-  4.7kΩ  -╟─┐ │ ║         GND-╟─────╢-    -GND    -╟──────────────────────────┐  │
+   │  │ ╚═══════════╝ │ │ ╚═════════════╝     ╚══════════════╝                          │  │
+   │  │ ╔═══════════╗ │ └───────────────────────────────────────────────────────────────┤  │
+   │  │ ║ Pressure  ║ │                                                                 │  │
+   │  │ ║  Sensor   ║ │                                                                 │  │
+   │  │ ║           ║ │                                                                 │  │
+   │  └─╢-Black     ║ │                                                                 │  │
+   ├────╢-Red       ║ │                                                                 │  │
+   │ ┌──╢-Green     ║ │                                    +5V                          │  │
+   │ │  ╚═══════════╝ │     ╔═══════════╗                   ┬  ╔═════════════╗          │  │
+   │ │  ╔═══════════╗ │     ║  -ESP32-  ║  ╔═════════════╗  │  ║     DAC     ║          │  │
+   │ │  ║ Resistor  ║ │     ║           ║  ║ Logic Level ║  │  ║   MCP4728   ║          │  │
+   │ └──╢-  3.3kΩ  -╟─┴─────╢-G34       ║  ║  converter  ║  │  ║             ║          │  │
+   │    ╚═══════════╝       ║       3V3-╟──╢-LV       HV-╟──┴──╢-V         D-╟──────┐   │  │
+   └────────────────────────╢-VIN   GND-╟──╢-GND     GND-╟──┬──╢-G         C-╟      │   │  │
+        ╔═══════════╗     ┌─╢-G25       ║  ║             ║  ┴  ║           B-╟────┐ │   │  │
++3V3    ║  Resistor ║     │ ║           ║  ║             ║ GND ║           A-╟──┐ │ │   │  │
+┌───────╢-  4.7kΩ  -╟─────┤ ║           ║  ║             ║     ║             ║  │ │ │   │  │
+│       ╚═══════════╝     │ ║       G14-╟──╢-LV3     HV3-╟─────╢-CL          ║  │ │ │   │  │
+│       ╔═══════════╗     │ ║       G13-╟──╢-LV4     HV4-╟─────╢-DA          ║  │ │ │   │  │
+│       ║  DS18B20  ║     │ ║           ║  ╚═════════════╝     ╚═════════════╝  │ │ │   │  │
+│       ║   Temp    ║     │ ║           ║   ┌───────────────────────────────────┘ │ │   │  │
+│       ║  Sensor   ║     │ ║           ║   │    ┌────────────────────────────────┘ │   │  │
+│       ║           ║     │ ║           ║   │    │    ┌─────────────────────────────┘   │  │
+│       ║           ║     │ ║  -ESP32-  ║   │    │    │        ╔════════════╗           │  │
+│       ║    SIGNAL-╟─(YE)┘ ║           ║   │    │    │        ║   Valve D  ║           │  │
+├──(RD)─╢-VCC       ║       ║           ║   │    │    │        ║        GND-╟─(BL)──────┤  │
+│ ┌(BL)─╢-GND       ║       ║           ║   │    │    └───(GR)─╢-LIN    ERR-╟─(YE)─     ┴  │
+│ │     ╚═══════════╝       ║           ║   │    │             ║    PWM Out-╟─(WT)─    GND │
+│ ├─────────────────────┬───╢-GND       ║   │    │             ║        VCC-╟─(RD)─────────┤
+│ │  ╔══════════════╗   │   ║           ║   │    │             ╚════════════╝              │
+│ │  ║   LCD TOUCH  ║   │   ║           ║   │    │             ╔════════════╗              │
+│ │  ║    DISPLAY   ║   │   ║           ║   │    │             ║   Valve C  ║              │
+│ │  ║              ║   │   ║           ║   │    │             ║        GND-╟─(BL)──────┐  │
+│ │  ║          GND-╟───┘   ║  -ESP32-  ║   │    └─────── (GR)─╢-LIN    ERR-╟─(YE)─     ┴  │
+│ │  ║      SD_MOSI-╟─┐     ║           ║   │                  ║    PWM Out-╟─(WT)─    GND │
+│ │  ║         MOSI-╟─┼───┐ ║           ║   │                  ║        VCC-╟─(RD)─────────┤
+│ │  ║        T_DIN-╟─┘   │ ║           ║   │                  ╚════════════╝              │
+│ │  ║       SD_SCK-╟─┐   │ ║           ║   │                  ╔════════════╗              │
+│ │  ║          SCK-╟─┼─┐ │ ║           ║   │                  ║   Valve H  ║              │
+│ │  ║        T_CLK-╟─┘ │ └─╢-G23       ║   │                  ║        GND-╟─(BL)──────┐  │
+│ │  ║         T_DO-╟─┐ └───╢-G18       ║   └─────────────(GR)─╢-LIN    ERR-╟─(YE)─     ┴  │
+│ │  ║      SD_MISO-╟─┴─────╢-G19       ║                      ║    PWM Out-╟─(WT)─    GND │
+│ │  ║           CS-╟───────╢-G15       ║                      ║        VCC-╟─(RD)─────────┤
+│ │  ║        RESET-╟───────╢-G4        ║                      ╚════════════╝              │
+│ │  ║           DC-╟───────╢-G2        ║  ┌─────────────────────────┐                     │
+│ │  ║        SD_CS-╟───────╢-G5        ║  │        ╔═════════════╗  │                     │
+│ │  ║         T_CS-╟───────╢-G21       ║  │        ║ DC_STEPDOWN ║  │                     │
+│ │  ║              ║       ║  -ESP32-  ║  │        ║             ║  │                     │
+│ │  ║          VCC-╟─┐     ╚═══════════╝  │  ┌─────╢- -Vo( GND) -╟  │ ┌───┐               │
+│ │  ║          LED-╟─┴────────────────────┘  │  ┌──╢- +Vo(+3V3) -╟──┘ │   ┴               │
+│ │  ╚══════════════╝                         │  │  ║         GND-╟────┘  GND              │
+│ └───────────────────────────────────────────┘  │  ║         VIN-╟────────────────────────┘
+└────────────────────────────────────────────────┘  ╚═════════════╝                         
 ```
 Legend
 
@@ -108,6 +107,9 @@ Legend
 - G14    : Esp32 GPIO 14 pin which is used control the cold water valve.
 - G32    : Esp32 GPIO 32 pin which is used control the drain water valve.
 - G##    : Other esp32 pins used to control the touch display and read and write to a sd card.
+- Valve H: Hot valve
+- Valve C: Cold valve
+- Valve D: Drain valve
 
 ## Software development
 
@@ -129,11 +131,11 @@ Then you can run the tests with this command `pio test`
 [DC_STEPDOWN]:https://www.aliexpress.com/item/32531438467.html?spm=a2g0s.9042311.0.0.27424c4dWJSXmG
 [ESP32 Development Board]:https://www.aliexpress.com/item/32801621054.html?spm=a2g0s.9042311.0.0.27424c4dOggB1n
 [DS18B20 Digital Temperature Sensor G3/4]:https://www.aliexpress.com/item/32881183992.html?spm=a2g0s.12269583.0.0.43c751fcxDyDbt
-[PWM to Voltage Converter Module]:https://www.aliexpress.com/item/4000169156580.html?spm=a2g0s.12269583.0.0.7faa1ca26zCgTQ
+[Logic level converter]:https://www.aliexpress.com/item/32308653416.html?spm=a2g0s.9042311.0.0.27424c4dy510IB
+[Dac MCP4728]:https://www.aliexpress.com/item/32975252305.html?spm=a2g0s.12269583.0.0.142b3d73bl1KXq
 [Proportional Valve Brass controllable with 0-5V]:https://www.aliexpress.com/item/33037988030.html?spm=a2g0s.12269583.0.0.49d04a42eL9zNl
 [Experiment page]: https://guttih.com/list/project-hottub-temp
 [Hot-tub]:http://192.168.1.79/list/project-hottub
-[Setting up PWM to Voltage Converter]:docs/development/pwmToVoltateConverter.md
 [cmake]:https://cmake.org/download/#latest
 [PlatformIO]:https://platformio.org/
 [Development documents]: docs/development/development.md
