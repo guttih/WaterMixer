@@ -19,11 +19,21 @@ It can run on both 5V and 3.3V power.
 - Bought [DS18B20 Color L30mm Thread Specification 3/4"](https://www.aliexpress.com/item/32881183992.html?spm=a2g0s.12269583.0.0.43c751fcxDyDbt) 
 - Inventory [Here](http://parts.guttih.com/parts/view/60c1c1c063ec3e056918c551)
 
-## pwm_to_voltage
-__PWM to Voltage Converter Module__
+## LLC 
+__Logic level converter__
 
-This device is used to convert a pwm signal from a Esp32 GPIO pin to voltage, ranging from 0-5 volts which a
-proportional valve understands.
+This device is used to convert 3.3V logic signals from the esp32 to 5V logic signals for the DAC.
+
+
+- Bought [here](https://www.aliexpress.com/item/Free-shipping-4-channel-IIC-I2C-Logic-Level-Converter-Bi-Directional-Module-5V-to-3-3V/32308653416.html?spm=a2g0s.9042311.0.0.27424c4dy510IB)
+- Inventory [Here](http://parts.guttih.com/parts/view/5bf9e9d1a66f3c7ee749efc5)
+
+
+## MCP4728 
+__DAC MCP4728 Module__
+
+This device is used to send voltage ranging from 0-5 volts which a proportional
+valve understands.
 
 
 - Bought [here](https://www.aliexpress.com/item/4000169156580.html?spm=a2g0s.12269583.0.0.7faa1ca26zCgTQ)
@@ -50,7 +60,7 @@ them all three units of the same device.  The 3/8" unit will be controlling the 
 
 ## 12v_power_supply
 
-Needed to power the three _PWM to Voltage Converter Modules_ and the three _12V Proportional Valves_
+Needed to power the three _12V Proportional Valves_
 
 __Not selected yet__
 - Bought todo: select product

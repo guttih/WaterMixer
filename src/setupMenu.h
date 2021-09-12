@@ -201,6 +201,7 @@ void onShowStartPage(DisplayPage *pPage)
 
 void setupMenu()
 {
+  Serial.println("Creating menu");
   const uint16_t buttonWidth = 100;
   const uint16_t buttonMarginX = 10;
   const uint16_t buttonHeight = 50;

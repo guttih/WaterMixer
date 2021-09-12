@@ -2,64 +2,64 @@
 #include "valve.h"
 #include "watermixer.h"
 #include <unity.h>
-    
+
+#include <Adafruit_MCP4728.h>    
 
 //   WARNING DO NOT USE TEST_ASSERT_EQUAL for float or double.  
 // the fraction part will not be compared then.  Use TEST_ASSERT_TRUE instead
 
-const int defaultMixerPin1 = 32;
-const int defaultMixerChannel1 = 1;
-const int defaultMixerMaxPWM1 = 190;
-const double defaultMixerFlow1 = 0.4;
-const int defaultMixerPin2 = 33;
-const int defaultMixerChannel2 = 2;
-const int defaultMixerMaxPWM2 = 189;
-const double defaultMixerFlow2 = 0.6;
-
+const channel channelHot = MCP4728_CHANNEL_A;
+const channel channelCold = MCP4728_CHANNEL_B;
+const channel channelDrain = MCP4728_CHANNEL_D;
 
 void test_WaterMixerConstructor(void) {
 
-    Valve hotValve(defaultMixerPin1, defaultMixerChannel1, defaultMixerMaxPWM1, defaultMixerFlow1, NULL);
-    Valve coldValve(defaultMixerPin2, defaultMixerChannel2, defaultMixerMaxPWM2, defaultMixerFlow2, NULL);
-
-    WaterMixer mixer(&hotValve, &coldValve,0,0);
     
-    TEST_ASSERT_NOT_NULL_MESSAGE(mixer.getHotValve(), "getHotValve() should not be null NULL");
-    TEST_ASSERT_NOT_NULL_MESSAGE(mixer.getColdValve(), "getColdValve() should not be null NULL");
+
+    WaterMixer mixer(MCP4728_CHANNEL_A, MCP4728_CHANNEL_B, MCP4728_CHANNEL_D, 0, 0);
+
+    // TEST_ASSERT_NOT_NULL_MESSAGE(mixer.getHotValve(), "getHotValve() should not be null NULL");
+    // TEST_ASSERT_NOT_NULL_MESSAGE(mixer.getColdValve(), "getColdValve() should not be null NULL");
 
     TEST_ASSERT_EQUAL_DOUBLE_MESSAGE(0, mixer.getCurrentTemperature(), "Defaut constructor should construct a WaterMixer object with current temperature as 0");
     TEST_ASSERT_EQUAL_DOUBLE_MESSAGE(0, mixer.getDesiredTemperature(), "Defaut constructor should construct a WaterMixer object with desired temperature as 0");
     TEST_ASSERT_TRUE_MESSAGE(mixer.getMode() == MANUAL, "Defaut constructor should construct WaterMixer object set to mode MANUAL");
     
-    TEST_ASSERT_EQUAL(defaultMixerPin1, mixer.getHotValve()->getPin());
-    TEST_ASSERT_EQUAL(defaultMixerChannel1, mixer.getHotValve()->getChannel());
-    TEST_ASSERT_EQUAL(defaultMixerMaxPWM1, mixer.getHotValve()->getMaxPWM());
-    TEST_ASSERT_EQUAL_DOUBLE_MESSAGE(defaultMixerFlow1, mixer.getHotValve()->getFlow(), "Defaut constructor should HAVE set the flow on hot valve");
+    TEST_ASSERT_EQUAL(channelHot, mixer.getHotValve()->getChannel());
+    mixer.getHotValve()->setFullOpenValue(1000);
+    TEST_ASSERT_EQUAL(1000, mixer.getHotValve()->getFullOpenValue());
 
-    TEST_ASSERT_EQUAL(defaultMixerPin2, mixer.getColdValve()->getPin());
-    TEST_ASSERT_EQUAL(defaultMixerChannel2, mixer.getColdValve()->getChannel());
-    TEST_ASSERT_EQUAL(defaultMixerMaxPWM2, mixer.getColdValve()->getMaxPWM());
-    TEST_ASSERT_EQUAL_DOUBLE_MESSAGE(defaultMixerFlow2, mixer.getColdValve()->getFlow(), "Defaut constructor should HAVE set the flow on cold valve");
+    mixer.getHotValve()->setFlow(60);
+    TEST_ASSERT_EQUAL_DOUBLE_MESSAGE(60, mixer.getHotValve()->getFlow(), "Defaut constructor should HAVE set the flow on hot valve");
+
+    TEST_ASSERT_EQUAL(channelCold, mixer.getColdValve()->getChannel());
+
+    mixer.getColdValve()->setFullOpenValue(2000);
+    TEST_ASSERT_EQUAL(2000, mixer.getColdValve()->getFullOpenValue());
+    mixer.getColdValve()->setFlow(90);
+    TEST_ASSERT_EQUAL_DOUBLE_MESSAGE(90, mixer.getColdValve()->getFlow(), "Defaut constructor should HAVE set the flow on cold valve");
+    TEST_ASSERT_EQUAL_DOUBLE_MESSAGE(2000 * 0.9, mixer.getColdValve()->getValue(), "Defaut constructor should HAVE set the flow on cold valve");
+    
+    mixer.getDrainValve()->setFullOpenValue(3000);
+    TEST_ASSERT_EQUAL(3000, mixer.getDrainValve()->getFullOpenValue());
 }
 
 void test_WaterMixerConstructorWithValues(void) {
 
-    Valve hotValve(defaultMixerPin1, defaultMixerChannel1, defaultMixerMaxPWM1, defaultMixerFlow1, NULL);
-    Valve coldValve(defaultMixerPin2, defaultMixerChannel2, defaultMixerMaxPWM2, defaultMixerFlow2, NULL);
-
-    WaterMixer mixer(&hotValve, &coldValve, NULL, 1.1, 2.001);
+    WaterMixer mixer(channelHot, channelCold, channelDrain, 1.1, 2.001, 4.33);
     
     TEST_ASSERT_EQUAL_DOUBLE_MESSAGE(1.1,  mixer.getCurrentTemperature(), "Constructor should have set current temperature");
     TEST_ASSERT_EQUAL_DOUBLE_MESSAGE(2.001,  mixer.getDesiredTemperature(), "Constructor should have set  desired temperature");
+    TEST_ASSERT_EQUAL_DOUBLE_MESSAGE(4.33,  mixer.getCurrentPressure(), "Constructor should have set  current pressure");
     TEST_ASSERT_TRUE_MESSAGE(MANUAL == mixer.getMode(), "Constructor should set manual");
     
 }
 
 void test_waterMixerChangeValues() {
-    Valve hotValve(defaultMixerPin1, defaultMixerChannel1, defaultMixerMaxPWM1, defaultMixerFlow1, NULL);
-    Valve coldValve(defaultMixerPin2, defaultMixerChannel2, defaultMixerMaxPWM2, defaultMixerFlow2, NULL);
-
-    WaterMixer mixer(&hotValve, &coldValve, 0, 0);
+    WaterMixer mixer(channelHot, channelCold, channelDrain, 0, 0, 0);
+    mixer.getHotValve()->setValue(5000);
+    mixer.begin(13, 14);
+    TEST_ASSERT_EQUAL(4095, mixer.getHotValve()->getValue());
     
     mixer.setCurrentTemperature(11.123456789);
     TEST_ASSERT_EQUAL_DOUBLE_MESSAGE(11.123456789 , mixer.getCurrentTemperature(), "setCurrentTemperature failed");
@@ -69,6 +69,4 @@ void test_waterMixerChangeValues() {
     TEST_ASSERT_TRUE_MESSAGE(MANUAL == mixer.getMode(), "default Constructor should set mode to MANUAL");
     mixer.setMode(AUTOMATIC);
     TEST_ASSERT_TRUE_MESSAGE(AUTOMATIC == mixer.getMode(), "getMode should set active to true");
-    
-
 }

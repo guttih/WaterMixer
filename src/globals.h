@@ -12,8 +12,9 @@
 #include <DallasTemperature.h>
 
 #include "DisplayMenu.h"
-#include "valve.h"
 #include "watermixer.h"
+
+#include <Adafruit_MCP4728.h>
 
 #define CALIBRATION_FILE "/TouchCalData3"
 
@@ -56,8 +57,8 @@ const int PIN_TEMPERATURE = 25;
 const int PIN_HOT = 12;
 const int PIN_COLD = 14;
 const int PIN_DRAIN = 32;
-#define FULL_DUTY 255
-#define MAX_DUTY 190
+#define FULL_DUTY 4095
+#define MAX_DUTY 4095
 #define CHANNEL_1 1
 #define CHANNEL_2 2
 #define CHANNEL_3 3
@@ -76,11 +77,10 @@ DallasTemperature sensors(&oneWire);
   
  */
 
-Valve   hot(PIN_HOT,  CHANNEL_1, FULL_DUTY, MAX_DUTY, 0, "Hot valve");
-Valve  cold(PIN_COLD, CHANNEL_2, FULL_DUTY, MAX_DUTY, 0, "Cold valve");
-Valve drain(PIN_DRAIN, CHANNEL_3, FULL_DUTY, 255,     0, "Drain valve");
-WaterMixer water(&hot, &cold, &drain, 0, values.desiredTemp);
 
+
+
+WaterMixer water(MCP4728_CHANNEL_A, MCP4728_CHANNEL_B, MCP4728_CHANNEL_D, 0, values.desiredTemp);
 
 TFT_eSPI tft = TFT_eSPI();
 DisplayMenu menu = DisplayMenu(&tft);
@@ -88,6 +88,7 @@ DisplayMenu menu = DisplayMenu(&tft);
 
 void touch_calibrate(bool REPEAT_CAL)
 {
+  Serial.println("running touch calibrate");
   uint16_t calData[5];
   uint8_t calDataOK = 0;
 

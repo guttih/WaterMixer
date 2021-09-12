@@ -1274,6 +1274,7 @@ void drawLinkedButtonsAndLabels() {
 void setup() {
     //Initialize serial and wait for port to open:
     Serial.begin(115200);
+    Serial.println("Setting up");
     digitalWrite(22, HIGH); // Touch controller chip select (if used)
     digitalWrite(15, HIGH); // TFT screen chip select
     digitalWrite( 5, HIGH); // SD card chips select, must use GPIO 5 (ESP32 SS)
@@ -1290,12 +1291,15 @@ void setup() {
 
     setupSensors();
 
+
     touch_calibrate(false);
     if(!SD.begin()){
         Serial.println("Unable to open sd card");
     } else {
         Serial.println("SD card available");
     }
+
+    water.begin(13, 14);
 
     setupMenu();
 
@@ -1307,6 +1311,7 @@ void setup() {
     pLabelStatus->setText("Starting", true);
     //Let's wait for two seconds before starting allowing voltage to stabelize after power on
     delay(2000);
+    Serial.println("reading sensors");
     checkAndUpdateSensors();
     sta_was_connected = connectWifi();
     if (sta_was_connected) {
@@ -1340,8 +1345,6 @@ void setup() {
 
     menu.showPage(PAGE_INDEX_START);
     //water.startRecordingSystem();
-    
-    
 }
 
 /// <summary>
