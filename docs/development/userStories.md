@@ -163,6 +163,4 @@ can be later used to search for valve settings for a desired temperature. exampl
 [User stories]: ./userStories.md
 [Hardware]: ./hardware.md
 [Releases]: ./releases.md
-
-[BC337]:./hardware.md#bc337_transistor
 [pressure_sensor]:./hardware.md#pressure_sensor
