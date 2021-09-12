@@ -98,15 +98,6 @@ This sensor needs 5V power to work and provides information on the water pressur
 - Inventory [Here](http://parts.guttih.com/parts/view/60cc6e7b395390058cb396d8)
 
 
-## bc337_transistor
-
-__BC337 Transistor__
-
-To dim the backlight on the **lcd_touch_display**.  The transistor would be controlling the LED pin on the LCD display.  I am not entirely sure that I will need this feature.
-
-- Inventory [Here](http://parts.guttih.com/parts/view/5f1769dc6a252307c167c06b)
-
-
  ### Related pages
  * [Readme]
  * [Product requirements]
