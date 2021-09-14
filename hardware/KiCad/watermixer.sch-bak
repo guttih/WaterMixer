@@ -16,23 +16,23 @@ $EndDescr
 $Comp
 L watermixer-symbols:MCP4728 U1
 U 1 1 613FB3CB
-P 1800 3700
-F 0 "U1" H 1800 4181 50  0000 C CNN
-F 1 "MCP4728" H 1800 4090 50  0000 C CNN
-F 2 "watermixer-footprints:MCP4728_module" H 1800 3100 50  0001 C CNN
-F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/22187E.pdf" H 1800 3950 50  0001 C CNN
-	1    1800 3700
+P 5950 4600
+F 0 "U1" H 5950 5081 50  0000 C CNN
+F 1 "MCP4728" H 5950 4990 50  0000 C CNN
+F 2 "watermixer-footprints:MCP4728_module" H 5950 4000 50  0001 C CNN
+F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/22187E.pdf" H 5950 4850 50  0001 C CNN
+	1    5950 4600
 	1    0    0    -1  
 $EndComp
 $Comp
 L watermixer-symbols:CR2013-MI2120-touch U?
 U 1 1 613FCFDC
-P 3850 4800
-F 0 "U?" H 3850 5581 50  0000 C CNN
-F 1 "CR2013-MI2120-touch" H 3850 5490 50  0000 C CNN
-F 2 "Display:CR2013-MI2120" H 3850 4100 50  0001 C CNN
-F 3 "http://pan.baidu.com/s/11Y990" H 3200 5300 50  0001 C CNN
-	1    3850 4800
+P 2200 2950
+F 0 "U?" H 2200 3731 50  0000 C CNN
+F 1 "CR2013-MI2120-touch" H 2200 3640 50  0000 C CNN
+F 2 "Display:CR2013-MI2120" H 2200 2250 50  0001 C CNN
+F 3 "http://pan.baidu.com/s/11Y990" H 1550 3450 50  0001 C CNN
+	1    2200 2950
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -49,23 +49,96 @@ $EndComp
 $Comp
 L watermixer-symbols:LLC_4CH U?
 U 1 1 6140B974
-P 8850 2700
-F 0 "U?" H 8850 3581 50  0000 C CNN
-F 1 "LLC_4CH" H 8850 3490 50  0000 C CNN
-F 2 "watermixer-footprints:LLC_4CH" H 8850 1950 50  0001 C CNN
-F 3 "http://www.ti.com/lit/ds/symlink/txb0104.pdf" H 8960 2795 50  0001 C CNN
-	1    8850 2700
+P 4400 4750
+F 0 "U?" H 4400 5631 50  0000 C CNN
+F 1 "LLC_4CH" H 4400 5540 50  0000 C CNN
+F 2 "watermixer-footprints:LLC_4CH" H 4400 4000 50  0001 C CNN
+F 3 "http://www.ti.com/lit/ds/symlink/txb0104.pdf" H 4510 4845 50  0001 C CNN
+	1    4400 4750
 	1    0    0    -1  
 $EndComp
 $Comp
-L watermixer-symbols:SD_BUCK3A U?
-U 1 1 61414EE5
-P 8250 4300
-F 0 "U?" H 8187 4917 50  0000 C CNN
-F 1 "SD_BUCK3A" H 8187 4826 50  0000 C CNN
-F 2 "watermixer-footprints:SD_BUCK3A" H 8350 4050 50  0001 C CNN
-F 3 "" H 8250 4300 50  0001 C CNN
-	1    8250 4300
+L watermixer-symbols:SD_BUCK3A U_5V
+U 1 1 61416868
+P 7900 4350
+F 0 "U_5V" H 7837 4967 50  0000 C CNN
+F 1 "SD_BUCK3A" H 7837 4876 50  0000 C CNN
+F 2 "watermixer-footprints:SD_BUCK3A" H 8000 4100 50  0001 C CNN
+F 3 "" H 7900 4350 50  0001 C CNN
+	1    7900 4350
 	1    0    0    -1  
 $EndComp
+$Comp
+L watermixer-symbols:SD_BUCK3A U_3.3V
+U 1 1 61417027
+P 7900 5350
+F 0 "U_3.3V" H 7837 5967 50  0000 C CNN
+F 1 "SD_BUCK3A" H 7837 5876 50  0000 C CNN
+F 2 "watermixer-footprints:SD_BUCK3A" H 8000 5100 50  0001 C CNN
+F 3 "" H 7900 5350 50  0001 C CNN
+	1    7900 5350
+	1    0    0    -1  
+$EndComp
+$Comp
+L watermixer-symbols:Barrel_Jack J_12V
+U 1 1 6141485A
+P 1050 1150
+F 0 "J_12V" H 1257 1567 50  0000 C CNN
+F 1 "Barrel_Jack" H 1257 1476 50  0000 C CNN
+F 2 "watermixer-footprints:Barrel_Jack" H 1200 900 50  0001 C CNN
+F 3 "~" H 1150 1110 50  0001 C CNN
+	1    1050 1150
+	1    0    0    -1  
+$EndComp
+$Comp
+L watermixer-symbols:Screw_Terminal_01x03 J?
+U 1 1 6140DCC9
+P 9300 5800
+F 0 "J?" H 9630 5950 50  0000 L CNN
+F 1 "Screw_Terminal_01x03" H 9630 5859 50  0000 L CNN
+F 2 "watermixer-footprints:Screw_Termianl_01x03" H 9300 5600 50  0001 C CNN
+F 3 "~" H 9300 5800 50  0001 C CNN
+	1    9300 5800
+	0    1    1    0   
+$EndComp
+$Comp
+L watermixer-symbols:Screw_Terminal_01x03 JD_VALVE
+U 1 1 61418706
+P 10400 5700
+F 0 "JD_VALVE" H 10730 5850 50  0000 L CNN
+F 1 "ST01x03" H 10730 5759 50  0000 L CNN
+F 2 "watermixer-footprints:Screw_Termianl_01x03" H 10600 5600 50  0001 C CNN
+F 3 "~" H 10400 5700 50  0001 C CNN
+	1    10400 5700
+	-1   0    0    1   
+$EndComp
+$Comp
+L watermixer-symbols:Screw_Terminal_01x06 JHC_VALVES
+U 1 1 6141617A
+P 10400 5400
+F 0 "JHC_VALVES" H 10730 5400 50  0000 L CNN
+F 1 "01x06" H 10730 5309 50  0000 L CNN
+F 2 "watermixer-footprints:Screw_Termianl_01x06" H 10400 5400 50  0001 C CNN
+F 3 "~" H 10400 5400 50  0001 C CNN
+	1    10400 5400
+	-1   0    0    1   
+$EndComp
+Text Label 10600 5200 0    39   ~ 0
+HotValve_GND
+Text Label 10600 5300 0    39   ~ 0
+HotValve_SIG
+Text Label 10600 5400 0    39   ~ 0
+ColdValve_VCC
+Text Label 10600 5500 0    39   ~ 0
+ColdValve_GND
+Text Label 10600 5600 0    39   ~ 0
+ColdValve_SIG
+Text Label 10600 5700 0    39   ~ 0
+DrainValve_VCC
+Text Label 10600 5800 0    39   ~ 0
+DrainValve_GND
+Text Label 10600 5900 0    39   ~ 0
+DrainValve_SIG
+Text Label 10600 5100 0    39   ~ 0
+HotValve_VCC
 $EndSCHEMATC

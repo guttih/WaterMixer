@@ -1,4 +1,4 @@
-19286530512196795
+19291425412508124
 Battery
 BatteryHolder_Bulgin_BX0036_1xC
 Bulgin Battery Holder, BX0036, Battery Type C (https://www.bulgin.com/products/pub/media/bulgin/data/Battery_holders.pdf)
@@ -83307,6 +83307,13 @@ varistor SIOV
 2
 2
 watermixer-footprints
+Barrel_Jack
+
+
+0
+3
+3
+watermixer-footprints
 CR2013-MI2120_touch
 CR2013-MI2120 ILI9341 LCD Breakout http://pan.baidu.com/s/11Y990
 CR2013-MI2120 ILI9341 LCD Breakout
@@ -83346,5 +83353,19 @@ SD_BUCK3A
 
 
 0
+8
+4
+watermixer-footprints
+Screw_Termianl_01x03
+
+
 0
+3
+3
+watermixer-footprints
+Screw_Termianl_01x06
+
+
 0
+6
+6
