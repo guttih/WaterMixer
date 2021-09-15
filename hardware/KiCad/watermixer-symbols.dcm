@@ -41,6 +41,12 @@ K dac i2c
 F http://ww1.microchip.com/downloads/en/DeviceDoc/22187E.pdf
 $ENDCMP
 #
+$CMP MountingHole
+D Mounting Hole without connection
+K mounting hole
+F ~
+$ENDCMP
+#
 $CMP R
 D Resistor
 K R res resistor

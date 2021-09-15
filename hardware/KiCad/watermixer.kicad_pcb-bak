@@ -214,17 +214,6 @@
     (add_net VDDF)
   )
 
-  (net_class "0,4 Width" ""
-    (clearance 0.2)
-    (trace_width 0.4)
-    (via_dia 1.2)
-    (via_drill 0.6)
-    (uvia_dia 0.6)
-    (uvia_drill 0.1)
-    (diff_pair_width 0.4)
-    (diff_pair_gap 0.5)
-  )
-
   (module watermixer-footprints:MountingHole_3.2mm_M3 (layer F.Cu) (tedit 56D1B4CB) (tstamp 614368CB)
     (at 209.55 43.18)
     (descr "Mounting Hole 3.2mm, no annular, M3")

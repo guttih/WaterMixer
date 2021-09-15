@@ -152,7 +152,7 @@ ENDDEF
 DEF watermixer-symbols_CP C 0 10 N Y 1 F N
 F0 "C" 25 100 50 H V L CNN
 F1 "watermixer-symbols_CP" 25 -100 50 H V L CNN
-F2 "Capacitor_THT:CP_Radial_Tantal_D8.0mm_P5.00mm" 0 -400 50 H I C CNN
+F2 "Capacitor_THT:CP_Radial_D8.0mm_P5.00mm" 0 -400 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
  CP_*
@@ -262,7 +262,7 @@ ENDDEF
 DEF watermixer-symbols_MCP4728 U 0 40 Y Y 1 F N
 F0 "U" -500 250 50 H V L CNN
 F1 "watermixer-symbols_MCP4728" 500 250 50 H V R CNN
-F2 "Package_SO:MSOP-10_3x3mm_P0.5mm" 0 -600 50 H I C CNN
+F2 "watermixer-footprints:MCP4728_module" 0 -600 50 H I C CNN
 F3 "" 0 250 50 H I C CNN
 $FPLIST
  *SOP*3x3mm*P0.5mm*
@@ -279,6 +279,21 @@ X VOUTA 6 600 100 100 L 50 50 1 1 O
 X VOUTB 7 600 0 100 L 50 50 1 1 O
 X VOUTC 8 600 -100 100 L 50 50 1 1 O
 X VOUTD 9 600 -200 100 L 50 50 1 1 O
+ENDDRAW
+ENDDEF
+#
+# watermixer-symbols_MountingHole
+#
+DEF watermixer-symbols_MountingHole H 0 40 Y Y 1 F N
+F0 "H" 0 200 50 H V C CNN
+F1 "watermixer-symbols_MountingHole" 0 125 50 H V C CNN
+F2 "watermixer-footprints:MountingHole_3.2mm_M3" 0 0 50 H I C CNN
+F3 "" 0 0 50 H I C CNN
+$FPLIST
+ MountingHole*
+$ENDFPLIST
+DRAW
+C 0 0 50 0 1 50 N
 ENDDRAW
 ENDDEF
 #

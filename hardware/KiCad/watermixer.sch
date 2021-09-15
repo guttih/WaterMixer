@@ -14,17 +14,6 @@ Comment3 "Licence: CC BY 4.0"
 Comment4 "Author:Gudjon Holm Sigurdsson"
 $EndDescr
 $Comp
-L watermixer-symbols:MCP4728 U4
-U 1 1 613FB3CB
-P 8700 5200
-F 0 "U4" H 8500 5450 50  0000 C CNN
-F 1 "MCP4728" H 8950 5450 50  0000 C CNN
-F 2 "watermixer-footprints:MCP4728_module" H 8700 4600 50  0001 C CNN
-F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/22187E.pdf" H 8700 5450 50  0001 C CNN
-	1    8700 5200
-	1    0    0    -1  
-$EndComp
-$Comp
 L Espressif:ESP32-DevKitC U2
 U 1 1 61402480
 P 5500 2100
@@ -427,8 +416,6 @@ F 3 "~" H 4550 4500 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	6800 1150 8700 1150
-Wire Wire Line
-	8700 1150 8700 4850
 Connection ~ 8700 4850
 Wire Wire Line
 	6850 3950 7050 3950
@@ -475,8 +462,6 @@ F 3 "" H 5550 7000 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	5250 7150 5550 7150
-Wire Wire Line
-	5550 7150 5550 7000
 $Comp
 L power:GND #PWR08
 U 1 1 6158DE4A
@@ -628,7 +613,7 @@ Wire Wire Line
 Wire Wire Line
 	4300 3950 4650 3950
 Wire Wire Line
-	4300 3950 4300 5250
+	4300 3950 4300 4900
 Wire Wire Line
 	4300 3350 4300 3500
 Wire Wire Line
@@ -676,12 +661,12 @@ F 3 "~" H 8450 2950 50  0001 C CNN
 $EndComp
 Connection ~ 8450 2950
 Wire Wire Line
-	5750 7000 5550 7000
+	5750 7000 5700 7000
 Connection ~ 5550 7000
 Wire Wire Line
 	2650 4100 2650 4250
 Wire Wire Line
-	5550 7550 5750 7550
+	5550 7550 5700 7550
 Connection ~ 5550 7550
 NoConn ~ 3000 2950
 $Comp
@@ -749,7 +734,7 @@ F 3 "~" H 5500 5100 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	4750 4850 4750 5100
+	4750 4850 4750 4900
 Wire Wire Line
 	5500 5100 5100 5100
 Wire Wire Line
@@ -758,4 +743,105 @@ Connection ~ 5100 5100
 Connection ~ 4750 5100
 Wire Wire Line
 	4750 5100 4750 5250
+Wire Wire Line
+	8700 1150 8700 4850
+$Comp
+L watermixer-symbols:CP C2
+U 1 1 6148D5D9
+P 4550 4900
+F 0 "C2" V 4450 4800 50  0000 C CNN
+F 1 "470uF" V 4700 4900 50  0000 C CNN
+F 2 "Capacitor_THT:CP_Radial_Tantal_D8.0mm_P5.00mm" H 4550 4500 50  0001 C CNN
+F 3 "~" H 4550 4900 50  0001 C CNN
+	1    4550 4900
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	4400 4900 4300 4900
+Connection ~ 4300 4900
+Wire Wire Line
+	4300 4900 4300 5250
+Wire Wire Line
+	4700 4900 4750 4900
+Connection ~ 4750 4900
+Wire Wire Line
+	4750 4900 4750 5100
+$Comp
+L watermixer-symbols:CP C3
+U 1 1 6149C94A
+P 5700 7250
+F 0 "C3" V 5600 7150 50  0000 C CNN
+F 1 "470uF" V 5850 7250 50  0000 C CNN
+F 2 "Capacitor_THT:CP_Radial_Tantal_D8.0mm_P5.00mm" H 5700 6850 50  0001 C CNN
+F 3 "~" H 5700 7250 50  0001 C CNN
+	1    5700 7250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5550 7000 5550 7150
+Wire Wire Line
+	5700 7100 5700 7000
+Connection ~ 5700 7000
+Wire Wire Line
+	5700 7000 5550 7000
+Wire Wire Line
+	5700 7400 5700 7550
+Connection ~ 5700 7550
+Wire Wire Line
+	5700 7550 5750 7550
+$Comp
+L watermixer-symbols:MCP4728 U4
+U 1 1 614D13D0
+P 8700 5200
+F 0 "U4" H 8700 5681 50  0000 C CNN
+F 1 "MCP4728" H 8700 5590 50  0000 C CNN
+F 2 "watermixer-footprints:MCP4728_module" H 8700 4600 50  0001 C CNN
+F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/22187E.pdf" H 8700 5450 50  0001 C CNN
+	1    8700 5200
+	1    0    0    -1  
+$EndComp
+$Comp
+L watermixer-symbols:MountingHole H4
+U 1 1 614E9C53
+P 700 7450
+F 0 "H4" H 800 7496 50  0000 L CNN
+F 1 "MountingHole" H 800 7405 50  0000 L CNN
+F 2 "watermixer-footprints:MountingHole_3.2mm_M3" H 700 7450 50  0001 C CNN
+F 3 "~" H 700 7450 50  0001 C CNN
+	1    700  7450
+	1    0    0    -1  
+$EndComp
+$Comp
+L watermixer-symbols:MountingHole H3
+U 1 1 614EA463
+P 700 7250
+F 0 "H3" H 800 7296 50  0000 L CNN
+F 1 "MountingHole" H 800 7205 50  0000 L CNN
+F 2 "watermixer-footprints:MountingHole_3.2mm_M3" H 700 7250 50  0001 C CNN
+F 3 "~" H 700 7250 50  0001 C CNN
+	1    700  7250
+	1    0    0    -1  
+$EndComp
+$Comp
+L watermixer-symbols:MountingHole H2
+U 1 1 614EAA78
+P 700 7050
+F 0 "H2" H 800 7096 50  0000 L CNN
+F 1 "MountingHole" H 800 7005 50  0000 L CNN
+F 2 "watermixer-footprints:MountingHole_3.2mm_M3" H 700 7050 50  0001 C CNN
+F 3 "~" H 700 7050 50  0001 C CNN
+	1    700  7050
+	1    0    0    -1  
+$EndComp
+$Comp
+L watermixer-symbols:MountingHole H1
+U 1 1 614EB1BF
+P 700 6850
+F 0 "H1" H 800 6896 50  0000 L CNN
+F 1 "MountingHole" H 800 6805 50  0000 L CNN
+F 2 "watermixer-footprints:MountingHole_3.2mm_M3" H 700 6850 50  0001 C CNN
+F 3 "~" H 700 6850 50  0001 C CNN
+	1    700  6850
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
