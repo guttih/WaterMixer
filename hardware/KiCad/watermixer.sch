@@ -14,10 +14,10 @@ Comment3 "Licence: CC BY 4.0"
 Comment4 "Author:Gudjon Holm Sigurdsson"
 $EndDescr
 $Comp
-L watermixer-symbols:MCP4728 U1
+L watermixer-symbols:MCP4728 U4
 U 1 1 613FB3CB
 P 8700 5200
-F 0 "U1" H 8500 5450 50  0000 C CNN
+F 0 "U4" H 8500 5450 50  0000 C CNN
 F 1 "MCP4728" H 8950 5450 50  0000 C CNN
 F 2 "watermixer-footprints:MCP4728_module" H 8700 4600 50  0001 C CNN
 F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/22187E.pdf" H 8700 5450 50  0001 C CNN
@@ -25,10 +25,10 @@ F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/22187E.pdf" H 8700 5450 50 
 	1    0    0    -1  
 $EndComp
 $Comp
-L Espressif:ESP32-DevKitC U?
+L Espressif:ESP32-DevKitC U2
 U 1 1 61402480
 P 5500 2100
-F 0 "U?" H 5575 3265 50  0000 C CNN
+F 0 "U2" H 5575 3265 50  0000 C CNN
 F 1 "ESP32-DevKitC" H 5575 3174 50  0000 C CNN
 F 2 "Espressif:ESP32-DevKitC" H 5500 850 50  0000 C CNN
 F 3 "https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/hw-reference/esp32/get-started-devkitc.html" H 5650 850 50  0001 C CNN
@@ -36,10 +36,10 @@ F 3 "https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/hw-reference
 	-1   0    0    1   
 $EndComp
 $Comp
-L watermixer-symbols:LLC_4CH U?
+L watermixer-symbols:LLC_4CH U3
 U 1 1 6140B974
 P 7750 4150
-F 0 "U?" H 7750 5031 50  0000 C CNN
+F 0 "U3" H 7750 5031 50  0000 C CNN
 F 1 "LLC_4CH" H 7750 4940 50  0000 C CNN
 F 2 "watermixer-footprints:LLC_4CH" H 7750 3400 50  0001 C CNN
 F 3 "http://www.ti.com/lit/ds/symlink/txb0104.pdf" H 7860 4245 50  0001 C CNN
@@ -47,21 +47,21 @@ F 3 "http://www.ti.com/lit/ds/symlink/txb0104.pdf" H 7860 4245 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L watermixer-symbols:Barrel_Jack J_12V
+L watermixer-symbols:Barrel_Jack J_12V1
 U 1 1 6141485A
-P 8950 4150
-F 0 "J_12V" H 9050 4550 50  0000 C CNN
-F 1 "Barrel_Jack" H 9100 4450 50  0000 C CNN
-F 2 "watermixer-footprints:Barrel_Jack" H 9100 3900 50  0001 C CNN
-F 3 "~" H 9050 4110 50  0001 C CNN
-	1    8950 4150
+P 4700 7300
+F 0 "J_12V1" H 4800 7700 50  0000 C CNN
+F 1 "Barrel_Jack" H 4850 7600 50  0000 C CNN
+F 2 "watermixer-footprints:Barrel_Jack" H 4850 7050 50  0001 C CNN
+F 3 "~" H 4800 7260 50  0001 C CNN
+	1    4700 7300
 	1    0    0    -1  
 $EndComp
 $Comp
-L watermixer-symbols:Screw_Terminal_01x03 JD_VALVE
+L watermixer-symbols:Screw_Terminal_01x03 JD_VALVE1
 U 1 1 61418706
 P 10250 5700
-F 0 "JD_VALVE" H 10200 5500 50  0000 L CNN
+F 0 "JD_VALVE1" H 10200 5500 50  0000 L CNN
 F 1 "01x03" H 10200 5600 50  0000 L CNN
 F 2 "watermixer-footprints:Screw_Termianl_01x03" H 10450 5600 50  0001 C CNN
 F 3 "~" H 10250 5700 50  0001 C CNN
@@ -69,10 +69,10 @@ F 3 "~" H 10250 5700 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L watermixer-symbols:Screw_Terminal_01x06 JHC_VALVES
+L watermixer-symbols:Screw_Terminal_01x06 JHC_VALVES1
 U 1 1 6141617A
 P 10250 5100
-F 0 "JHC_VALVES" H 10200 5500 50  0000 L CNN
+F 0 "JHC_VALVES1" H 10200 5500 50  0000 L CNN
 F 1 "01x06" H 10200 5400 50  0000 L CNN
 F 2 "watermixer-footprints:Screw_Termianl_01x06" H 10250 5100 50  0001 C CNN
 F 3 "~" H 10250 5100 50  0001 C CNN
@@ -111,12 +111,12 @@ $EndComp
 $Comp
 L watermixer-symbols:R R2
 U 1 1 6143A5C1
-P 4350 3650
-F 0 "R2" H 4500 3600 50  0000 R CNN
-F 1 "4.7k" H 4550 3700 50  0000 R CNN
-F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 4280 3650 50  0001 C CNN
-F 3 "~" H 4350 3650 50  0001 C CNN
-	1    4350 3650
+P 4300 3650
+F 0 "R2" H 4450 3600 50  0000 R CNN
+F 1 "4.7k" H 4500 3700 50  0000 R CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 4230 3650 50  0001 C CNN
+F 3 "~" H 4300 3650 50  0001 C CNN
+	1    4300 3650
 	-1   0    0    1   
 $EndComp
 $Comp
@@ -131,10 +131,10 @@ F 3 "~" H 4550 3650 50  0001 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L watermixer-symbols:Screw_Terminal_01x03 JTemp
+L watermixer-symbols:Screw_Terminal_01x03 JTemp1
 U 1 1 6143D1E5
 P 650 3900
-F 0 "JTemp" H 550 3800 50  0000 L CNN
+F 0 "JTemp1" H 550 3800 50  0000 L CNN
 F 1 "Temperature sensor" H 50  4200 50  0000 L CNN
 F 2 "watermixer-footprints:Screw_Termianl_01x03" H 650 3700 50  0001 C CNN
 F 3 "~" H 650 3900 50  0001 C CNN
@@ -142,107 +142,11 @@ F 3 "~" H 650 3900 50  0001 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L power:+12V #PWR?
-U 1 1 61448603
-P 9600 3800
-F 0 "#PWR?" H 9600 3650 50  0001 C CNN
-F 1 "+12V" H 9615 3973 50  0000 C CNN
-F 2 "" H 9600 3800 50  0001 C CNN
-F 3 "" H 9600 3800 50  0001 C CNN
-	1    9600 3800
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	9600 3800 9600 4000
-Wire Wire Line
-	9600 4000 9500 4000
-$Comp
-L power:GND #PWR?
-U 1 1 6144B091
-P 9600 4400
-F 0 "#PWR?" H 9600 4150 50  0001 C CNN
-F 1 "GND" H 9605 4227 50  0000 C CNN
-F 2 "" H 9600 4400 50  0001 C CNN
-F 3 "" H 9600 4400 50  0001 C CNN
-	1    9600 4400
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	9600 4400 9600 4250
-Wire Wire Line
-	9600 4250 9500 4250
-Wire Wire Line
-	9600 4250 9600 4150
-Wire Wire Line
-	9600 4150 9500 4150
-Connection ~ 9600 4250
-$Comp
-L watermixer-symbols:SD_BUCK3A U_5V
-U 1 1 61416868
-P 4700 5500
-F 0 "U_5V" V 4700 5600 50  0000 C CNN
-F 1 "SD_BUCK3A" V 4550 5600 50  0000 C CNN
-F 2 "watermixer-footprints:SD_BUCK3A" H 4800 5250 50  0001 C CNN
-F 3 "" H 4700 5500 50  0001 C CNN
-	1    4700 5500
-	0    -1   -1   0   
-$EndComp
-$Comp
-L power:GND #PWR?
-U 1 1 6144D59F
-P 2100 6000
-F 0 "#PWR?" H 2100 5750 50  0001 C CNN
-F 1 "GND" H 2105 5827 50  0000 C CNN
-F 2 "" H 2100 6000 50  0001 C CNN
-F 3 "" H 2100 6000 50  0001 C CNN
-	1    2100 6000
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:+12V #PWR?
-U 1 1 614522A9
-P 4600 6250
-F 0 "#PWR?" H 4600 6100 50  0001 C CNN
-F 1 "+12V" H 4615 6423 50  0000 C CNN
-F 2 "" H 4600 6250 50  0001 C CNN
-F 3 "" H 4600 6250 50  0001 C CNN
-	1    4600 6250
-	-1   0    0    1   
-$EndComp
-$Comp
-L power:GND #PWR?
-U 1 1 61453729
-P 4250 6250
-F 0 "#PWR?" H 4250 6000 50  0001 C CNN
-F 1 "GND" H 4255 6077 50  0000 C CNN
-F 2 "" H 4250 6250 50  0001 C CNN
-F 3 "" H 4250 6250 50  0001 C CNN
-	1    4250 6250
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:+12V #PWR?
-U 1 1 61459696
-P 2450 6000
-F 0 "#PWR?" H 2450 5850 50  0001 C CNN
-F 1 "+12V" H 2465 6173 50  0000 C CNN
-F 2 "" H 2450 6000 50  0001 C CNN
-F 3 "" H 2450 6000 50  0001 C CNN
-	1    2450 6000
-	-1   0    0    1   
-$EndComp
-Wire Wire Line
-	4450 4950 4450 4800
-Wire Wire Line
-	4450 4800 4350 4800
-Wire Wire Line
-	4350 4800 4350 4950
-$Comp
-L watermixer-symbols:SD_BUCK3A U_3.3V
+L watermixer-symbols:SD_BUCK3A U_3.3V1
 U 1 1 61417027
 P 2550 5200
-F 0 "U_3.3V" V 2550 5350 50  0000 C CNN
-F 1 "SD_BUCK3A" V 2400 5350 50  0000 C CNN
+F 0 "U_3.3V1" V 3300 5350 50  0000 C CNN
+F 1 "SD_BUCK3A" V 2050 5300 50  0000 C CNN
 F 2 "watermixer-footprints:SD_BUCK3A" H 2650 4950 50  0001 C CNN
 F 3 "" H 2550 5200 50  0001 C CNN
 	1    2550 5200
@@ -262,10 +166,10 @@ F 3 "~" H 2400 3800 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L watermixer-symbols:CR2013-MI2120-touch U?
+L watermixer-symbols:CR2013-MI2120-touch U1
 U 1 1 6143BF69
 P 2200 2950
-F 0 "U?" H 1900 3400 50  0000 C CNN
+F 0 "U1" H 1900 3400 50  0000 C CNN
 F 1 "Display" H 2600 3400 50  0000 C CNN
 F 2 "watermixer-footprints:CR2013-MI2120_touch" H 2200 2250 50  0001 C CNN
 F 3 "http://pan.baidu.com/s/11Y990" H 1550 3450 50  0001 C CNN
@@ -308,19 +212,6 @@ Wire Wire Line
 	3050 3150 3050 2350
 Wire Wire Line
 	3100 2300 3100 2850
-Wire Wire Line
-	2650 4650 2650 4550
-Wire Wire Line
-	2550 4550 2550 4650
-Wire Wire Line
-	2550 4550 2650 4550
-Wire Wire Line
-	2200 4500 2300 4500
-Wire Wire Line
-	2300 4500 2300 4650
-Connection ~ 2200 4500
-Wire Wire Line
-	2200 4500 2200 4650
 Connection ~ 3050 3150
 Wire Wire Line
 	2200 4000 3950 4000
@@ -394,9 +285,6 @@ Wire Wire Line
 	6950 700  950  700 
 Wire Wire Line
 	950  700  950  3600
-Wire Wire Line
-	950  3600 950  3900
-Connection ~ 950  3600
 Text Label 800  4000 0    50   ~ 0
 GND
 Text Label 800  4100 0    50   ~ 0
@@ -411,8 +299,6 @@ Connection ~ 1200 4100
 Wire Wire Line
 	1200 4100 2650 4100
 Wire Wire Line
-	800  3900 950  3900
-Wire Wire Line
 	800  4000 2200 4000
 Wire Wire Line
 	800  4100 1200 4100
@@ -423,11 +309,6 @@ Wire Wire Line
 Connection ~ 4550 3350
 Wire Wire Line
 	4550 3350 6850 3350
-Connection ~ 4350 4800
-Wire Wire Line
-	4350 3500 4350 3350
-Wire Wire Line
-	4350 3350 4550 3350
 Text Label 4550 4300 1    50   ~ 0
 SIG
 Text Label 4650 4300 1    50   ~ 0
@@ -448,15 +329,6 @@ Wire Wire Line
 	7450 3700 7450 1550
 Wire Wire Line
 	8700 4900 8700 4850
-Wire Wire Line
-	4700 4950 4700 4850
-Wire Wire Line
-	4700 4850 4800 4850
-Wire Wire Line
-	4800 4950 4800 4850
-Connection ~ 4800 4850
-Wire Wire Line
-	4800 4850 4900 4850
 Text Label 8300 4850 0    50   ~ 0
 5V
 Wire Wire Line
@@ -486,30 +358,16 @@ Wire Wire Line
 	9750 5000 9750 5300
 Connection ~ 9750 5300
 Wire Wire Line
-	9750 5000 9750 4150
-Wire Wire Line
-	9750 4150 9600 4150
-Connection ~ 9750 5000
-Connection ~ 9600 4150
-Wire Wire Line
-	9600 4000 9950 4000
-Wire Wire Line
-	9950 4000 9950 4900
-Wire Wire Line
 	9950 4900 10100 4900
-Connection ~ 9600 4000
 Wire Wire Line
 	9950 4900 9950 5200
 Wire Wire Line
 	9950 5200 10100 5200
-Connection ~ 9950 4900
 Wire Wire Line
 	9950 5200 9950 5500
 Wire Wire Line
 	9950 5500 10100 5500
 Connection ~ 9950 5200
-Wire Wire Line
-	8450 2950 8450 4050
 Wire Wire Line
 	6850 2550 6850 3350
 Wire Wire Line
@@ -521,16 +379,8 @@ Wire Wire Line
 Wire Wire Line
 	6800 1650 7050 1650
 Wire Wire Line
-	7050 1650 7050 4050
-Wire Wire Line
-	6800 2950 8450 2950
+	7050 1650 7050 3950
 Connection ~ 4900 4850
-Wire Wire Line
-	2200 4000 2200 4500
-Wire Wire Line
-	2650 4100 2650 4550
-Connection ~ 2650 4100
-Connection ~ 2650 4550
 Wire Wire Line
 	1350 3650 3750 3650
 Wire Wire Line
@@ -557,13 +407,6 @@ Wire Wire Line
 	7050 4250 6850 4250
 Wire Wire Line
 	4550 3800 4550 4350
-Wire Wire Line
-	4350 3800 4350 3950
-Wire Wire Line
-	4650 3950 4350 3950
-Connection ~ 4350 3950
-Wire Wire Line
-	4350 3950 4350 4800
 Connection ~ 4650 3950
 Wire Wire Line
 	4650 3950 4650 4350
@@ -571,31 +414,326 @@ Wire Wire Line
 	6850 4250 6850 3950
 Wire Wire Line
 	4650 3950 6850 3950
-Wire Wire Line
-	4250 5850 4450 5850
-Wire Wire Line
-	4250 5850 4250 6250
-Wire Wire Line
-	4600 5850 4600 6250
-Wire Wire Line
-	4600 5850 4800 5850
-Wire Wire Line
-	2100 5550 2100 6000
-Wire Wire Line
-	2100 5550 2300 5550
-Wire Wire Line
-	2450 5550 2450 6000
-Wire Wire Line
-	2450 5550 2650 5550
 $Comp
-L watermixer-symbols:Screw_Terminal_01x03 JPress
+L watermixer-symbols:Screw_Terminal_01x03 JPress1
 U 1 1 6140DCC9
 P 4550 4500
-F 0 "JPress" V 4650 4450 50  0000 L CNN
+F 0 "JPress1" V 4650 4450 50  0000 L CNN
 F 1 "Pressure sensor" V 4600 4850 50  0000 L CNN
 F 2 "watermixer-footprints:Screw_Termianl_01x03" H 4550 4300 50  0001 C CNN
 F 3 "~" H 4550 4500 50  0001 C CNN
 	1    4550 4500
 	0    1    1    0   
 $EndComp
+Wire Wire Line
+	6800 1150 8700 1150
+Wire Wire Line
+	8700 1150 8700 4850
+Connection ~ 8700 4850
+Wire Wire Line
+	6850 3950 7050 3950
+Connection ~ 6850 3950
+Connection ~ 7050 3950
+Wire Wire Line
+	7050 3950 7050 4050
+NoConn ~ 4050 1150
+NoConn ~ 4050 1250
+NoConn ~ 4050 1350
+NoConn ~ 4050 1650
+NoConn ~ 4050 1850
+NoConn ~ 4050 1950
+NoConn ~ 4050 2750
+NoConn ~ 4050 2650
+NoConn ~ 4050 2550
+NoConn ~ 6800 2250
+NoConn ~ 6800 2350
+NoConn ~ 6800 2450
+NoConn ~ 6800 2650
+NoConn ~ 6800 2750
+NoConn ~ 6800 2850
+NoConn ~ 6800 2050
+NoConn ~ 6800 1950
+NoConn ~ 6800 1750
+NoConn ~ 6800 1450
+NoConn ~ 6800 1350
+NoConn ~ 6800 1250
+NoConn ~ 7850 4600
+NoConn ~ 8050 4600
+NoConn ~ 8050 3700
+NoConn ~ 7850 3700
+NoConn ~ 1400 3350
+$Comp
+L power:VCC #PWR06
+U 1 1 615867D1
+P 5550 7000
+F 0 "#PWR06" H 5550 6850 50  0001 C CNN
+F 1 "VCC" H 5565 7173 50  0000 C CNN
+F 2 "" H 5550 7000 50  0001 C CNN
+F 3 "" H 5550 7000 50  0001 C CNN
+	1    5550 7000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5250 7150 5550 7150
+Wire Wire Line
+	5550 7150 5550 7000
+$Comp
+L power:GND #PWR07
+U 1 1 6158DE4A
+P 5550 7550
+F 0 "#PWR07" H 5550 7300 50  0001 C CNN
+F 1 "GND" H 5555 7377 50  0000 C CNN
+F 2 "" H 5550 7550 50  0001 C CNN
+F 3 "" H 5550 7550 50  0001 C CNN
+	1    5550 7550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5250 7400 5550 7400
+Wire Wire Line
+	5550 7400 5550 7550
+$Comp
+L power:PWR_FLAG #FLG03
+U 1 1 61594EB6
+P 5750 7000
+F 0 "#FLG03" H 5750 7075 50  0001 C CNN
+F 1 "PWR_FLAG" V 5750 7128 50  0000 L CNN
+F 2 "" H 5750 7000 50  0001 C CNN
+F 3 "~" H 5750 7000 50  0001 C CNN
+	1    5750 7000
+	0    1    1    0   
+$EndComp
+$Comp
+L power:PWR_FLAG #FLG04
+U 1 1 61595B94
+P 5750 7550
+F 0 "#FLG04" H 5750 7625 50  0001 C CNN
+F 1 "PWR_FLAG" V 5750 7678 50  0000 L CNN
+F 2 "" H 5750 7550 50  0001 C CNN
+F 3 "~" H 5750 7550 50  0001 C CNN
+	1    5750 7550
+	0    1    1    0   
+$EndComp
+$Comp
+L power:VCC #PWR09
+U 1 1 615AFAED
+P 9950 4650
+F 0 "#PWR09" H 9950 4500 50  0001 C CNN
+F 1 "VCC" H 9965 4823 50  0000 C CNN
+F 2 "" H 9950 4650 50  0001 C CNN
+F 3 "" H 9950 4650 50  0001 C CNN
+	1    9950 4650
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR08
+U 1 1 615B0DF3
+P 9750 6050
+F 0 "#PWR08" H 9750 5800 50  0001 C CNN
+F 1 "GND" H 9755 5877 50  0000 C CNN
+F 2 "" H 9750 6050 50  0001 C CNN
+F 3 "" H 9750 6050 50  0001 C CNN
+	1    9750 6050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9750 5600 9750 6050
+Wire Wire Line
+	9950 4650 9950 4900
+Connection ~ 9950 4900
+$Comp
+L power:VCC #PWR02
+U 1 1 615E182E
+P 2750 5900
+F 0 "#PWR02" H 2750 5750 50  0001 C CNN
+F 1 "VCC" H 2765 6073 50  0000 C CNN
+F 2 "" H 2750 5900 50  0001 C CNN
+F 3 "" H 2750 5900 50  0001 C CNN
+	1    2750 5900
+	-1   0    0    1   
+$EndComp
+$Comp
+L power:GND #PWR01
+U 1 1 615E8CEF
+P 2100 5850
+F 0 "#PWR01" H 2100 5600 50  0001 C CNN
+F 1 "GND" H 2105 5677 50  0000 C CNN
+F 2 "" H 2100 5850 50  0001 C CNN
+F 3 "" H 2100 5850 50  0001 C CNN
+	1    2100 5850
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:VCC #PWR04
+U 1 1 615F4805
+P 4950 6350
+F 0 "#PWR04" H 4950 6200 50  0001 C CNN
+F 1 "VCC" H 4965 6523 50  0000 C CNN
+F 2 "" H 4950 6350 50  0001 C CNN
+F 3 "" H 4950 6350 50  0001 C CNN
+	1    4950 6350
+	-1   0    0    1   
+$EndComp
+$Comp
+L power:GND #PWR03
+U 1 1 615F4C68
+P 4100 6350
+F 0 "#PWR03" H 4100 6100 50  0001 C CNN
+F 1 "GND" H 4105 6177 50  0000 C CNN
+F 2 "" H 4100 6350 50  0001 C CNN
+F 3 "" H 4100 6350 50  0001 C CNN
+	1    4100 6350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4300 6150 4300 6250
+Wire Wire Line
+	2300 5600 2100 5600
+Wire Wire Line
+	2100 5600 2100 5850
+Wire Wire Line
+	2650 5600 2750 5600
+Wire Wire Line
+	2750 5600 2750 5900
+$Comp
+L watermixer-symbols:SD_BUCK3A U_5V1
+U 1 1 61416868
+P 4650 5900
+F 0 "U_5V1" V 5400 6000 50  0000 C CNN
+F 1 "SD_BUCK3A" V 4200 6000 50  0000 C CNN
+F 2 "watermixer-footprints:SD_BUCK3A" H 4750 5650 50  0001 C CNN
+F 3 "" H 4650 5900 50  0001 C CNN
+	1    4650 5900
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	4750 6250 4950 6250
+Wire Wire Line
+	4950 6250 4950 6350
+Wire Wire Line
+	4100 6250 4100 6350
+Wire Wire Line
+	4100 6250 4300 6250
+NoConn ~ 4400 6250
+NoConn ~ 4650 6250
+NoConn ~ 4400 5250
+NoConn ~ 4650 5250
+Wire Wire Line
+	2650 5600 2650 5550
+Wire Wire Line
+	2300 5600 2300 5550
+Wire Wire Line
+	2200 4550 2200 4000
+Connection ~ 2650 4100
+Wire Wire Line
+	4750 5250 4750 5200
+Wire Wire Line
+	4750 4850 4900 4850
+Wire Wire Line
+	4300 3350 4550 3350
+Wire Wire Line
+	4300 3950 4650 3950
+Wire Wire Line
+	4300 3950 4300 5250
+Wire Wire Line
+	4300 3350 4300 3500
+Wire Wire Line
+	4300 3950 4300 3800
+Connection ~ 4300 3950
+Wire Wire Line
+	2300 4550 2200 4550
+Connection ~ 2200 4550
+Wire Wire Line
+	2550 4550 2650 4550
+Connection ~ 2650 4550
+Wire Wire Line
+	2200 5550 2300 5550
+Connection ~ 2300 5550
+Wire Wire Line
+	2550 5550 2650 5550
+Connection ~ 2650 5550
+Wire Wire Line
+	5250 7300 5550 7300
+Wire Wire Line
+	5550 7300 5550 7400
+Connection ~ 5550 7400
+NoConn ~ 9300 5300
+NoConn ~ 8100 5300
+NoConn ~ 8100 5400
+Wire Wire Line
+	800  3900 950  3900
+Wire Wire Line
+	950  3900 950  3600
+Connection ~ 950  3600
+Connection ~ 4750 5200
+Wire Wire Line
+	4750 5200 4750 4850
+Wire Wire Line
+	6800 2950 8450 2950
+Wire Wire Line
+	8450 2950 8450 4050
+$Comp
+L power:PWR_FLAG #FLG05
+U 1 1 617755C1
+P 8450 2950
+F 0 "#FLG05" H 8450 3025 50  0001 C CNN
+F 1 "PWR_FLAG" H 8450 3123 50  0000 C CNN
+F 2 "" H 8450 2950 50  0001 C CNN
+F 3 "~" H 8450 2950 50  0001 C CNN
+	1    8450 2950
+	1    0    0    -1  
+$EndComp
+Connection ~ 8450 2950
+$Comp
+L power:VCC #PWR05
+U 1 1 61776287
+P 5100 5200
+F 0 "#PWR05" H 5100 5050 50  0001 C CNN
+F 1 "VCC" H 5115 5373 50  0000 C CNN
+F 2 "" H 5100 5200 50  0001 C CNN
+F 3 "" H 5100 5200 50  0001 C CNN
+	1    5100 5200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5100 5200 4750 5200
+Wire Wire Line
+	5750 7000 5550 7000
+Connection ~ 5550 7000
+Wire Wire Line
+	2650 4100 2650 4250
+Wire Wire Line
+	5550 7550 5750 7550
+Connection ~ 5550 7550
+NoConn ~ 3000 2950
+$Comp
+L power:VDD #PWR0101
+U 1 1 617A9ADE
+P 2850 4250
+F 0 "#PWR0101" H 2850 4100 50  0001 C CNN
+F 1 "VDD" H 2865 4423 50  0000 C CNN
+F 2 "" H 2850 4250 50  0001 C CNN
+F 3 "" H 2850 4250 50  0001 C CNN
+	1    2850 4250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2850 4250 2650 4250
+Connection ~ 2650 4250
+Wire Wire Line
+	2650 4250 2650 4550
+$Comp
+L power:PWR_FLAG #FLG0101
+U 1 1 617B04F0
+P 3050 4250
+F 0 "#FLG0101" H 3050 4325 50  0001 C CNN
+F 1 "PWR_FLAG" V 3050 4378 50  0000 L CNN
+F 2 "" H 3050 4250 50  0001 C CNN
+F 3 "~" H 3050 4250 50  0001 C CNN
+	1    3050 4250
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	3050 4250 2850 4250
+Connection ~ 2850 4250
 $EndSCHEMATC
