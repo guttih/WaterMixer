@@ -6,6 +6,12 @@ K DC power barrel jack connector
 F ~
 $ENDCMP
 #
+$CMP CP
+D Polarized capacitor
+K cap capacitor
+F ~
+$ENDCMP
+#
 $CMP CR2013-MI2120-touch
 D ILI9341 controller, SPI TFT LCD Display, 9-pin breakout PCB, 4-pin SD card interface, touch 5-pin, 5V/3.3V
 K driver display
