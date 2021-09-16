@@ -154,17 +154,6 @@ F 3 "~" H 2400 3800 50  0001 C CNN
 	1    2400 3800
 	0    1    1    0   
 $EndComp
-$Comp
-L watermixer-symbols:CR2013-MI2120-touch U1
-U 1 1 6143BF69
-P 2200 2950
-F 0 "U1" H 1900 3400 50  0000 C CNN
-F 1 "Display" H 2600 3400 50  0000 C CNN
-F 2 "watermixer-footprints:CR2013-MI2120_touch" H 2200 2250 50  0001 C CNN
-F 3 "http://pan.baidu.com/s/11Y990" H 1550 3450 50  0001 C CNN
-	1    2200 2950
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	4050 2350 3950 2350
 Wire Wire Line
@@ -380,7 +369,6 @@ Wire Wire Line
 	2200 3550 4050 3550
 Wire Wire Line
 	4050 3550 4050 2950
-Connection ~ 2200 3550
 Wire Wire Line
 	4900 4850 8450 4850
 Connection ~ 8450 4850
@@ -844,4 +832,16 @@ F 3 "~" H 700 6850 50  0001 C CNN
 	1    700  6850
 	1    0    0    -1  
 $EndComp
+$Comp
+L watermixer-symbols:CR2013-MI2120-touch U1
+U 1 1 6142F819
+P 2200 2950
+F 0 "U1" H 2200 3731 50  0000 C CNN
+F 1 "CR2013-MI2120-touch" H 2200 3640 50  0000 C CNN
+F 2 "watermixer-footprints:CR2013-MI2120_touch" H 2200 2250 50  0001 C CNN
+F 3 "http://pan.baidu.com/s/11Y990" H 1550 3450 50  0001 C CNN
+	1    2200 2950
+	1    0    0    -1  
+$EndComp
+Connection ~ 2200 3550
 $EndSCHEMATC

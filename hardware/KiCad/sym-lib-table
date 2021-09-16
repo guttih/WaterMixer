@@ -1,3 +1,4 @@
 (sym_lib_table
   (lib (name watermixer-symbols)(type Legacy)(uri ${KIPRJMOD}/watermixer-symbols.lib)(options "")(descr ""))
+  (lib (name watermixer-rescue)(type Legacy)(uri ${KIPRJMOD}/watermixer-rescue.lib)(options "")(descr ""))
 )
