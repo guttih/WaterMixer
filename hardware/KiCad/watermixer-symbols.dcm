@@ -1,5 +1,10 @@
 EESchema-DOCLIB  Version 2.0
 #
+$CMP ADS1115
+D 16-bit analog to digital converter, quad input
+K ADC i2c
+$ENDCMP
+#
 $CMP Barrel_Jack
 D DC Barrel Jack with an internal switch
 K DC power barrel jack connector
