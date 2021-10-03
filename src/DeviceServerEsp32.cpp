@@ -1288,8 +1288,7 @@ void setup() {
     Serial.println("Whitelist: " + whiteList.toJson());
 
     Serial.println("");
-
-    setupSensors();
+    setupSensorTemperature();
 
 
     touch_calibrate(false);
@@ -1300,7 +1299,7 @@ void setup() {
     }
 
     water.begin(13, 14);
-
+    setupSensorAdc();
     setupMenu();
 
     String outString;

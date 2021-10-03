@@ -15,6 +15,7 @@
 #include "watermixer.h"
 
 #include <Adafruit_MCP4728.h>
+#include <Adafruit_ADS1X15.h>
 
 #define CALIBRATION_FILE "/TouchCalData3"
 
@@ -51,7 +52,6 @@ struct GLOBAL_STRUCT {
     PID_STRUCT pid;
 } values;
 
-const int PIN_PRESSURE = 34;
 const int PIN_TEMPERATURE = 25;
 
 const int PIN_HOT = 12;
@@ -68,6 +68,7 @@ double currentPressure = 0;
 
 OneWire oneWire(PIN_TEMPERATURE);
 DallasTemperature sensors(&oneWire);
+Adafruit_ADS1115 ads; //Analog to digital converter (ADC)
 
 
 /*

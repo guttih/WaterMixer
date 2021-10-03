@@ -36,8 +36,8 @@ This device is used to send voltage ranging from 0-5 volts which a proportional
 valve understands.
 
 
-- Bought [here](https://www.aliexpress.com/item/4000169156580.html?spm=a2g0s.12269583.0.0.7faa1ca26zCgTQ)
-- Inventory [Here](http://parts.guttih.com/parts/view/5eff93f45025df04fc393477)
+- Bought [here](https://www.aliexpress.com/item/32975252305.html?spm=a2g0s.12269583.0.0.142b3d73bl1KXq)
+- Inventory [Here](http://parts.guttih.com/parts/view/61110ca1643bf7053b856df2)
 
 ## proportional_valve
 __12V Proportional Valve__

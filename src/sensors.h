@@ -5,13 +5,24 @@
 
 unsigned long timerReadTemperature;
 
-void setupSensors() {
+void setupSensorTemperature() {
     Serial.println("Setting up sensors");
     timerReadTemperature = 0;
     sensors.begin();
     sensors.setWaitForConversion(false);
     sensors.requestTemperatures(); 
     sensors.setResolution(9);
+}
+
+void setupSensorAdc() {
+  // Getting single-ended readings from AIN0..3
+  // ADC Range: +/- 6.144V (1 bit = 3mV/ADS1015, 0.1875mV/ADS1115)
+  // Try to initialize ADC!
+  Serial.println("Setting up the Analog to Digital Converter ADS1115");
+  if (!ads.begin()) {
+    Serial.println("Failed to initialize ADS.");
+    while (1);
+  }
 }
 
 
@@ -39,32 +50,28 @@ bool readTemperature(double *value) {
 
 }
 
-const int pressureSampleCount = 20;
-float pressureSamples[pressureSampleCount];
-unsigned long pressureSampleNumber = 0;
-
 /**
  * @brief Get the pressure
  * 
- * @return double number in PSI(Pound per square inch)
+ * @return double number in BAR
  */
 double readPressure() {
   
   // 5 psi should give full power that is 4096
-  // todo: bought a new sensor which is 60 psi which is on it's way from china.
-  // todo: this scale should be in bars not PSI when the new sensor arrives
+  // todo: bought a new sensor which is 60 psi
+  // todo: this scale should be in bars not volts when the new sensor arrives
+  int16_t adc0 = ads.readADC_SingleEnded(0);
+  
+  //float volts0 = ads.computeVolts(adc0);
+  
+  //if volts is 5 then PSI = 60 PSI (pounds per square inch) and BAR = 4.13685438
+  //The 5 PSI sensor sends 5.05 volts when filling the hot tub so I'm setting that as the max value
+  //The 5 PSI sensor sends 26906 value when filling the hot tub so I'm setting that as the max value
+  // so 26906 / 4.13685438 = 6503.975613 which is the ratio between the value and BAR units 
 
-  pressureSamples[pressureSampleNumber % pressureSampleCount] = ((float)analogRead(PIN_PRESSURE) / (float)4096) * 5;
-  //Serial.printf("%lu index:%d\n", pressureSampleNumber, pressureSampleNumber % pressureSampleCount);
-  pressureSampleNumber++;
-  int samplePull = pressureSampleNumber < pressureSampleCount? pressureSampleCount:pressureSampleCount;
-
-  //get the average
-  double res = 0;
-  for(int i = 0; i<samplePull; i++) {
-    res+=pressureSamples[i];
-  }
-  return res/samplePull;
+  double ret = adc0 / (double)6503.975613;
+  
+  return ret;
   
 }
 

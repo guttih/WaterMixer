@@ -1,0 +1,77 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP ADS1115
+D 16-bit analog to digital converter, quad input
+K ADC i2c
+$ENDCMP
+#
+$CMP Barrel_Jack
+D DC Barrel Jack with an internal switch
+K DC power barrel jack connector
+F ~
+$ENDCMP
+#
+$CMP CP
+D Polarized capacitor
+K cap capacitor
+F ~
+$ENDCMP
+#
+$CMP CR2013-MI2120-touch
+D ILI9341 controller, SPI TFT LCD Display, 9-pin breakout PCB, 4-pin SD card interface, touch 5-pin, 5V/3.3V
+K driver display
+F http://pan.baidu.com/s/11Y990
+$ENDCMP
+#
+$CMP ESP32-DevKitC
+D Development Kit
+K ESP32
+F https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/hw-reference/esp32/get-started-devkitc.html
+$ENDCMP
+#
+$CMP ESP32-S2-Saola-1
+D Development Kit
+K ESP32-S2
+$ENDCMP
+#
+$CMP LLC_4CH
+D 4-Channel Bidirectional Voltage-Level Translator, Auto Direction Sensing and ±15-kV ESD Protection, 3.3V LPort, 5.5V HPort, SOIC-12
+K Level-Shifter CMOS-TTL-Translation
+F http://www.ti.com/lit/ds/symlink/txb0104.pdf
+$ENDCMP
+#
+$CMP MCP4728
+D 12-bit digital to analog converter, quad output, 2.048V internal reference, integrated EEPROM, I2C interface
+K dac i2c
+F http://ww1.microchip.com/downloads/en/DeviceDoc/22187E.pdf
+$ENDCMP
+#
+$CMP MountingHole
+D Mounting Hole without connection
+K mounting hole
+F ~
+$ENDCMP
+#
+$CMP R
+D Resistor
+K R res resistor
+F ~
+$ENDCMP
+#
+$CMP SD_BUCK3A
+D DC-DC Step Down Power Supply Module 3A Buck Converter. SupplyVCC 4.5V-24V, outVCC 1.8V-9V
+$ENDCMP
+#
+$CMP Screw_Terminal_01x03
+D Generic screw terminal, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)
+K screw terminal
+F ~
+$ENDCMP
+#
+$CMP Screw_Terminal_01x06
+D Generic screw terminal, single row, 01x06, script generated (kicad-library-utils/schlib/autogen/connector/)
+K screw terminal
+F ~
+$ENDCMP
+#
+#End Doc Library
