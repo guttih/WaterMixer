@@ -7,8 +7,6 @@
 
 #include <TFT_eSPI.h> // Hardware-specific library
 
-
-#include <OneWire.h>
 #include <DallasTemperature.h>
 
 #include "DisplayMenu.h"
