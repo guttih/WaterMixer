@@ -38,6 +38,8 @@ by regular post to the address Haseyla 27, 260 Reykjanesbar, Iceland.
 */
 
 const char* deviceId = "61052c38bc1fdd0526aedf31";
+const char *hostName = "WaterMixer";
+
 // Name of the wifi (accesspoint)network
 // example: "guttisWiFi"
 const char* ssid = getSsId();
@@ -1084,6 +1086,7 @@ bool connectWifiHelper(String ssid, String password, uint32_t uiDelay) {
     Serial.println();
     String outString = "";
     Serial.print("Connecting to ");
+    WiFi.hostname(hostName);
     if (password.length() < 1) {
         WiFi.begin(ssid.c_str());
         outString = ssid + ".";
