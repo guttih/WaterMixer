@@ -47,8 +47,8 @@ void setupArduinoOTA(const char *hostName) {
       else if (error == OTA_END_ERROR) Serial.println("End Failed");
     });
 
-  ArduinoOTA.begin();
   ArduinoOTA.setHostname(hostName);
+  ArduinoOTA.begin();
 }
 
 #endif

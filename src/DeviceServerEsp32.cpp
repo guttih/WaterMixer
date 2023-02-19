@@ -38,7 +38,7 @@ by regular post to the address Haseyla 27, 260 Reykjanesbar, Iceland.
 */
 
 const char* deviceId = "61052c38bc1fdd0526aedf31";
-const char *hostName = "WaterMixer";
+const char *hostName = "watermixer";
 
 // Name of the wifi (accesspoint)network
 // example: "guttisWiFi"
@@ -265,8 +265,7 @@ public:
     String jsonKeyValue(String key, String value);
     String jsonKeyValue(String key, int value);
     String jsonObjectType(unsigned int uiType);
-    String makeStatusResponceJson(String jsonPins, String jsonWhitelist, String jsonDate);
-    String makeStatusResponceJson(String jsonPins, String jsonWhitelist, String jsonDate, String jsonMixer);
+    String makeStatusResponceJson(String jsonPins, String jsonWhitelist, String jsonDate, String macAddress, String deviceId, String hostName, String deviceIpAddress, int port, String jsonMixer);
     
     String makePostLogPinsJson(String deviceId, String jsonPins);
     String makeHttpStatusCodeString(unsigned int uiStatusCode);
@@ -1003,7 +1002,17 @@ void handleStatus(WiFiClient* client) {
         whiteList.add(voffconServerIp);
     }
 
-    String str = urlTool.makeStatusResponceJson(devicePins.toJson(), whiteList.toJson(), startTime.toJson(), water.toJson());
+    String str = urlTool.makeStatusResponceJson(
+        devicePins.toJson(), 
+        whiteList.toJson(), 
+        startTime.toJson(), 
+        WiFi.macAddress(), 
+        deviceId, 
+        hostName, 
+        client->localIP().toString(), 
+        PORT, 
+        water.toJson()
+    );
 
     client->println(makeJsonResponseString(200, str));
 }
@@ -1075,10 +1084,12 @@ void printWiFiInfo() {
     //Serial.print  ("WiFi psk       :"); Serial.println(WiFi.psk());  
     Serial.print("WiFi.BSSIDstr  :"); Serial.println(WiFi.BSSIDstr());
     Serial.print("WiFi status    :"); Serial.println(WiFi.status());
+    Serial.print("WiFi.macAddress:"); Serial.println(WiFi.macAddress());
+    Serial.print("WiFi.getHostname   :"); Serial.println(WiFi.getHostname());
     Serial.print("VOFFCON ip and port:"); Serial.println(voffconServerIp.toString() + ":" + voffconServerPort);
-
     Serial.println("----------------------------------");
 }
+
 bool connectWifiHelper(String ssid, String password, uint32_t uiDelay) {
     DisplayPage * pPage = menu.getPage(PAGE_INDEX_CONNECTION);
     DisplayLabel * pLabelHeading = pPage->getLabel(pPage->labelCount()-2);
@@ -1191,19 +1202,6 @@ static void poll_connection(void) {
         else WiFi.begin();
     }
 }
-static void timerTwoSeconds(void) {
-    static uint32_t timerTwoSecondsMs = millis();
-
-    if ((millis() - timerTwoSecondsMs) > 2000) {
-
-        //excecute commands at one second interval
-        poll_connection();
-        //pinnar.get(LIGHTPIN)->setValue(WiFi.isConnected());
-
-        //after the last command executes then two second will pass
-        timerTwoSecondsMs = millis();
-    }
-}
 
 unsigned long timerUpdateScreen = 0;
 void drawLinkedButtonsAndLabels() {
@@ -1274,6 +1272,26 @@ void drawLinkedButtonsAndLabels() {
     }
 }
 
+static void reconnectIfDisconnected(void) {
+    static bool connectionWasDisconnected = false;
+    static int connectionCount = 0;
+    if (WiFi.isConnected()){
+        if (connectionWasDisconnected){
+            connectionWasDisconnected = false;
+            connectionCount = 0;
+        }
+        return;
+    }
+    connectionWasDisconnected = true;
+    static uint32_t timerCheckWifiConnection = millis();
+    if ((millis() - timerCheckWifiConnection) > 10000) {
+        Serial.print("Reconnecting ");Serial.print(++connectionCount);Serial.println(" to WiFi...");
+        WiFi.disconnect();
+        WiFi.reconnect();
+        timerCheckWifiConnection = millis();
+    }
+}
+
 void setup() {
     //Initialize serial and wait for port to open:
     Serial.begin(115200);
@@ -1327,7 +1345,7 @@ void setup() {
         pLabelStatus->setText(outString, true);
         ESP.restart();
     }
-    setupArduinoOTA(deviceId);
+    setupArduinoOTA(hostName);
     printWiFiInfo();
     pLabelHeading->setText("Reporting in to VoffCon");
     pLabelStatus->setText("");
@@ -1356,6 +1374,7 @@ void setup() {
 void loop() {
     ArduinoOTA.handle();
     checkAndUpdateSensors();
+    reconnectIfDisconnected();
     //Serial.printf("%.3f°  %.3f PSI\n", currentTemperature, currentPressure);
     menu.update();
     drawLinkedButtonsAndLabels();
@@ -2366,26 +2385,22 @@ String GUrl::jsonObjectType(unsigned int uiType) {
     return jsonKeyValue("type", str);
 }
 
-String GUrl::makeStatusResponceJson(String jsonPins, String jsonWhitelist, String jsonDate, String jsonMixer) {
+String GUrl::makeStatusResponceJson(String jsonPins, String jsonWhitelist, String jsonDate, String macAddress, String deviceId, String hostName, String deviceIpAddress, int port, String jsonMixer) {
     String str = "{" +
-        jsonObjectType(OBJECTTYPE_STATUS) + "," +
-        jsonKeyValue("pins", jsonPins) + "," +
-        jsonKeyValue("whitelist", jsonWhitelist) + "," +
-        jsonKeyValue("date", jsonDate) + "," +
+        jsonObjectType(OBJECTTYPE_STATUS)                + "," +
+        jsonKeyValue("pins", jsonPins)                   + "," +
+        jsonKeyValue("whitelist", jsonWhitelist)         + "," +
+        jsonKeyValue("macAddress","\""+macAddress+ "\"") + "," +
+        jsonKeyValue("deviceId", "\""+deviceId+ "\"")    + "," +
+        jsonKeyValue("hostName", "\""+hostName+ "\"")    + "," +
+        jsonKeyValue("ip", "\""+deviceIpAddress+ "\"")   + "," +
+        jsonKeyValue("port", String(port))               + "," +
+        jsonKeyValue("date", jsonDate)                   + "," +
         jsonKeyValue("mixer", jsonMixer) +
         "}";
     return str;
 }
 
-String GUrl::makeStatusResponceJson(String jsonPins, String jsonWhitelist, String jsonDate) {
-    String str = "{" +
-        jsonObjectType(OBJECTTYPE_STATUS) + "," +
-        jsonKeyValue("pins", jsonPins) + "," +
-        jsonKeyValue("whitelist", jsonWhitelist) + "," +
-        jsonKeyValue("date", jsonDate) +
-        "}";
-    return str;
-}
 String GUrl::makePostLogPinsJson(String deviceId, String jsonPins) {
     String str = "{" +
         jsonObjectType(OBJECTTYPE_LOG_PINS) + "," +
