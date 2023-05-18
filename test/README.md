@@ -7,7 +7,12 @@ __Running the tests__
 
 Assuming the esp32 is connected to the usb on port COM4
 ```
-pio test -e esp32dev --test-port COM4
+pio test -e esp32dev --test-port COM6
+```
+
+Showing serial print monitor
+```
+pio test -e esp32dev -v --test-port COM6
 ```
 
 

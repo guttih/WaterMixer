@@ -70,3 +70,33 @@ void test_waterMixerChangeValues() {
     mixer.setMode(AUTOMATIC);
     TEST_ASSERT_TRUE_MESSAGE(AUTOMATIC == mixer.getMode(), "getMode should set active to true");
 }
+
+void test_waterMixerToJson() {
+    
+    WaterMixer mixer(channelHot, channelCold, channelDrain, 1, 2, 3);
+    // mixer.getHotValve()->setValue(5000);
+    // mixer.begin(13, 14);
+    String str = mixer.toJson();
+    TEST_ASSERT_TRUE_MESSAGE(str.startsWith("{"),"json string should start with {" );
+    TEST_ASSERT_TRUE_MESSAGE(str.endsWith("}"),"json string should end with }" );
+    TEST_ASSERT_TRUE_MESSAGE(str.indexOf("\"hotValveFlow\":")       > -1,"json string missing hotValveFlow");
+    TEST_ASSERT_TRUE_MESSAGE(str.indexOf("\"coldValveFlow\":")      > -1,"json string missing coldValveFlow");
+    TEST_ASSERT_TRUE_MESSAGE(str.indexOf("\"drainValveFlow\":")     > -1,"json string missing drainValveFlow");
+    TEST_ASSERT_TRUE_MESSAGE(str.indexOf("\"currentTemperature\":") > -1,"json string missing currentTemperature");
+    TEST_ASSERT_TRUE_MESSAGE(str.indexOf("\"desiredTemperature\":") > -1,"json string missing desiredTemperature");
+    TEST_ASSERT_TRUE_MESSAGE(str.indexOf("\"currentPressure\":")   > -1,"json string missing currentPressure");
+    
+    Serial.println(str);
+
+}
+
+void test_waterMixerMapValue() {
+    
+    WaterMixer mixer(channelHot, channelCold, channelDrain, 1, 2, 3);
+    TEST_ASSERT_EQUAL_DOUBLE(   0, mixer.mapValue(0,     100, 1023));
+    TEST_ASSERT_EQUAL_DOUBLE(   1, mixer.mapValue(0.1,   100, 1023));
+    TEST_ASSERT_EQUAL_DOUBLE(   2, mixer.mapValue(0.244, 100, 1023));
+    TEST_ASSERT_EQUAL_DOUBLE(   3, mixer.mapValue(0.245, 100, 1023));
+    TEST_ASSERT_EQUAL_DOUBLE( 512, mixer.mapValue(50,    100, 1023));
+    TEST_ASSERT_EQUAL_DOUBLE(1023, mixer.mapValue(100,   100, 1023));
+}

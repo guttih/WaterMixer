@@ -19,9 +19,10 @@ void setupSensorAdc() {
   // ADC Range: +/- 6.144V (1 bit = 3mV/ADS1015, 0.1875mV/ADS1115)
   // Try to initialize ADC!
   Serial.println("Setting up the Analog to Digital Converter ADS1115");
-  if (!ads.begin()) {
-    Serial.println("Failed to initialize ADS.");
-    while (1);
+  values.pressureSensorIsActive=ads.begin();
+  if (!values.pressureSensorIsActive) {
+    Serial.println("Error: Failed to initialize ADS. (For pressures sensing)");
+    // while (1);
   }
 }
 
@@ -79,14 +80,18 @@ double readPressure() {
  * @brief Checks if it's time to read a new value from sensors and updates values if it is time
  * 
  */
-void checkAndUpdateSensors() {
+bool checkAndUpdateSensors() {
    
-   currentPressure = readPressure();
-   water.setCurrentPressure(currentPressure);
+  if (values.pressureSensorIsActive) {
+    currentPressure = readPressure();
+    water.setCurrentPressure(currentPressure);
+  }
 
-   readTemperature(&currentTemperature);
-   water.setCurrentTemperature(currentTemperature);
-   
+  readTemperature(&currentTemperature);
+  water.setCurrentTemperature(currentTemperature);
+  //todo: return false if both Pressure sensor and Temperature are offline
+
+  return true;
 }
 
 #endif

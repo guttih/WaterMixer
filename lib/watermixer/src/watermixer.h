@@ -52,6 +52,7 @@ class WaterMixer
         String readLine(File file);
         SYSTEM_SAMPLE extractDataFromString(String line);
         void init(channel hotValve, channel coldValve, channel drainValve, double currentTemperature, double desiredTemperature, double currentPressure,  WaterMixerMode mode);
+    
     public:
         WaterMixer(channel hotValve, channel coldValve, channel drainValve, double currentTemperature = 0, double desiredTemperature = 0, double currentPressure = 0);
         void begin(int sdaPin = 21, int sclPin = 22);
@@ -180,5 +181,12 @@ class WaterMixer
          */
         String toJson();
         WATER_MIXER_UPDATE update();
+
+        /**
+         * @brief Maps a double number to an integer number
+         * 
+         * @return int number rounded to 0.5
+         */
+        int mapValue(double dValue, double dValueMax, int iValueMax);
 };
 #endif

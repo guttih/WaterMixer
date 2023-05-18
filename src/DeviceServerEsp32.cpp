@@ -575,7 +575,22 @@ String reportIn() {
     return ret;
 }
 
-void tellServerToSaveLog() {
+/**
+ * @brief Log all device pin values to voffcon
+ * 
+ * @param sendAfterReplyToCaller if true, log will be executed after answering caller.
+ */
+
+
+const unsigned long tellServerToSaveLogTimerDelayMs = 10 * 1000;
+unsigned long _tellServerToSaveLogTimer = ULONG_MAX;
+void tellServerToSaveLog(bool sendAfterReplyToCaller) {
+    if (sendAfterReplyToCaller) {
+        _tellServerToSaveLogTimer = millis() + tellServerToSaveLogTimerDelayMs;
+        return;
+    }
+    _tellServerToSaveLogTimer = ULONG_MAX;
+
     Serial.println("Telling server to log the device pins");
 
     HTTPClient http;
@@ -690,12 +705,13 @@ bool setPinValues(String jsonString, GPins* devicePins) {
 /// </summary>
 void setupPins() {
 
-    //uint8_t index, uint8_t number, uint8_t value, PINTYPE type = PINTYPE_ANALOG
-    PINTYPE type, type2;
-    //type = PINTYPE_ANALOG;
-    /*Pins D0 - D7 can be turned compleately off with OUTPUT_ANALOG*/
-    type = PINTYPE_OUTPUT_ANALOG;
-    type2 = PINTYPE_OUTPUT_DIGITAL;
+    devicePins.addPin("valveHot",           PINTYPE_OUTPUT_VIRTUAL, 50, 0);
+    devicePins.addPin("valveCold",          PINTYPE_OUTPUT_VIRTUAL, 51, 0);
+    devicePins.addPin("valveDrain",         PINTYPE_OUTPUT_VIRTUAL, 52, 0);
+    devicePins.addPin("pressure",           PINTYPE_OUTPUT_VIRTUAL, 53, 0);
+    devicePins.addPin("temperature",        PINTYPE_OUTPUT_VIRTUAL, 54, 0);
+    devicePins.addPin("desiredTemperature", PINTYPE_OUTPUT_VIRTUAL, 55, 0);
+
 
     Serial.println("----------------------------------------");
     Serial.println(devicePins.toJson());
@@ -926,10 +942,12 @@ void handleCustom(WiFiClient* client, unsigned int postMethod, String callingUrl
                                 httpResponseCode = 200;
                                 strSend =  "{\"message\":\"Draining the hot tub\"}";
                                 water.drain();
+                                tellServerToSaveLog(true);
                         } else if (pCommand->getValueAsString() == "stop") {
                                 httpResponseCode = 200;
                                 strSend =  "{\"message\":\"Stoppig flow to and from the hot tub\"}";
                                 water.stop();
+                                tellServerToSaveLog(true);
                         } else if (pCommand->getValueAsString() == "flow") {
                             //Opening water valves command
                             pParam1 =  parser.getRootObject()->getChild("hot");
@@ -941,6 +959,7 @@ void handleCustom(WiFiClient* client, unsigned int postMethod, String callingUrl
                                     httpResponseCode = 200;
                                     strSend =  "{\"message\":\"Opening valves\",\"hot\":" + String(hot) +",\"cold\":" + String(cold) + "}";
                                     water.fill(hot, cold);
+                                    tellServerToSaveLog(true);
                                 }
                             }
                         } else if (pCommand->getValueAsString() == "fill") {
@@ -958,6 +977,7 @@ void handleCustom(WiFiClient* client, unsigned int postMethod, String callingUrl
                                     else
                                     {
                                         water.fillDesired();
+                                        tellServerToSaveLog(true);
                                         httpResponseCode = 200;
                                         strSend = "{\"message\":\"Filling with temperature\",\"temperature\":" + String(temperature) +
                                                   ",\"hot\":" + String(sample.hotValveFlow) + ",\"cold\":" + String(sample.coldValveFlow) +
@@ -969,6 +989,7 @@ void handleCustom(WiFiClient* client, unsigned int postMethod, String callingUrl
                                 httpResponseCode = 200;
                                 strSend = "{\"message\":\"Filling with currently desired temperature\",\"temperature\":" + String(water.getDesiredTemperature()) +"}";
                                 water.fillDesired();
+                                tellServerToSaveLog(true);
                             }
                         }
                     }
@@ -1292,6 +1313,21 @@ static void reconnectIfDisconnected(void) {
     }
 }
 
+/**
+ * @brief Copies the current device values and saves them to the virtual device pins
+ * 
+ */
+void updateDeviceVirtualPinValues() {
+
+    devicePins.setValue(50, water.mapValue(water.getHotValveFlow(),       100, 1024));
+    devicePins.setValue(51, water.mapValue(water.getColdValveFlow(),      100, 1024));
+    devicePins.setValue(52, water.mapValue(water.getDrainValveFlow(),     100, 1024));
+    devicePins.setValue(52, water.mapValue(water.getDrainValveFlow(),     100, 1024));
+    devicePins.setValue(53, water.mapValue(water.getCurrentPressure(),      5, 1024));
+    devicePins.setValue(54, water.mapValue(water.getCurrentTemperature(), 100, 1024));
+    devicePins.setValue(55, water.mapValue(water.getDesiredTemperature(), 100, 1024));
+}
+
 void setup() {
     //Initialize serial and wait for port to open:
     Serial.begin(115200);
@@ -1319,9 +1355,13 @@ void setup() {
         Serial.println("SD card available");
     }
 
+    Serial.println("water.being on 13 and 14");
     water.begin(13, 14);
+    Serial.println("setupSensorAdc");
     setupSensorAdc();
+    Serial.println("setupMenu");
     setupMenu();
+    Serial.println("continuing");
 
     String outString;
     DisplayPage * pPage = menu.getPage(PAGE_INDEX_CONNECTION);
@@ -1329,10 +1369,7 @@ void setup() {
     DisplayLabel * pLabelStatus = pPage->getLastLabel();
 
     pLabelStatus->setText("Starting", true);
-    //Let's wait for two seconds before starting allowing voltage to stabelize after power on
-    delay(2000);
-    Serial.println("reading sensors");
-    checkAndUpdateSensors();
+    
     sta_was_connected = connectWifi();
     if (sta_was_connected) {
         outString = "WiFi connected";
@@ -1353,6 +1390,7 @@ void setup() {
     startTime.setTime(reportIn());
     Serial.println("Start time:" + startTime.toString());
     setupPins();
+    Serial.println(devicePins.toJson());
     //test(&devicePins);
     Serial.println("The device can be accessed at this path ");
     String subPath = "://" + WiFi.localIP().toString() + ":" + String(PORT) + "\"";
@@ -1362,6 +1400,11 @@ void setup() {
     pLabelHeading->setText("Fetching monitors", true);
     tellServerToSendMonitors();
 
+    //Let's wait for two seconds before starting allowing voltage to stabelize after power on
+    delay(2000);
+    Serial.println("reading sensors");
+    if (checkAndUpdateSensors())
+        updateDeviceVirtualPinValues();
 
     menu.showPage(PAGE_INDEX_START);
     //water.startRecordingSystem();
@@ -1372,8 +1415,11 @@ void setup() {
 /// </summary>
 
 void loop() {
+    if (millis() > _tellServerToSaveLogTimer)
+        tellServerToSaveLog(false);
     ArduinoOTA.handle();
-    checkAndUpdateSensors();
+    if (checkAndUpdateSensors())
+        updateDeviceVirtualPinValues();
     reconnectIfDisconnected();
     //Serial.printf("%.3f°  %.3f PSI\n", currentTemperature, currentPressure);
     menu.update();
@@ -1382,7 +1428,7 @@ void loop() {
     //timerTwoSeconds();
     if (monitors.isAnyPinWatchDo()) {
         // One item did trigger so you could log
-        tellServerToSaveLog();
+        tellServerToSaveLog(false);
         monitors.resetAllChecks();
     }
     
@@ -2067,7 +2113,7 @@ int GPins::count() {
 /// <summary>
 /// Returns all pin values in a json array
 /// a key-value Json object with the '{' and '}' around it.
-/// where first key is the first in the index with the key as the GPO key
+/// where first key is the first in the indexf with the key as the GPO key
 /// and the value is the last value set to that key.
 /// </summary>
 /// <returns>A Json object string containing status of all pins in the GPins object</returns>

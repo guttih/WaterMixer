@@ -16,14 +16,14 @@ void WaterMixer::begin(int sdaPin, int sclPin){
     Wire.begin(sdaPin, sclPin);
     _dac = new Adafruit_MCP4728();
     const uint8_t  address = 0x60;
-    if (!_dac->begin(address))
+    const unsigned long waitRounds=10;
+    unsigned long round = 0;
+    while (!_dac->begin(address) && round < waitRounds)
     {
-        Serial.println("!!!!!   ERROR  - Failed to find MCP4728 chip   !!!!!\n");
-        Serial.printf("  - SDA should be connected to pin %d on the Esp32 and SCL should be connected to %d\n", sdaPin, sclPin);
-        while (1)
-        {
-            delay(10);
-        }
+        Serial.print("ERROR  - Failed to find MCP4728 chip.  ");
+        Serial.printf(" - SDA should be connected to pin %d on the Esp32 and SCL should be connected to %d\n", sdaPin, sclPin);
+        delay(1000);
+        round++;
     }
     Serial.printf("dac MCP4728 is connected.  Address:0x%02X, SDA:%d, SCL:%d pointer:%p\n", address, sdaPin, sclPin, _dac);
     _hotValve.setDac(_dac);
@@ -252,6 +252,9 @@ String WaterMixer::toJson() {
     return str;
 }
 
+int WaterMixer::mapValue(double value, double dValueMax, int iValueMax) {
+    return ((value/dValueMax) * iValueMax) + 0.5;    
+}
 
 WATER_MIXER_UPDATE WaterMixer::update(){
     if (recordSystemTimer && millis() > recordSystemTimer) {
