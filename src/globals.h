@@ -48,6 +48,7 @@ struct GLOBAL_STRUCT {
     float coldValveFlow = 0; // A number from 0 to 100 describing the opening of the COLD valve, 0 is fully closed and 100 fully open.
     float hotValveFlow = 0;  // A number from 0 to 100 describing the opening of the HOT  valve, 0 is fully closed and 100 fully open.
     PID_STRUCT pid;
+    bool pressureSensorIsActive = false;
 } values;
 
 const int PIN_TEMPERATURE = 25;

@@ -17,7 +17,12 @@
         "initializer_list": "cpp",
         "new": "cpp",
         "memory": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "system_error": "cpp",
+        "functional": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp",
+        "utility": "cpp"
     },
     "cSpell.words": [
         "Kamila",
