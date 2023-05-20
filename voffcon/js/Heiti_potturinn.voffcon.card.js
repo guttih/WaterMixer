@@ -36,8 +36,6 @@ var bak = new SvgCtrl('bakgrunnur', 0,30, 200,200);
     // normal                      01:54        06:00
     //hotTub.setFlowTimeInMinutes((54 + (60*1)), 60*6 );
     // when hottub is leaking      02:30         05:30
-    hotTub.setFlowTimeInMinutes(60*1, (60*5)+30 );
-    console.log(hotTub);
     switchDrain = new SwitchCtrl(xBase + 10, 110, pinDrain);
     switchDrain.scale(0.7);
     switchDrain.rotate(180);
@@ -49,8 +47,6 @@ var bak = new SvgCtrl('bakgrunnur', 0,30, 200,200);
     pinDrain.registerClicks(onClickCAllbackDrain);
     
     //updateView(device, device.pinsToSendArray());
-    
-    //getWaterLevel(device);
     
     var t0 = new TextCtrl(360,0, 'Á meðan er verið að renna í pottinn á þá er þrýstingur:');
     var t1 = new TextCtrl(380,20, '- Þegar potturinn er tómur þá: 2.85, 2.86, 2.87 BAR SÁ LÍKA 2.80 SEINNA');
@@ -162,7 +158,6 @@ function onClickCAllbackDrain(obj){
 }
 
 function onClickCAllbackFill(obj){
-    console.log("hér skal senda fill object")
     var pin = obj.pinObject;
     pin.active(false);
     
@@ -177,100 +172,13 @@ function onClickCAllbackFill(obj){
     var posting = $.post( url, sendObj);
     console.log(url);
     console.log(sendObj);
-    console.log('sending onClickCAllbackFill');console.log(sendObj);
     posting.done(function(data){
         fetchDeviceStatus();
     });
 }
 
-var calculateWatherFlow = function calculateWatherFlow(prevObject, currentObject, index){
-    
-     var drainFlowUnits = hotTub.drainMinutes*1023, // five hours on full flow
-         fillFlowUnits  = hotTub.fillMinutes *1023,
-         drainFillProportion = hotTub.fillMinutes / hotTub.drainMinutes *-1;
-         
-        
-    var prevDate = new Date(prevObject.datetime);
-    var currDate = new Date(currentObject.datetime);
-    var diffMillis = (currDate.getTime()-prevDate.getTime());
-    var diffMinutes = (diffMillis/(1000*60));
-    //þarf að fá waterFlow
-    var pins = JSON.parse(prevObject.data).filter(item => item.pin ===4 || item.pin ===5);
-    var drainValue = pins.filter(item => item.pin === 4 )[0].val;
-    var fillValue =  pins.filter(item => item.pin === 5 )[0].val;
-    if (drainValue > 0) {
-       currentObject.flow =  drainValue * drainFillProportion;  
-    } else {
-       currentObject.flow = fillValue;
-    }
-    
-    currentObject.flowMinutes = diffMinutes;
-    currentObject.flowUnits   = diffMinutes * currentObject.flow;
-    
-    currentObject. sumFlowUnits   = prevObject.sumFlowUnits + currentObject.flowUnits;
-    if (currentObject. sumFlowUnits < 0) {
-        currentObject. sumFlowUnits = 0;
-        
-    } else if (currentObject. sumFlowUnits > fillFlowUnits) {
-        currentObject. sumFlowUnits = fillFlowUnits;
-    }
-    currentObject.waterLevel = Math.round((currentObject.sumFlowUnits/fillFlowUnits) * 100);
-    //console.log(`${index}\t.waterLevel: ${currentObject.waterLevel}%\t.sumFlowUnits: ${currentObject.sumFlowUnits}\t.flowUnits: ${currentObject.flowUnits}\tdiffMinutes: ${diffMinutes}\tpower: ${currentObject.flow}\t`);
-    
-}
 
-/*
-var getDeviceLogs = function getDeviceLogs(deviceId){
-    var url = SERVER+'/logs/list/'+deviceId;
-    var request = $.get(url);
-    request.done(function( data ) {
-        if (data.length < 1) {
-            console.log("data empty:");
-            return; 
-            
-        }
-        var start = 0;
-        var drainFlowUnits = hotTub.drainMinutes*1023, // five hours on full flow
-            fillFlowUnits = hotTub.fillMinutes *1023;
-        data[start].flow      =0;
-        data[start].flowMinutes=0;
-        data[start].flowUnits  =0;
-        data[start].sumFlowUnits   =0;
-        for(var i = start+1; i<data.length;i++) {
-            data[i].date = new Date(data[i].datetime);
-            calculateWatherFlow(data[i-1], data[i],i);
-        }
-       
-        var lastState = data[data.length-1];
-        var now = { 
-                    datetime    : new Date().toString(),
-                    flow        : 0,
-                    flowMinutes : 0,
-                    flowUnits   : 0,
-                    sumFlowUnits: 0,
-                    waterLevel  : 0
-            
-        };
-        calculateWatherFlow(lastState, now);
-        hotTub.setWaterLevel(now.waterLevel);
-        
-        }).fail(function( data ) {
-            if (data.status===401){
-                showModal("You need to be logged in!", data.responseText);
-            }
-        });
-}
-*/
 
-/*
-var getWaterLevelCount = 0;
-var getWaterLevel = function getWaterLevel(device) {
-    
-    getDeviceLogs(device.savedDeviceID);
-    //console.log(`${++getWaterLevelCount} | waterLevel: ${hotTub.waterLevel}% `);
-    setTimeout(function(){ getWaterLevel(device);  }, 10*1000);
-}
-*/
 function displayError(title, message){
     showModal(title, 
             '\n\n<p class="error-response-text">Error :<br>' + 
