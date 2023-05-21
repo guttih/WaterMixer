@@ -149,8 +149,6 @@ function onClickCAllbackDrain(obj){
     //pin.setValue(pin.value === 0? 100:0);
     //sen
     var url = getServer()+'/devices/custom/'+ pin.savedDeviceID;
-    hotTub.drain();
-    console.log('sending onClickCAllbackDrain');console.log(sendObj);
     var posting = $.post( url, sendObj);
     posting.done(function(data){
        fetchDeviceStatus();

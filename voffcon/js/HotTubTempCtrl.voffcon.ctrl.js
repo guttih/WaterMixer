@@ -19,7 +19,7 @@ class HotTubTempCtrl extends ControlElement {
             });
             return;
         }
-        var start = 0;
+        var start = 0;       
         var data = JSON.parse(JSON.stringify(this.log));
         data.forEach(element => {
             element.data = JSON.parse(element.data);
@@ -112,6 +112,7 @@ class HotTubTempCtrl extends ControlElement {
     init(statusResponse) {
         this.deviceId = statusResponse.deviceId;
         this.log = [];
+        this.setWaterLevel(0);
         // DrainTimeRequired : 10:00:00 -> 10*60*60   = 36000 sec
         // FillTimeRequired  : 00:48:56 -> (48*60)+56 = 2934 sec
         // FillTimeRequired  : 01:10:00 -> (70*60)+0 = 4200 sec
@@ -148,15 +149,23 @@ class HotTubTempCtrl extends ControlElement {
         this.desiredTemperature = status.mixer.desiredTemperature;
         this.drainValveFlow = status.mixer.drainValveFlow;
         this.mode = status.mixer.mode;
-        if (this.isStopped()) {
-            //when all is stopped, we can read the waterlevel from pressure sensor
-            this.setWaterLevel((this.currentPressure / 0.46) * 100);//pressure 0.46 means full
-            this.stop();
-        } else if (this.isFilling()) {
-            this.drawFill(this.hotValveFlow, this.coldValveFlow);
-        } else if (this.isDraining()) {
+        
+        if (this.hotValveFlow > 0 || this.coldValveFlow > 0 ) {
+            this.fill(this.hotValveFlow, this.coldValveFlow);
+        } else  if (this.drainValveFlow > 0) {
             this.drain();
+        } else {
+            this.stop();
         }
+        // if (this.isStopped()) {
+        //     //when all is stopped, we can read the waterlevel from pressure sensor
+        //     this.setWaterLevel((this.currentPressure / 0.46) * 100);//pressure 0.46 means full
+        //     this.stop();
+        // } else if (this.isFilling()) {
+        //     this.drawFill(this.hotValveFlow, this.coldValveFlow);
+        // } else if (this.isDraining()) {
+        //     this.drain();
+        // }
 
         this.getDesiredTemperatureInput().val(this.desiredTemperature);
         this.getCurrentTemperatureDiv().text(this.currentTemperature);
@@ -196,7 +205,6 @@ class HotTubTempCtrl extends ControlElement {
     }
 
     setValue(value) {
-
         if (this.drainPin.value > 0) {
             this.drain();
 
@@ -220,10 +228,10 @@ class HotTubTempCtrl extends ControlElement {
 
     }
     fill(hotFlow, coldFlow) {
-        if (value === 0) {
+        if (hotFlow === 0 && coldFlow === 0 ) {
             this.stop();
         } else {
-            this.drawFill(hotFlow, clodFlow);
+            this.drawFill(hotFlow, coldFlow);
             this.reCalculate();
         }
     }
@@ -238,6 +246,7 @@ class HotTubTempCtrl extends ControlElement {
     stop() { this.drawStop(); this.reCalculate(); }
 
     drawFill(hotFlow, clodFlow) {
+        this.active(this.isFilling());
         var value = hotFlow > clodFlow ? hotFlow : clodFlow;
         var maxSpeed = 0.95, minSpeed = 7.0, maxNegative = (minSpeed - maxSpeed);
         var ratio = value / 100;
@@ -250,16 +259,19 @@ class HotTubTempCtrl extends ControlElement {
         this.getBlob().css("animation-duration", function (index) {
             return speed + 's';
         });
+
     }
 
     drawStop() {
         this.getBlob().removeClass('showing').addClass('hiding');
+        this.active(this.isStopped());
     }
 
     drawDrain() {
         var blob = this.getBlob();
-        this.getBlob().removeClass('hiding').addClass('showing');
-        this.getBlob().removeClass('fill-hottub').addClass('drain-hottub');
+        this.active(this.isDraining());
+        blob.removeClass('hiding').addClass('showing');
+        blob.removeClass('fill-hottub').addClass('drain-hottub');
         this.getBlob().css("animation-duration", function (index) {
             return '2s';
         });
@@ -268,7 +280,6 @@ class HotTubTempCtrl extends ControlElement {
     setWaterLevel(procent) {
         this.waterLevel = procent;
         // this.waterLevel = Math.round(procent * 10) / 10;//round to one decimals
-
         this.drawWaterLevel();
     }
 

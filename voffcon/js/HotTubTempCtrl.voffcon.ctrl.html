@@ -1,0 +1,172 @@
+<div  id="hot-tub-temp-ctrl"  style="position:absolute;display: inline-block">
+
+    <style>
+        .water-level-text{
+            top: 50px;
+            left: 217px;
+            position: absolute;
+        }
+        .flow-text {
+            position: relative;
+            top:-40px;
+            left:25px;
+        }
+        .showing{
+            visibility:visible;
+        }
+        .hiding{
+            visibility:hidden;
+        }
+        
+        .set-active{
+            background: #f9ee27;
+            stroke:#f9ef2a;
+            fill:#f9ee27;
+            
+            
+        }
+        .set-inactive{
+            background:gray;
+            stroke:gray;
+            fill:gray;
+        }
+        
+        .desired {
+            position: relative;
+            top: -5px;
+            left: 116px;
+        }
+        input[name="desired-temperature"] {
+                width: 62px;
+        }
+        .current-temperature {
+                position: relative;
+                left: 120px;
+        }
+        .current-pressure {
+            position: relative;
+            left: 120px;
+            top: 0px;
+        }
+        .current-temperature-value,.current-pressure-value{
+            font-weight:bold;
+        }
+        .blatt{
+        	fill:#1e1efe;stroke:#1e1efe;stroke-width:0
+        }
+        .bottom-hottub{
+        	fill:darkgray;stroke:darkgray;stroke-width:0
+        }
+        .svart{
+        	fill:black;stroke:black;stroke-width:2
+        }
+        .orange{
+        	fill:orange;stroke:orange;stroke-width:2
+        }
+        .inside-hottub{
+            	fill:gray;stroke:gray;stroke-width:2
+        }
+        
+        div.blob-white-box {
+            background: white;
+            height: 16px;
+            width: 35px;
+            position: absolute;
+            top: 148px;
+            left: -24px;
+        }
+        
+        .blob {
+            z-index:-1;
+          left:0px;
+          position:relative;
+          width: 25px;
+          height: 8px;
+          border-radius: 50%;
+          -webkit-backface-visibility: hidden;
+           -moz-backface-visibility: hidden;
+           -ms-backface-visibility: hidden;
+           backface-visibility: hidden;
+        
+           -webkit-perspective: 1000;
+           -moz-perspective: 1000;
+           -ms-perspective: 1000;
+           perspective: 1000;
+          -webkit-transform: translate3d(0, 0, 0);
+           -moz-transform: translate3d(0, 0, 0);
+           -ms-transform: translate3d(0, 0, 0);
+           transform: translate3d(0, 0, 0);
+        }
+        
+        .drain-hottub{
+            -webkit-animation: drain 9s infinite; /* Safari 4.0 - 8.0 */
+            -webkit-animation-timing-function: linear; /* Safari 4.0 - 8.0 */
+            animation: drain 9s infinite;
+            animation-timing-function: linear; 
+        }
+        
+        .fill-hottub {
+            -webkit-animation: fill 9s infinite; /* Safari 4.0 - 8.0 */
+            -webkit-animation-timing-function: linear; /* Safari 4.0 - 8.0 */
+            animation: fill 9s infinite;
+            animation-timing-function: linear; 
+        }
+        
+        /* Safari 4.0 - 8.0 */
+        @-webkit-keyframes fill {
+            0%   {left:-25px; top:149px;}
+            100% {left:130px; top:149px;}
+        }
+        
+        /* Standard syntax */
+        @keyframes fill {
+            0%   {left:-25px; top:149px;}
+            100% {left:130px; top:149px;}
+        }
+        /* Safari 4.0 - 8.0 */
+        @-webkit-keyframes drain {
+            0%   {left:130px; top:149px;}
+            100% {left:-5px; top:149px;}
+        }
+        
+        /* Standard syntax */
+        @keyframes drain {
+            0%   {left:130px; top:149px;}
+            100% {left:-5px; top:149px;}
+        }
+    </style>
+    <div class="blob-wrapper">
+        <div class="blob hiding"></div>
+    </div>
+    <div class="blob-white-box"></div>
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" xml:space="preserve">
+        <ellipse cx="223" cy="70" rx="100" ry="30" class="inside-hottub" /><!--inn í potti-->
+        <ellipse cx="223" cy="75" rx="88" ry="26" class="blatt vatn" /><!--vatn-->
+        <ellipse cx="223" cy="151" rx="100" ry="30" class="svart" /><!--bottom-->
+        <path fill="black" stroke="#000" d="M122,74 C170,110 272,110 323,74 V150 H122"/>
+        <!--<use x="120" y="30" href="#pottur"/>-->
+        <line x1="0" y1="145" x2="122" y2="145" style="stroke-width:4" class="set-active"/><!--Slanga-->
+        <!--<path d="M 10 30 q 100 -50 160 30" stroke="#d4d861" stroke-width="4" fill="none" />-->
+    </svg>
+    <div class="water-level-text">%</div>
+    <div class="flow-text"> Here is the flow text</div>
+    <div class="desired">
+        <span >Desired temperature</span>
+        <input name="desired-temperature" type="number" step="0.1">
+         <span > °C</span>
+         
+            <a href="#" class="btn-update btn btn-xs btn-info"> <span class="glyphicon glyphicon-floppy-disk"></span>&nbsp;Save </a>
+        
+    </div>
+    <div class="current-temperature">
+         <span>Current temperature</span>
+        <span class="current-temperature-value"></span>
+        <span > °C</span>
+    </div>
+    <div class="current-pressure">
+        <span>Current pressure</span>
+        <span class="current-pressure-value"></span>
+        <span > PSI</span>
+    </div>
+                
+</div>
