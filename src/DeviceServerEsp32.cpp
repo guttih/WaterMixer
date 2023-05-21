@@ -1059,14 +1059,14 @@ void handleSamplesJson(WiFiClient* client) {
     client->println(makeJsonResponseString(200, str));
 }
 
-void handleSamplesCSV(WiFiClient* client) {
+void handleSamplesCSV(WiFiClient* client, char separator=';') {
 
     //if (!isAuthorized()) return;
     if (whiteList.isEmpty()) {
         whiteList.add(voffconServerIp);
     }
 
-    String str = water.getAllRecordedSystemValuesAsCSV();
+    String str = water.getAllRecordedSystemValuesAsCSV(separator);
 
     client->println(makeTextResponseString(200, str));
 }
@@ -1124,6 +1124,17 @@ void handleGetPinout(WiFiClient* client) {
     Serial.println("handleGetPinout");
     client->println(makeJsonResponseString(200, devicePins.JsonPinout()));
 }
+
+/// <summary>
+/// Sends a JSON message with all pins name and number to a client
+/// </summary>
+/// <param name="client">The client which this message should be sent to.</param>
+void handleNotFound(WiFiClient* client) {
+    String strSend = "{\"code\":"+String(404) +",\"message\":\"Bad request\"}";
+    client->println(makeJsonResponseString(200, strSend));
+}
+
+
 
 void sendText(WiFiClient* client, int statusCode, const char* strSend) {
     client->println(makeTextResponseString(statusCode, strSend));
@@ -1517,7 +1528,7 @@ void loop() {
                         } // if (method == METHOD_POST && contentLength > 0) 
                     }
                     if (command == COMMANDS_NOTSET)
-                        handleGetPinout(&client);// send a standard http response header
+                        handleNotFound(&client);// send a standard http response header
                     break;
                 }
                 if (c == '\n') {
@@ -1547,15 +1558,20 @@ void loop() {
                         break;
                     }
                     else if (strstr(linebuf, "GET /status") > 0) {
+
                         handleStatus(&client);
                         break;
                     }
-                    else if (strstr(linebuf, "GET /samples") > 0 ) {
-                        handleSamplesJson(&client);
+                    else if (strstr(linebuf, "GET /samples/csv/,") > 0) {
+                        handleSamplesCSV(&client, ',');
                         break;
                     }
                     else if (strstr(linebuf, "GET /samples/csv") > 0) {
                         handleSamplesCSV(&client);
+                        break;
+                    }
+                    else if (strstr(linebuf, "GET /samples") > 0 ) {
+                        handleSamplesJson(&client);
                         break;
                     }
                     else if (strstr(linebuf, "GET /monitors") > 0) {
@@ -2176,7 +2192,7 @@ String GPins::toJson() {
 /// </summary>
 /// <returns>A string formatted as a JSON object which contains all pin names and number. </returns>
 String GPins::JsonPinout() {
-    String str = "[";
+    String str = "{";
     int i;
     for (i = 0; i < mLength; i++) {
         if (i > 0) {
@@ -2184,7 +2200,7 @@ String GPins::JsonPinout() {
         }
         str = str + mPins[i]->toJsonKeyValue();
     }
-    return str + "]";
+    return str + "}";
 }
 #endif //CODE_BLOCK_GPins_impl
 

@@ -1,0 +1,65 @@
+@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";
+@import "https://cdn.jsdelivr.net/gh/asciidoctor/asciidoctor@2.0/data/stylesheets/asciidoctor-default.css";
+@import "https://gitlab.com/TernDev/common/docker/proto-doc-generation/-/blob/4.0/resources/styles/tern.css";
+
+.error {
+  font-weight: 800;
+  color:red;
+}
+
+
+.success {
+  font-weight: 800;
+  color:#08fd00;
+}
+
+.terminal .highlight {
+  font-weight: 800;
+  color:white;
+}
+
+
+.terminal {
+  font-family: monospace,"Droid Sans Mono","DejaVu Sans Mono";
+  font-weight: 400; 
+  color:rgb(180, 178, 178);
+  background-color: rgb(30, 36, 36); 
+  border:0px;
+  border-radius: 8px;
+  padding-top:0px;
+  padding-bottom:1px;
+  padding-left: 1.25em;
+  
+}
+
+.exampleblock.terminal {
+}
+
+.terminal .content {
+}
+
+.terminal .content > .paragraph {
+  padding:0px;
+  white-space: pre-wrap;
+  
+}
+.terminal p {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+
+.exampleblock>.content  {
+  background-color: rgb(30, 36, 36); 
+  box-shadow: none;
+  padding-bottom: 0px;
+  border:0px;
+}
+
+#content p code {
+  background-color: rgb(30, 36, 36); 
+  color:rgb(190, 188, 188);
+  font-weight: 400; 
+  padding-left: 0.3em;
+  padding-right: 0.3em;
+}
