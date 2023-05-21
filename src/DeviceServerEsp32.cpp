@@ -962,7 +962,7 @@ void handleCustom(WiFiClient* client, unsigned int postMethod, String callingUrl
                                     tellServerToSaveLog(true);
                                 }
                             }
-                        } else if (pCommand->getValueAsString() == "fill") {
+                        } else if (pCommand->getValueAsString() == "fill" || pCommand->getValueAsString() == "update") {
                             //opening water valves to match a specific temperature
                             pParam1 =  parser.getRootObject()->getChild("temperature");
                             if (pParam1) {
@@ -975,13 +975,19 @@ void handleCustom(WiFiClient* client, unsigned int postMethod, String callingUrl
                                         strSend = "{\"message\":\"Filling with temperature\",\"reason\":\"Failed because no system scan sample could be found.  Please run System Scan before using this command.\"}";
                                     }
                                     else
-                                    {
-                                        water.fillDesired();
-                                        tellServerToSaveLog(true);
+                                    {   String commandDesc;
+                                        if (pCommand->getValueAsString() == "fill" || water.isFlowing()) {
+                                            water.fillDesired();
+                                            tellServerToSaveLog(true);
+                                            commandDesc = "Filling with temperature";
+                                        } else {
+                                            commandDesc = "Updating temperature";
+                                        }
+                                            
                                         httpResponseCode = 200;
-                                        strSend = "{\"message\":\"Filling with temperature\",\"temperature\":" + String(temperature) +
-                                                  ",\"hot\":" + String(sample.hotValveFlow) + ",\"cold\":" + String(sample.coldValveFlow) +
-                                                  +"}";
+                                        strSend = "{\"message\":\"" + commandDesc + "\",\"temperature\":" + String(temperature) +
+                                                      ",\"hot\":" + String(sample.hotValveFlow) + ",\"cold\":" + String(sample.coldValveFlow) +
+                                                      +"}";
                                     }
                                 }
                             } else {
@@ -991,7 +997,7 @@ void handleCustom(WiFiClient* client, unsigned int postMethod, String callingUrl
                                 water.fillDesired();
                                 tellServerToSaveLog(true);
                             }
-                        }
+                        } 
                     }
                     Serial.println();
                 }
