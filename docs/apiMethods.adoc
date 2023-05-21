@@ -1018,13 +1018,13 @@ curl -X POST http://192.168.1.28/custom  -H "Content-Type: application/json" -d 
 ----
 
 
-.Set desired temperature to 37 +
+.Set desired temperature to 37.76 +
 
 [source, json]
 ----
 {
     "cmd": "update",
-    "temperature": 35.799
+    "temperature": 37.756
 }
 ----
 
