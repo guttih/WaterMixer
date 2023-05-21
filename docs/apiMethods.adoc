@@ -1005,6 +1005,8 @@ curl -X POST http://192.168.1.28/custom  -H "Content-Type: application/json" -d 
 }
 ----
 
+====== Some more Post objects +
+
 .Filling the hot tub and set desired temperature to 37 +
 
 [source, json]
