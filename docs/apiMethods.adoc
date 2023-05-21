@@ -48,6 +48,16 @@ In all cases the response should be the following json object, (with different n
 
 If you see this response, you have access to the device and it is working as it should.
 
+.Posting with curl
+
+If you need to post to the device you could use curl to do that.  Here is an example on how
+to make the device fill the hot tub with temperature 37.
+
+[source,shell]
+----
+ curl -X POST http://192.168.1.28/custom  -H "Content-Type: application/json" -d '{"cmd":"fill","temperature":37}'
+----
+
 == Methods overview
 
 The device support the following http methods.
@@ -70,10 +80,10 @@ The device support the following http methods.
                                       where fields are separated by comma.                      | xref:Get /samples/csv/, response[] |  Csv
 |   GET     |  `/monitors`      |     Get pin monitors.                                         | <<Get /monitors response>>             |  JsonArray 
 |   POST    |  `/monitors`      |     Add a pin monitor.                                        | <<Post /monitors response>>    (todo)  |  Json 
-|   DELETE  |  `/monitors`      |     Delete pin monitors.                                      | <<Delete /monitors response>>  (todo)  |  JsonArray
+|   DELETE  |  `/monitors`      |     D pin monitors.                                      | <<Delete /monitors response>>  (todo)  |  JsonArray
 |   POST    |  `/whitelist`     |     Add a ip address to whitelist.                            | <<Post /whitelist response>>   (todo)  |  Json 
 |   DELETE  |  `/whitelist`     |     Delete a ip address from whitelist.                       | <<Delete /whitelist response>> (todo)  |  Json 
-// |   POST    |  `/custom`        |     ?                                                         | <<Post /custom response>>      |  Json 
+|   POST    |  `/custom`        |     Send commands to fill, stop, drain and change temperature of th e hot tub.                                                         | <<Post /custom response>>      |  Json 
 // |   DELETE  |  `/custom`        |     ?                                                         | <<Delete /custom response>>    |  Json 
 |===
 
@@ -941,6 +951,72 @@ todo...
 [source, json]
 ----
 todo...
+----
+
+=== Resource /custom
+
+Send commands to fill, stop, drain and change temperature of th e hot tub.
+ 
+===== Post /custom response
+
+There are two key allowed in the request json object, _cmd_ and _temperature_.
+The _cmd_ key is required but the temperature is optional.
+
+* Available values for the _cmd_ key are:
+ ** _drain_ - To drain the hot tub
+ ** _stop_ - To stop the hot tub
+ ** _fill_ - To fill the hot tub
+ ** _update_ - To change the desired temperature of the hot tub.  This command will only change the temperature.
+ *** If hot tub is already filling, then the filling temperature will change.
+ *** I hot tub is already stopped or draining, the desired temperature will change so that
+     next time the hot tub starts filling, this temperature will be used.
+
+
+.Filling the hot tub and set desired temperature to 37 +
+
+[source, json]
+----
+{
+    "cmd": "fill",
+    "temperature": 37
+}
+----
+
+.Filling the hot tub with the previously set desired temperature +
+
+[source, json]
+----
+{
+    "cmd": "fill"
+}
+----
+
+.Set desired temperature to 37 +
+
+[source, json]
+----
+{
+    "cmd": "update",
+    "temperature": 35
+}
+----
+
+.Stopping the hot tub +
+
+[source, json]
+----
+{
+    "cmd": "stop"
+}
+----
+
+.Draining the hot tub +
+
+[source, json]
+----
+{
+    "cmd": "drain"
+}
 ----
 
 See chapter <<Methods overview>> for an overview.
