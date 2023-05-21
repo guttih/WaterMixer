@@ -83,7 +83,7 @@ The device support the following http methods.
 |   DELETE  |  `/monitors`      |     D pin monitors.                                      | <<Delete /monitors response>>  (todo)  |  JsonArray
 |   POST    |  `/whitelist`     |     Add a ip address to whitelist.                            | <<Post /whitelist response>>   (todo)  |  Json 
 |   DELETE  |  `/whitelist`     |     Delete a ip address from whitelist.                       | <<Delete /whitelist response>> (todo)  |  Json 
-|   POST    |  `/custom`        |     Send commands to fill, stop, drain and change temperature of th e hot tub.                                                         | <<Post /custom response>>      |  Json 
+|   POST    |  `/custom`        |     Send commands to fill, stop, drain and change temperature of the hot tub.                                                         | <<Post /custom response>>      |  Json 
 // |   DELETE  |  `/custom`        |     ?                                                         | <<Delete /custom response>>    |  Json 
 |===
 
@@ -955,22 +955,55 @@ todo...
 
 === Resource /custom
 
-Send commands to fill, stop, drain and change temperature of th e hot tub.
+Send commands to fill, stop, drain and change temperature of the hot tub.
  
 ===== Post /custom response
 
-There are two key allowed in the request json object, _cmd_ and _temperature_.
-The _cmd_ key is required but the temperature is optional.
+There are two keys allowed in the request json object, *cmd* and *temperature*.
+The *cmd* key is required.  The *temperature* key is optional but can only be used
+when *cmd* key value is _fill_ or _update_.
 
-* Available values for the _cmd_ key are:
+* Available values for the *cmd* key are:
  ** _drain_ - To drain the hot tub
  ** _stop_ - To stop the hot tub
  ** _fill_ - To fill the hot tub
- ** _update_ - To change the desired temperature of the hot tub.  This command will only change the temperature.
+ ** _update_ - To change the desired temperature of the hot tub.
  *** If hot tub is already filling, then the filling temperature will change.
- *** I hot tub is already stopped or draining, the desired temperature will change so that
+ *** If hot tub is already stopped or draining, the desired temperature will change so that
      next time the hot tub starts filling, this temperature will be used.
 
+* Available values for the *temperature* key are:
+** A decimal number from 0.00 - 100.00
+
+ 
+_Just a reminder, you could use the curl command to send a post object:_ +
+
+[source, bash]
+----
+curl -X POST http://192.168.1.28/custom  -H "Content-Type: application/json" -d '{"cmd":"update","temperature":37.479}'
+----
+
+*Now for some post object examples* 
+
+.Filling the hot tub with the previously set desired temperature +
+
+====== Post object to fill +
+
+[source, json]
+----
+{
+    "cmd": "fill"
+}
+----
+
+====== Response from successful fill posting +
+[source, json]
+----
+{
+    "message":"Filling with currently desired temperature",
+    "temperature":37.48
+}
+----
 
 .Filling the hot tub and set desired temperature to 37 +
 
@@ -982,14 +1015,6 @@ The _cmd_ key is required but the temperature is optional.
 }
 ----
 
-.Filling the hot tub with the previously set desired temperature +
-
-[source, json]
-----
-{
-    "cmd": "fill"
-}
-----
 
 .Set desired temperature to 37 +
 
@@ -997,7 +1022,7 @@ The _cmd_ key is required but the temperature is optional.
 ----
 {
     "cmd": "update",
-    "temperature": 35
+    "temperature": 35.799
 }
 ----
 
