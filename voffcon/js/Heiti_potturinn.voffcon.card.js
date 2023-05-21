@@ -46,19 +46,6 @@ var bak = new SvgCtrl('bakgrunnur', 0,30, 200,200);
     pinFill.registerClicks(onClickCAllbackFill);
     pinDrain.registerClicks(onClickCAllbackDrain);
     
-    //updateView(device, device.pinsToSendArray());
-    
-    var t0 = new TextCtrl(360,0, 'Á meðan er verið að renna í pottinn á þá er þrýstingur:');
-    var t1 = new TextCtrl(380,20, '- Þegar potturinn er tómur þá: 2.85, 2.86, 2.87 BAR SÁ LÍKA 2.80 SEINNA');
-    var t2 = new TextCtrl(380,58, '- Þegar potturinn er fullur þá: 2.94 to 2.97 BAR');
-    var t3 = new TextCtrl(380,70, '- Það hefur mikil áhrif hve mikið er opið fyrir heita lokann.  Þrýstingur eykst ef meira er opnað fyrir heita vatnið');
-    t0.getElement().css('color','Green');
-    t1.getElement().css('color','blue');
-    t2.getElement().css('color','red');
-    
-    
-    
-    
 };
 
 
@@ -142,7 +129,6 @@ function newDataToView(data){
 function onClickCAllbackDrain(obj){
     var pin = obj.pinObject;
     pin.active(false);
-    console.log(pin);
     var sendObj = {
         cmd:pin.value == 0? "drain" : "stop"
     };
@@ -150,6 +136,7 @@ function onClickCAllbackDrain(obj){
     //sen
     var url = getServer()+'/devices/custom/'+ pin.savedDeviceID;
     var posting = $.post( url, sendObj);
+    console.log(`${url}\n${JSON.stringify(sendObj, null, 4)}`);
     posting.done(function(data){
        fetchDeviceStatus();
     });
@@ -168,8 +155,7 @@ function onClickCAllbackFill(obj){
     var url = getServer()+'/devices/custom/'+ pin.savedDeviceID;
     hotTub.stop();
     var posting = $.post( url, sendObj);
-    console.log(url);
-    console.log(sendObj);
+    console.log(`${url}\n${JSON.stringify(sendObj, null, 4)}`);
     posting.done(function(data){
         fetchDeviceStatus();
     });

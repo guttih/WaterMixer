@@ -21,6 +21,16 @@ struct SYSTEM_SAMPLE {
     float temperature;
 };
 
+struct SYSTEM_SAMPLE_TIMED {
+    float hotValveFlow;
+    float coldValveFlow;
+    float pressure;
+    float temperature;
+    unsigned long time; /* when was the sample taken time in milliseconds this value represents, 
+                           how many milliseconds the micro controller has been running when the
+                           sample was taken. */
+};
+
 enum WATER_MIXER_UPDATE {
     IDLE, //When no update took place
     SYSTEM_RECORDING_IN_PROGRESS, //when system recording is in progress
@@ -51,6 +61,7 @@ class WaterMixer
         Valve _drainValve;
         String readLine(File file);
         SYSTEM_SAMPLE extractDataFromString(String line);
+        SYSTEM_SAMPLE_TIMED extractTimedDataFromString(String line);
         void init(channel hotValve, channel coldValve, channel drainValve, double currentTemperature, double desiredTemperature, double currentPressure,  WaterMixerMode mode);
     
     public:
@@ -173,6 +184,33 @@ class WaterMixer
          */
         SYSTEM_SAMPLE getSavedSystemRecordingClosestTo(SYSTEM_RECORDING_COLUM column, double value);
 
+        /**
+         * @brief Get the All Recorded System Values As CSV formatted document
+         * 
+         * Records will be separated by '\n' and fields by the separator character.
+         * 
+         * @param separator The symbol used to separate values in a record
+         * @return String containing all records, separated by '\n'.
+         *         On error, or no values are already recorded, an empty string is returned.
+         */
+        String getAllRecordedSystemValuesAsCSV(char separator = ';');
+
+         /**
+         * @brief Get the All Recorded System Values As Json array formatted string
+         * 
+         * 
+         * @return Json String containing all records
+         */
+        String getAllRecordedSystemValuesAsJson();
+
+        /**
+         * @brief Formats a sample object as a Json string
+         * 
+         * @param timpedSample the sample values 
+         * 
+         * @return String a valid json value
+         */
+        String sampleToJson(SYSTEM_SAMPLE_TIMED timedSample);
 
         /**
          * @brief Returns mixer values a json string

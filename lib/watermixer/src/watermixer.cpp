@@ -166,6 +166,33 @@ SYSTEM_SAMPLE WaterMixer::extractDataFromString(String line){
    return sample; 
 }
 
+SYSTEM_SAMPLE_TIMED WaterMixer::extractTimedDataFromString(String line){
+   SYSTEM_SAMPLE_TIMED sample;
+   sample.coldValveFlow = 0;
+   sample.hotValveFlow = 0;
+   sample.pressure = 0;
+   sample.temperature = 0;
+   int index = line.indexOf(';');
+   int column = 0;
+   String str;
+   while (index > 0) {
+       String str = line.substring(0, index);
+       switch(column) {
+           case 0: sample.hotValveFlow = str.toFloat(); break;
+           case 1: sample.coldValveFlow = str.toFloat(); break;
+           case 2: sample.pressure = str.toFloat(); break;
+           case 3: sample.temperature = str.toFloat(); break;
+       }
+       line.remove(0, index+1);
+       index = line.indexOf(';');
+       column++;
+   }
+   if (column == 4 && line.length() > 0)
+        sample.time = line.toInt();
+   
+   return sample; 
+}
+
 String WaterMixer::readLine(File file)
 {
     String ret;
@@ -236,6 +263,71 @@ SYSTEM_SAMPLE WaterMixer::getSavedSystemRecordingClosestTo(SYSTEM_RECORDING_COLU
 
     return ret;
 
+}
+
+String WaterMixer::sampleToJson(SYSTEM_SAMPLE_TIMED sample) {
+
+    String str = "{\"hot\":" + String(sample.hotValveFlow) +
+                 ", \"cold\":" + String(sample.coldValveFlow)  +
+                 ", \"pressure\":" + String(sample.pressure)  +
+                 ", \"temperature\":" + String(sample.temperature)  +
+                 ", \"time\":" + String(sample.time)  +
+                "}";
+
+    return str;
+
+}
+String WaterMixer::getAllRecordedSystemValuesAsJson() {
+
+    File file = SD.open(SYSTEM_RECORDING_FILE_NAME, FILE_READ);
+    String returnString = "[";
+    String line = readLine(file); //reading the header
+    String jsonRecord;
+    SYSTEM_SAMPLE_TIMED sample;
+    sample.hotValveFlow = -1;
+    sample.coldValveFlow = -1;
+    sample.pressure = -1;
+    sample.temperature = -1;
+    if (line.length() > 8)
+        line = readLine(file); //first line is name of the values (header)
+    
+    bool firstRun = true;
+    while (line.length() > 8 )
+    {
+        // Shortest valid string is 9 chars in length. e.g. "1;1;1;1;1"
+        sample = extractTimedDataFromString(line);
+        jsonRecord = sampleToJson(sample);
+        if (firstRun)
+            returnString +=jsonRecord;
+        else
+            returnString += String("," + sampleToJson(sample));
+        
+        firstRun = false;
+        line = readLine(file);
+
+    }
+
+    file.close();
+    returnString += "]";
+    return returnString;
+}
+
+String WaterMixer::getAllRecordedSystemValuesAsCSV(char separator) {
+
+    File file = SD.open(SYSTEM_RECORDING_FILE_NAME, FILE_READ);
+    String returnString = "";
+    String line = readLine(file); //reading the header
+    double diffRet, diffSample;
+    while (line.length() > 8 )
+    {
+        if (separator != ';')
+            line.replace(';', ',');
+        returnString += line + '\n';
+        line = readLine(file);
+    }
+
+    file.close();
+    return returnString;
 }
 
 String WaterMixer::toJson() {

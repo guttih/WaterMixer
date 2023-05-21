@@ -111,10 +111,9 @@ class HotTubTempCtrl extends ControlElement {
         this.deviceId = statusResponse.deviceId;
         this.log = [];
         this.setWaterLevel(0);
-        // DrainTimeRequired : 10:00:00 -> 10*60*60   = 36000 sec
-        // FillTimeRequired  : 00:48:56 -> (48*60)+56 = 2934 sec
-        // FillTimeRequired  : 01:10:00 -> (70*60)+0 = 4200 sec
-        this.setFlowTimeInSeconds(2934, 36000);
+        // DrainTimeRequired : 06:00:00 -> (6*60*60)+0  = 21600 sec
+        // FillTimeRequired  : 01:10:00 -> (70*60)  +0  =  4200 sec
+        this.setFlowTimeInSeconds(4200, 21600);
         this.setStatus(statusResponse);
         var that = this;
         this.getUpdateButton().on('click', function (e) {

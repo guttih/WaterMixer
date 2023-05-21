@@ -262,14 +262,14 @@ private:
 public:
     GUrl() { }
     int toNumber(String str);
-    String jsonKeyValue(String key, String value);
-    String jsonKeyValue(String key, int value);
-    String jsonObjectType(unsigned int uiType);
-    String makeStatusResponceJson(String jsonPins, String jsonWhitelist, String jsonDate, String macAddress, String deviceId, String hostName, String deviceIpAddress, int port, String jsonMixer);
+    static String jsonKeyValue(String key, String value);
+    static String jsonKeyValue(String key, int value);
+    static String jsonObjectType(unsigned int uiType);
+    static String makeStatusResponceJson(String jsonPins, String jsonWhitelist, String jsonDate, String macAddress, String deviceId, String hostName, String deviceIpAddress, int port, String jsonMixer);
     
-    String makePostLogPinsJson(String deviceId, String jsonPins);
-    String makeHttpStatusCodeString(unsigned int uiStatusCode);
-    String jsonRoot(unsigned int uiType, String key, String value);
+    static String makePostLogPinsJson(String deviceId, String jsonPins);
+    static String makeHttpStatusCodeString(unsigned int uiStatusCode);
+    static String jsonRoot(unsigned int uiType, String key, String value);
 };
 
 /// <summary>
@@ -1043,6 +1043,35 @@ void handleStatus(WiFiClient* client) {
 
     client->println(makeJsonResponseString(200, str));
 }
+
+void handleSamplesJson(WiFiClient* client) {
+
+    //if (!isAuthorized()) return;
+    if (whiteList.isEmpty()) {
+        whiteList.add(voffconServerIp);
+    }
+
+    String str = "{" +
+        GUrl::jsonObjectType(OBJECTTYPE_INFORMATION)                + "," +
+        GUrl::jsonKeyValue("samples", water.getAllRecordedSystemValuesAsJson()) +
+        "}";
+
+    client->println(makeJsonResponseString(200, str));
+}
+
+void handleSamplesCSV(WiFiClient* client) {
+
+    //if (!isAuthorized()) return;
+    if (whiteList.isEmpty()) {
+        whiteList.add(voffconServerIp);
+    }
+
+    String str = water.getAllRecordedSystemValuesAsCSV();
+
+    client->println(makeTextResponseString(200, str));
+}
+
+
 String makeJsonPostString(String host, String url, String jsonString) {
     String str = "POST " + url + " HTTP/1.1 " +
         "\r\nHost: " + host +
@@ -1519,6 +1548,14 @@ void loop() {
                     }
                     else if (strstr(linebuf, "GET /status") > 0) {
                         handleStatus(&client);
+                        break;
+                    }
+                    else if (strstr(linebuf, "GET /samples") > 0 ) {
+                        handleSamplesJson(&client);
+                        break;
+                    }
+                    else if (strstr(linebuf, "GET /samples/csv") > 0) {
+                        handleSamplesCSV(&client);
                         break;
                     }
                     else if (strstr(linebuf, "GET /monitors") > 0) {
