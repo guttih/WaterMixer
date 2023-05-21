@@ -868,31 +868,6 @@ Hot,Cold,Pressure,Temperature,time
 
 Get pin monitors.
 
-I do not have an actual response example, but this is the cpp function which creates one record of the array returned.
-So below I will create a example based on this 
-
-[source, cpp]
-----
-/// <summary>
-/// Exports the object to a Json string
-/// </summary>
-/// <returns>A json object String</returns>
-String PinWatch::toJson() {
-
-    String str = "{\"pin\":"    + String(getPinNumber()) + "," +
-        "\"sampleSum\":"        + String(sampleSum) + "," +
-        "\"pinValueLast\":"     + String(pinValueLast) + "," +
-        "\"pinValueMargin\":"   + String(pinValueMargin) + "," +
-        "\"sampleCount\":"      + String(sampleCount) + "," +
-        "\"sampleTotalCount\":" + String(sampleTotalCount) + "," +
-        "\"nextSampleTime\":"   + String(nextSampleTime) + "," +
-        "\"sampleInterval\":"   + String(sampleInterval) + "," +
-        "\"minLogInterval\":"   + String(minLogInterval) + "," +
-        "\"nextLogTime\":"      + String(nextLogTime) + "}";
-    return str;
-}
-----
-
 ===== Get /monitors response
 
 So the response object would look something like this (ignore the values, they 
@@ -902,16 +877,28 @@ make no sense).
 ----
 [
     {
-        "pin": 50,
-        "sampleSum": 10,
-        "pinValueLast": 10,
-        "pinValueMargin": 10,
-        "sampleCount": 10,
+        "pin": 51,
+        "sampleSum": 0,
+        "pinValueLast": 1024,
+        "pinValueMargin": 1,
+        "sampleCount": 0,
         "sampleTotalCount": 10,
-        "nextSampleTime": 10,
-        "sampleInterval": 10,
-        "minLogInterval": 10,
-        "nextLogTime": 10
+        "nextSampleTime": 21077329,
+        "sampleInterval": 1000,
+        "minLogInterval": 10000,
+        "nextLogTime": 21086329
+    },
+    {
+        "pin": 54,
+        "sampleSum": 0,
+        "pinValueLast": 408,
+        "pinValueMargin": 2,
+        "sampleCount": 0,
+        "sampleTotalCount": 10,
+        "nextSampleTime": 21078329,
+        "sampleInterval": 2000,
+        "minLogInterval": 100000,
+        "nextLogTime": 21176329
     }
 ]
 ----
