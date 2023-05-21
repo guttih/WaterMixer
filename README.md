@@ -23,6 +23,10 @@ Finally the third electrical valve is used to drain the hot tub.
 - 3 x [Proportional Valve Brass controllable with 0-5V]
 - 1 x [LCD touch display]
 
+## Api
+
+Supported methods, requests and responses are described in the
+[API methods]
 ## Wiring the project
 
 ### Schematic
@@ -143,3 +147,4 @@ Then you can run the tests with this command `pio test`
 [PlatformIO]:https://platformio.org/
 [Development documents]: docs/development/development.md
 [LCD touch display]: https://www.aliexpress.com/item/4000030399357.html?spm=a2g0s.12269583.0.0.687d6973QvjfAl
+[API methods]: docs/apiMethods.adoc
