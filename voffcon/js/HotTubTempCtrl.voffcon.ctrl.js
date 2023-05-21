@@ -88,7 +88,6 @@ class HotTubTempCtrl extends ControlElement {
         }
         //currentObject.waterLevel = Math.round((currentObject.sumFlowUnits / fillFlowUnits) * 1000);
         currentObject.waterLevel = (currentObject.sumFlowUnits / fillFlowUnits) * 100;
-        // console.log(`,${formaTima(currDate)},${currentObject.flowSeconds},${currentObject.flow},${currentObject.sumFlowUnits},${currentObject.waterLevel}`);
     }
     getServer(){
         return window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
@@ -105,7 +104,6 @@ class HotTubTempCtrl extends ControlElement {
             }
         }).fail(function (data) {
             console.log("rejecting");
-            reject(data);
         });
     }
 
@@ -126,13 +124,10 @@ class HotTubTempCtrl extends ControlElement {
                 temperature: currentVal
             };
             var url = that.getServer()+'/devices/custom/'+ that.deviceId;
-            // console.log(`Sending ${url}\n${JSON.stringify(sendObj, null, 4)}`);
             var posting = $.post( url, sendObj);
-            // posting.done(function(data){
-            //     console.log(`response: ${JSON.stringify(data, null, 4)}`);
-            // });
-            // this.desiredTemperature
-            // console.log(currentVal)
+            posting.done(function(data){
+                 console.log(`update res: ${JSON.stringify(data, null, 4)}`);
+            });
             that.calculateWaterLevel(true);
         });
         this.calculateWaterLevel(true);
@@ -236,9 +231,9 @@ class HotTubTempCtrl extends ControlElement {
         }
     }
     reCalculate(waitDelay = 20000) {
-        console.log(`Fetching logs again after ${waitDelay / 1000} seconds, for re-calculation`);
-        setTimeout(() => {
-            console.log('Recalculating water level');
+        
+        clearTimeout(this.reCalculateTimer);
+        this.reCalculateTimer = setTimeout(() => {
             this.calculateWaterLevel(true);
         }, waitDelay);
     }
@@ -341,26 +336,30 @@ class HotTubTempCtrl extends ControlElement {
 
         this.getWaterLevelText().text(waterLevelText);
         this.getFlowText().text(" ");
-        if (this.fillPin !== undefined && this.fillMinutes !== undefined
-            && (this.fillPin.value > 0 || this.drainPin.value > 0)) {
+        if (this.isFilling() || this.isDraining() ) {
 
-            var minutesLeft = 0, power = 0, hours = 0, minutes = 0;
-            if (this.fillPin.value > 0) {
-                var missingWater = 100 - this.waterLevel;
-                power = this.fillPin.value / 1023;
-                minutesLeft = (missingWater / 100) * this.fillMinutes / power;
-            } else if (this.drainPin.value > 0) {
-                power = this.drainPin.value / 1023;
-                minutesLeft = (this.waterLevel / 100) * this.drainSeconds / power;
+            var secondsLeft = 0, power = 0, hours = 0, minutes = 0;
+            var flowValue;
+            var waterLeftPros;
+            if (this.isFilling()) {
+                flowValue = this.hotValveFlow > this.coldValveFlow? this.hotValveFlow: this.coldValveFlow;
+                waterLeftPros = 100 - this.waterLevel;
+                power = flowValue / 100;
+                secondsLeft = ((waterLeftPros / 100) * this.fillSeconds ) * power ;
+            } else if (this.isDraining() > 0) {
+                flowValue = this.drainValveFlow;
+                waterLeftPros = this.waterLevel;
+                power = flowValue / 100;
+                secondsLeft = ((waterLeftPros / 100) * this.drainSeconds ) * power ;
             }
-
+            var minutesLeft = secondsLeft / 60;
             var hoursFrag = minutesLeft / 60;
             hours = parseInt(hoursFrag);
             minutes = Math.round((hoursFrag - hours) * 60);
 
             //full after
             var remainingTimeString = zeroFirst(hours) + ':' + zeroFirst(minutes);
-            //this.getFlowText().text(zeroFirst(hours)+':'+ zeroFirst(minutes));
+            // this.getFlowText().text(remainingTimeString);
 
 
             //full at
@@ -368,7 +367,7 @@ class HotTubTempCtrl extends ControlElement {
             d.setHours(d.getHours() + hours);
             d.setMinutes(d.getMinutes() + minutes);
 
-            var timeFull = d.getHours() + ':' + d.getMinutes();
+            var timeFull = zeroFirst(d.getHours()) + ':' + zeroFirst(d.getMinutes());
             this.getFlowText().text(`${timeFull} (${remainingTimeString})`);
         }
     }
