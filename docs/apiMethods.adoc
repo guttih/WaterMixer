@@ -39,7 +39,7 @@ we want to test if it's up and running.  You could do one of the following:
  - Give command: `curl http://192.168.1.28/started`
  - Give command: `wget -q -S -O - http://192.168.1.28/started`
  
-In all cases the response should be the following json object, (with different numbers of course) containing information about when the device was started.
+In all three cases the response should be the following json object, (with different numbers of course) containing information about when the device was started.
 
 [source,json]
 ----
@@ -65,26 +65,26 @@ The device support the following http methods.
 .Methods
 [cols="1,1,3,2,1"]
 |===
-| *Method*  | *Resource*        | *Description*                                                 | *Details*                      | *Type*
-|   GET     |  `/pinout`        |     Name and number of the connected virtual pins.            | <<Get /pinout response>>       |  Json 
-|   GET     |  `/started`       |     When was the device started.                              | <<Get /started response>>      |  Json 
-|   GET     |  `/pins`          
-|        Information about device pins, like pin name, pin number, pin value and pin type.      | <<Get /pins response>>         |  Json 
-|   POST    |  `/pins`          |     Set new pin values to pins.                               | <<Post /pins response>>        |  Json 
-|   GET     |  `/status`        |     Status of the device, This object contains values for pins, 
-                               whitelist, macAddress, deviceId, hostName and mixer values.      | <<Get /status response>>       |  Json 
-|   GET     |  `/samples`       |     Values recorded by system scan returned as a json object. | <<Get /samples response>>      |  Json 
-|   GET     |  `/samples/csv`   |     Values recorded by system scan returned as a csv document, 
-                                      where fields are separated by semicolon.                  | <<Get /samples/csv response>> |  Csv 
-|   GET     |  `/samples/csv/,` |     Values recorded by system scan returned as a csv document, 
-                                      where fields are separated by comma.                      | xref:Get /samples/csv/, response[] |  Csv
-|   GET     |  `/monitors`      |     Get pin monitors.                                         | <<Get /monitors response>>             |  JsonArray 
-|   POST    |  `/monitors`      |     Add a pin monitor.                                        | <<Post /monitors response>>    (todo)  |  Json 
-|   DELETE  |  `/monitors`      |     D pin monitors.                                      | <<Delete /monitors response>>  (todo)  |  JsonArray
-|   POST    |  `/whitelist`     |     Add a ip address to whitelist.                            | <<Post /whitelist response>>   (todo)  |  Json 
-|   DELETE  |  `/whitelist`     |     Delete a ip address from whitelist.                       | <<Delete /whitelist response>> (todo)  |  Json 
-|   POST    |  `/custom`        |     Send commands to fill, stop, drain and change temperature of the hot tub.                                                         | <<Post /custom response>>      |  Json 
-// |   DELETE  |  `/custom`        |     ?                                                         | <<Delete /custom response>>    |  Json 
+| *Method*  | *Resource*        | *Description*                                              | *Details*                          | *Type*
+|   GET     |  `/pinout`        | Name and number of the connected virtual pins.             | <<Get /pinout response>>           |  Json 
+|   GET     |  `/started`       | When was the device started.                               | <<Get /started response>>          |  Json 
+|   GET     |  `/pins`          | Information about device pins, like pin name, pin number, 
+                                  pin value and pin type.                                    | <<Get /pins response>>             |  Json 
+|   POST    |  `/pins`          | Set new pin values to pins.                                | <<Post /pins request>>            |  Json 
+|   GET     |  `/status`        | Status of the device, This object contains values for pins, 
+                                  whitelist, macAddress, deviceId, hostName and mixer values.| <<Get /status response>>           |  Json 
+|   GET     |  `/samples`       | Values recorded by system scan returned as a json object.  | <<Get /samples response>>          |  Json 
+|   GET     |  `/samples/csv`   | Values recorded by system scan returned as a csv document, 
+                                  where fields are separated by semicolon.                   | <<Get /samples/csv response>>      |  Csv 
+|   GET     |  `/samples/csv/,` | Values recorded by system scan returned as a csv document, 
+                                  where fields are separated by comma.                       | xref:Get /samples/csv/, response[] |  Csv
+|   GET     |  `/monitors`      | Get pin monitors.                                          | <<Get /monitors response>>         |  JsonArray 
+|   POST    |  `/monitors`      | Add a pin monitor.                                         | <<Post /monitors request>>         |  Json
+|   DELETE  |  `/monitors`      | Delete pin monitors.                                       | <<Delete /monitors request>>       |  JsonArray
+|   POST    |  `/whitelist`     | Add a ip address to whitelist.                             | <<Post /whitelist request>>        |  Json 
+|   DELETE  |  `/whitelist`     | Delete a ip address from whitelist.                        | <<Delete /whitelist request>>      |  Json 
+|   POST    |  `/custom`        | Send commands to fill, stop, drain and change temperature 
+                                  of the hot tub.                                            | <<Post /custom request>>          |  Json 
 |===
 
 == API Resources
@@ -153,11 +153,33 @@ Information about device pins, like pin name, pin number, pin value and pin type
 }
 ----
 
-===== Post /pins response
+===== Post /pins request
+
+Change pin value, in this case pin number 55 will get the value 378.
 
 [source, json]
 ----
-todo:
+{
+    "55": 378
+}
+----
+
+===== Post /pins response
+
+Current status of all pins after the change is done.
+
+[source, json]
+----
+{
+    "type": 2,
+    "pins": [ { "pin": 50,"val": 0,  "m": 4,"name":"valveHot"},
+              { "pin": 51,"val": 0,  "m": 4,"name":"valveCold"},
+              { "pin": 52,"val": 0,  "m": 4,"name":"valveDrain"},
+              { "pin": 53,"val": 80, "m": 4,"name":"pressure"},
+              { "pin": 54,"val": 237,"m": 4,"name":"temperature"},
+              { "pin": 55,"val": 378,"m": 4,"name":"desiredTemperature"}
+    ]
+}
 ----
 
 
@@ -180,23 +202,14 @@ whitelist, macAddress, deviceId, hostName and mixer values.
              {"pin":54,"val":230,"m":4,"name":"temperature"},
              {"pin":55,"val":369,"m":4,"name":"desiredTemperature"}
            ],
-    "whitelist": [
-        "192.168.1.79",
-        "192.168.1.198"
-    ],
+    "whitelist": ["192.168.1.79", "192.168.1.198"],
     "macAddress": "F0:08:D1:C8:39:34",
     "deviceId": "61052c38bc1fdd0526aedf31",
     "hostName": "watermixer",
     "ip": "192.168.1.28",
     "port": 80,
-    "date": {
-        "year": 2023,
-        "month": 5,
-        "day": 21,
-        "hours": 17,
-        "minutes": 46,
-        "seconds": 10
-    },
+    "date": { "year": 2023,"month": 5,   "day": 21,
+              "hours": 17, "minutes": 46,"seconds": 10},
     "mixer": {
         "hotValveFlow": 0.00,
         "coldValveFlow": 0.00,
@@ -866,12 +879,14 @@ Hot,Cold,Pressure,Temperature,time
 
 === Resource /monitors
 
-Get pin monitors.
+Monitor is an object which will watch a pin value and tell the device
+to log it's value if certain conditions are met.
 
 ===== Get /monitors response
 
-So the response object would look something like this (ignore the values, they 
-make no sense).
+Get pin monitors.
+
+So the response object would look something like this.
 
 [source, json]
 ----
@@ -903,46 +918,111 @@ make no sense).
 ]
 ----
 
-===== Post /monitors response
+===== Post /monitors request
 
 Add a pin monitor.
 
 [source, json]
 ----
-todo...
+{
+    "minLogInterval": 10000000,
+    "pin": 50,
+    "pinValueMargin": 10,
+    "sampleInterval": 1000,
+    "sampleTotalCount": 10
+}
+
 ----
-
-===== Delete /monitors response
-
-Delete pin monitors.
+===== Post /monitors response
 
 [source, json]
 ----
-todo...
+[
+    {
+        "pin": 50,
+        "sampleSum": 0,
+        "pinValueLast": 0,
+        "pinValueMargin": 10,
+        "sampleCount": 0,
+        "sampleTotalCount": 10,
+        "nextSampleTime": 73486327,
+        "sampleInterval": 1000,
+        "minLogInterval": 10000000,
+        "nextLogTime": 83485327
+    }
+]
+----
+
+===== Delete /monitors request
+
+Delete a pin monitor.
+
+[source, json]
+----
+[50]
+----
+===== Post /monitors response
+
+[source, json]
+----
+[]
 ----
 
 === Resource /whitelist
 
-List of hosts which are allowed to give commands.
-See <<Get /status response>> to find out which hosts are whitelisted.
+A Whitelist contains ip addresses of devices allowed to give commands to the device.
+To get the current whitelist, you can request the the status object (see: <<Get /status response>> ).
+
+===== Post /whitelist request
+
+Add a ip address to whitelist.
+
+[source, json]
+----
+{
+    "ipaddress":"185.126.62.103"
+}
+----
 
 ===== Post /whitelist response
 
-[source, json]
-----
-todo...
-----
-
-===== Delete /whitelist response
+Current whitelist after post
 
 [source, json]
 ----
-todo...
+[
+    "192.168.1.79",
+    "192.168.1.198",
+    "185.126.62.103"
+]
+----
+
+===== Delete /whitelist request
+
+Delete a ip address from whitelist.
+
+[source, json]
+----
+{
+    "ipaddress":"185.126.62.103"
+}
+----
+
+===== Post /whitelist response
+
+Current whitelist after delete
+
+[source, json]
+----
+[
+    "192.168.1.79",
+    "192.168.1.198"
+]
 ----
 
 === Resource /custom
 
-Send commands to fill, stop, drain and change temperature of the hot tub.
+Commands to fill, stop, drain and change temperature of the hot tub.
  
 ===== Post /custom response
 
@@ -955,7 +1035,7 @@ when *cmd* key value is _fill_ or _update_.
  ** _stop_ - To stop the hot tub
  ** _fill_ - To fill the hot tub
  ** _update_ - To change the desired temperature of the hot tub.
- *** If hot tub is already filling, then the filling temperature will change.
+ *** If hot tub is already filling, the desired temperature will change.  In addition, the hot valve flow rate will be changed to adjust the current filling temperature.
  *** If hot tub is already stopped or draining, the desired temperature will change so that
      next time the hot tub starts filling, this temperature will be used.
 
@@ -963,13 +1043,6 @@ when *cmd* key value is _fill_ or _update_.
 ** A decimal number from 0.00 - 100.00
 
  
-_Just a reminder, you could use the curl command to send a post object:_ +
-
-[source, bash]
-----
-curl -X POST http://192.168.1.28/custom  -H "Content-Type: application/json" -d '{"cmd":"update","temperature":37.479}'
-----
-
 *Now for some post object examples* 
 
 .Filling the hot tub with the previously set desired temperature +
