@@ -1024,7 +1024,7 @@ Current whitelist after delete
 
 Commands to fill, stop, drain and change temperature of the hot tub.
  
-===== Post /custom response
+===== Post /custom request
 
 There are two keys allowed in the request json object, *cmd* and *temperature*.
 The *cmd* key is required.  The *temperature* key is optional but can only be used
