@@ -77,12 +77,20 @@ void WaterMixer::fill(double hotFlow, double coldFlow)
     _hotValve.setFlow(hotFlow);
     _coldValve.setFlow(coldFlow);
 }
+void WaterMixer::fillDesired(double desiredTemperature)
+{
+    setDesiredTemperature(desiredTemperature);
+    fillDesired();
+}
+
 void WaterMixer::fillDesired()
 {
     setMode(AUTOMATIC);
     SYSTEM_SAMPLE sample = getSavedSystemRecordingClosestTo(TEMPERATURE, _desiredTemperature);
     fill(sample.hotValveFlow, sample.coldValveFlow);
 }
+
+
 
 String WaterMixer::recordingSystemHeader(){
     return "Hot;Cold;Pressure;Temperature;time\n";

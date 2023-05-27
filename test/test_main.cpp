@@ -47,6 +47,17 @@ void testWaterMixer(){
     
 }
 
+void testPID(){
+    
+    header("Testing PID");
+    RUN_TEST(test_waterMixerMapValue);
+    RUN_TEST(test_waterMixerToJson);
+    RUN_TEST(test_WaterMixerConstructor);
+    RUN_TEST(test_WaterMixerConstructorWithValues);
+    // RUN_TEST(test_waterMixerChangeValues);
+    
+}
+
 void setup() {
     // NOTE!!! Wait for >2 secs
     // if board doesn't support software reset via Serial.DTR/RTS
@@ -57,6 +68,8 @@ void setup() {
 
     UNITY_BEGIN();    
         testWaterMixer();
+        //testPID();
+
     UNITY_END();
 }
 

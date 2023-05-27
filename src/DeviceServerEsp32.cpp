@@ -1247,12 +1247,12 @@ bool connectWifi() {
     return false;
 }
 
-/// <summary>
-/// This function is only run once in the beginning of the device startup
-/// </summary>
-void printHeapSize(String strAddInfront = String("")) {
-    Serial.println(strAddInfront + " ESP32 SDK version:" + String(system_get_sdk_version()) + ", RAM left " + String(esp_get_free_heap_size()) + "\n");
-}
+// /// <summary>
+// /// This function is only run once in the beginning of the device startup
+// /// </summary>
+// void printHeapSize(String strAddInfront = String("")) {
+//     Serial.println(strAddInfront + " ESP32 SDK version:" + String(system_get_sdk_version()) + ", RAM left " + String(esp_get_free_heap_size()) + "\n");
+// }
 
 static bool sta_was_connected = true;
 static void poll_connection(void) {
@@ -4007,7 +4007,7 @@ bool PinWatch::check(unsigned long currentTimeInMillis) {
             sampleCount++;
             if (sampleCount >= sampleTotalCount) {
                 int avg = sampleSum / sampleCount;
-                int diff = abs(avg - pinValueLast);
+                int diff = abs(avg - (int)(unsigned int)pinValueLast);
 
                 reset(currentTimeInMillis, false, false);
                 if (diff >= pinValueMargin) {

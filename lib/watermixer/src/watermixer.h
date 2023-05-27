@@ -10,8 +10,9 @@
  * 
  */
 enum WaterMixerMode {
-    AUTOMATIC, /*!< Mixer will change opening on valves dependent on the difference between current and desired temperature */
-    MANUAL     /*!< Mixer will only change opening on valves when drain and fill functions are used*/
+    MANUAL,         /*!< Mixer will only change opening on valves when drain and fill functions are used*/
+    AUTOMATIC,     /*!< Mixer will change opening on valves dependent on pre-recorded values in a file*/
+    AUTOMATIC_PID, /*!< Mixer will change opening on valves using a PID controller to calculate the openings of the valves*/
 };
 
 struct SYSTEM_SAMPLE {
@@ -110,6 +111,13 @@ class WaterMixer
          * 
          */
         void fillDesired();
+
+         /**
+          * @brief Sets the desired temperature and opens opens valves and adjusts them so they will mix water to the desired temperature.
+          * 
+          * @param desiredTemperature 
+          */
+        void fillDesired(double desiredTemperature);
 
         /**
          * @brief Closes all valves
