@@ -20,7 +20,7 @@ struct PID_STRUCT {
  * 
  * @details This class implements a PID controller. The PID controller is a
  * feedback control algorithm that calculates an error value as the difference
- * between a measured process variable and a desired setpoint. The controller
+ * between a measured process variable and a desired set point. The controller
  * attempts to minimize the error by adjusting the process control inputs.
  * 
  * @see https://en.wikipedia.org/wiki/PID_controller
@@ -39,20 +39,41 @@ public:
     ~PidController();
 
     
-    // These functions query the pid for interal values.
+    // These functions query the pid for integral values.
     // they were created mainly for the pid front-end,
     // where it's important to know what is actually 
     // inside the PID.
     
     // Get current Proportional gain
-    double getKp(){ return  _pid->GetKp();}            
+    double getKp();
 	
     // Get current Integral gain
-    double getKi(){ return  _pid->GetKi();}            
+    double getKi();
 	
     // Get current Derivative gain
-    double getKd(){ return  _pid->GetKd();}            
-	int  getMode(){ return  _pid->GetMode();}          
+    double getKd();
+
+    /**
+     * @brief Get the Desired Value (the set point of the PID controller)
+     * 
+     * @return The desired value
+     */
+    double getDesiredValue(){ return  _values.setPoint;}            
+
+    /**
+     * 
+     * @brief Get the PID Suggested Value (the output of the PID controller)
+     * 
+     *  @return The value you should set to your device to
+     */
+    double getSuggestedValue(){ return  _values.output;}
+    /**
+     * 
+     * @brief Get the Current Value
+     * @return Current Value the pid controller is working on
+     */
+    double getCurrentValue(){ return  _values.input;}            
+	bool  isAutomaticModeOn(){ return  _pid->GetMode();}          
 	int getDirection(){ return  _pid->GetDirection();};
 
      void set(double input, double output, double setPoint,
@@ -61,12 +82,12 @@ public:
     void setOutputLimits(double minValue, double maxValue){ _pid->SetOutputLimits(minValue, maxValue);};
     
     /**
-     * @brief Set bot desired and current values
+     * @brief Set desired and current values
      * 
-     * @param setPoint - desired value
-     * @param currentInput - current value
+     * @param setPoint - The value you want to reach
+     * @param currentValue - current value (Update the PID input value (to the newest sensor reading)))
      */
-    void setDesiredValue(double setPoint, double currentInput);
+    void setDesiredValue(double setPoint, double currentValue);
 
     /**
      * @brief Update the desired value 
@@ -82,7 +103,8 @@ public:
      */
     void setCurrentValue(double currentInput);
     
-    void SetSampleTime(double sampleTimeMs){ _pid->SetSampleTime(sampleTimeMs);};
+    void setSampleTime(double sampleTimeMs){ _pid->SetSampleTime(sampleTimeMs);};
+    
 private:
     PID_STRUCT _values;
     PID* _pid;

@@ -25,7 +25,25 @@
         "utility": "cpp"
     },
     "cSpell.words": [
+        "BSSID",
+        "DARKGREEN",
+        "editpagesetup",
+        "EDITPAGESETUPH",
+        "EDITVALUE",
+        "ERRORNUMBER",
+        "Gtime",
+        "hicpp",
+        "JSONDATA",
+        "JSONTYPEKEY",
         "Kamila",
+        "LEDC",
+        "linebuf",
+        "MAINMENU",
+        "NOTSET",
+        "PIDCONTROLLER",
+        "PINTYPE",
+        "reportin",
+        "Streng",
         "vout"
     ],
     "cSpell.ignoreWords": [

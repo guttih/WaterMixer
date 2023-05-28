@@ -5,7 +5,7 @@ PidController::PidController(double minOutPutValue, double maxOutPutValue, int s
 
     _pid = new PID(&_values.input, &_values.output, &_values.setPoint, 0.1, 0.1, 0.1, DIRECT);
     setOutputLimits(minOutPutValue, maxOutPutValue);
-    SetSampleTime(sampleTimeMs);
+    setSampleTime(sampleTimeMs);
 
 }
 
@@ -22,10 +22,10 @@ void PidController::set(double input, double output, double setPoint,
     setMode(automaticMode);
 }
 
-void PidController::setDesiredValue(double setPoint, double currentInput)
+void PidController::setDesiredValue(double setPoint, double currentValue)
 {
     _values.setPoint = setPoint;
-    _values.input = currentInput;
+    _values.input = currentValue;
 }
 
 void PidController::setDesiredValue(double setPoint)
@@ -33,12 +33,28 @@ void PidController::setDesiredValue(double setPoint)
     _values.setPoint = setPoint;
 }
 
-void PidController::setCurrentValue(double currentInput)
+void PidController::setCurrentValue(double currentValue)
 {
-    _values.input = currentInput;
+    _values.input = currentValue;
 }
 
 PidController::~PidController()
 {
     delete _pid;
+}
+
+double PidController::getKp() 
+{ 
+    return  _pid->GetKp();
+}
+	
+double PidController::getKi() 
+{ 
+    return  _pid->GetKi();
+}
+
+
+double PidController::getKd() 
+{
+    return  _pid->GetKd();
 }

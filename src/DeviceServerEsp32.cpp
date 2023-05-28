@@ -40,11 +40,11 @@ by regular post to the address Haseyla 27, 260 Reykjanesbar, Iceland.
 const char* deviceId = "61052c38bc1fdd0526aedf31";
 const char *hostName = "watermixer";
 
-// Name of the wifi (accesspoint)network
-// example: "guttisWiFi"
+// Name of the wifi (access point)network
+// example: "guttiWiFi"
 const char* ssid = getSsId();
 // Wifi password
-// example: "mypasswordToTheWifi"
+// example: "my_passwordToTheWifi"
 const char* password = getPassword();
 // port number which this device will be operating on.
 // example: 5100
@@ -62,7 +62,7 @@ myIp(192,168,1,185),
 // example: "192.168.1.254"
 gateway(192,168,1,254),
 
-// the default gatway on this network.
+// the default gateway on this network.
 // On windows goto command
 // prompt and type "ipconfig"
 // example: "255.255.255.0"
@@ -80,7 +80,7 @@ boolean grantAccessToEveryone = false;
 boolean grantAccessToAllClientsOnSameSubnet = true;
 /*boolean grantAccessToFirstCaller:
 * set to true if you want to allow the first client to call the "/setup" method
-* to be automaticly granted access.  that is, client IP address will be whitelisted.
+* to be automatically granted access.  that is, client IP address will be whitelisted.
 .*/
 
 WiFiServer server(PORT);
@@ -116,7 +116,7 @@ enum JSONTYPEKEY {
 /// </summary>
 class IPAddressList : public LinkedList<IPAddress*> {
 private:
-    void destory();
+    void destroy();
 
 public:
     bool add(uint8_t first_octet, uint8_t second_octet, uint8_t third_octet, uint8_t fourth_octet);
@@ -213,7 +213,7 @@ public:
 
 /// <summary>
 /// Used to store time.
-/// Depended on which constuctor is used, values can be eather a "date and time" or a "counter" up to 49 days. 
+/// Depended on which constructor is used, values can be either a "date and time" or a "counter" up to 49 days. 
 /// </summary>
 class GTime {
     ///////////////////////////////////////////////////////////
@@ -265,7 +265,7 @@ public:
     static String jsonKeyValue(String key, String value);
     static String jsonKeyValue(String key, int value);
     static String jsonObjectType(unsigned int uiType);
-    static String makeStatusResponceJson(String jsonPins, String jsonWhitelist, String jsonDate, String macAddress, String deviceId, String hostName, String deviceIpAddress, int port, String jsonMixer);
+    static String makeStatusResponseJson(String jsonPins, String jsonWhitelist, String jsonDate, String macAddress, String deviceId, String hostName, String deviceIpAddress, int port, String jsonMixer);
     
     static String makePostLogPinsJson(String deviceId, String jsonPins);
     static String makeHttpStatusCodeString(unsigned int uiStatusCode);
@@ -273,16 +273,16 @@ public:
 };
 
 /// <summary>
-/// The errornumber to return when a numberfunction fails;
+/// The error number to return when a number function fails;
 /// Like: toInt(), toFloat(), toLong(), toULong()
 /// </summary>
 #define JSONDATA_ERRORNUMBER 999999999
 
-//See informanation on JSON on https://www.json.org (nice pictures)
+//See information on JSON on https://www.json.org (nice pictures)
 //See more info here : https://www.crockford.com/mckeeman.html
 //todo: Hexadecimal digits can be represented as u and then 4 hexadecimal digits. (\u hex hex hex hex)
 //      hex can be ('0'..'9' or 'A'..'F' or 'a'..'f')
-//todo: Exponent numbers see second answser: https://stackoverflow.com/questions/19554972/json-standard-floating-point-numbers
+//todo: Exponent numbers see second answer: https://stackoverflow.com/questions/19554972/json-standard-floating-point-numbers
 //      example1: 1e-005 example2: 2.99792458e8   Exponent can be ('E' sign digits) or ('e' sign digits)
 /// <summary>
 /// Enumeration for which type of json object the json data is.
@@ -354,7 +354,7 @@ private:
                                     int    &pairLength);
     JsonData        *members(String* pairs, JsonData* parent);
     JsonData        *pair(String* keyValues, JsonData* parent);
-    static bool      validateValue(const JSONTYPE jsonvaluetype, String string);
+    static bool      validateValue(const JSONTYPE jsonValueType, String string);
     JsonData       *value(String* valuesString, JsonData* parent);
     static String   jsonTypeString(JSONTYPE type);
     String          toTree(JsonData* current, int level);
@@ -370,7 +370,7 @@ public:
     /// Checks if the current object has any child objects
     /// </summary>
     /// <returns>
-    /// true if this object has one ore more child object(s).  Otherwize false
+    /// true if this object has one ore more child object(s).  Otherwise false
     /// </returns>
     bool          hasChildren() { return this->mFirstChild != NULL; };
     JsonData     *getChildAt(unsigned int index);
@@ -427,7 +427,7 @@ class PinWatch
         unsigned long sampleSum       = 0;  // Sum of pin value samples
         unsigned int pinValueLast     = 0; // The pin value which was last logged.
         unsigned int pinValueMargin   = 0; // How much must a sampleSum / sampleCount change from pinValueLast to trigger a log.
-        int          sampleCount      = 0; // How many times has the pinValueSum been summerized.
+        int          sampleCount      = 0; // How many times has the pinValueSum been summarized.
         int          sampleTotalCount = 0; // How many samples before we can average sampleSum and compare with pinValueLast
         unsigned long nextSampleTime;      // When should we get the next sample
         unsigned long sampleInterval;      // How long between samples
@@ -477,7 +477,7 @@ class PinWatch
 class PinWatchList : public LinkedList<PinWatch*> {
 
 private:
-        void destory();
+        void destroy();
         bool removeByIndex(int index);
         bool add(GPin* gPin, int pinValueMargin, int sampleTotalCount, unsigned long sampleInterval, unsigned long minLogInterval);
         bool addJsonPinWatchToList(JsonData* jsonObject, GPins* devicePins);
@@ -532,7 +532,7 @@ GTime startTime;
 GUrl urlTool;
 PinWatchList monitors;
 char linebuf[580];
-int charcount = 0;
+int charCount = 0;
 
 //////////////////////// Global Functions  ///////////////////////////////
 
@@ -562,7 +562,7 @@ String reportIn() {
 
         Serial.println(httpResponseCode);   //Print return code
         Serial.println(response);           //Print request answer
-        ret = response; //responce should contain date.toUTCString()
+        ret = response; //response should contain date.toUTCString()
 
     }
     else {
@@ -600,7 +600,7 @@ void tellServerToSaveLog(bool sendAfterReplyToCaller) {
     http.addHeader("Connection", "close");
     Serial.print("Calling : "); Serial.println(url);
     int httpResponseCode = http.GET();   //make the request to server
-    Serial.print("Responce code: "); Serial.println(httpResponseCode);   //return code
+    Serial.print("Response code: "); Serial.println(httpResponseCode);   //return code
     Serial.println(http.getString());   //The response to the request
     http.end();  //Free resources
 }
@@ -615,7 +615,7 @@ void tellServerToSendMonitors() {
     http.addHeader("Connection", "close");
     Serial.print("Calling : "); Serial.println(url);
     int httpResponseCode = http.GET();   //make the request to server
-    Serial.print("Responce code: "); Serial.println(httpResponseCode);   //return code
+    Serial.print("Response code: "); Serial.println(httpResponseCode);   //return code
     Serial.println(http.getString());   //The response to the request
     http.end();  //Free resources
 }
@@ -666,7 +666,7 @@ String getKeyValueFromJsonAsString(String jsonText, String key) {
 /// and sets the pin values according to what was extracted.
 /// </summary>
 /// <param name="unParsedJson">A json string on the form { "3":220}</param>
-/// <returns>true if successful otherwhise false</returns>
+/// <returns>true if successful otherwise false</returns>
 bool setPinValues(String jsonString, GPins* devicePins) {
 
     Json parser(jsonString.c_str());
@@ -751,13 +751,13 @@ String makeTextResponseString(unsigned int uiCode, String textString) {
 String getTime() {
     WiFiClient client;
     uint8_t connectionAttempt = 0;
-    uint8_t RETRYS = 1;
+    uint8_t RETRIES = 1;
     //String strUrl = "google.com"; // This will not work because function WiFi.config will disable DHCP, dns lookup will fail
     String strUrl = voffconServerIp.toString();
     int port = voffconServerPort;
     Serial.println(String("Getting current date and time from " + strUrl + ":" + port + " (VoffCon server)"));
 
-    while (!client.connect(strUrl.c_str(), port) && connectionAttempt < RETRYS) {
+    while (!client.connect(strUrl.c_str(), port) && connectionAttempt < RETRIES) {
         ++connectionAttempt;
         switch (connectionAttempt) {
         case 1: strUrl = "google.com"; break;
@@ -771,7 +771,7 @@ String getTime() {
         Serial.println("connection retry attempt (" + String(connectionAttempt) + ") now trying connection to \"" + strUrl + ":" + port + "\"");
         delay(1000);
     }
-    if (connectionAttempt == RETRYS) {
+    if (connectionAttempt == RETRIES) {
         String strDate = "Fri, 1 Jan 1971 00:00:00 GMT";
         Serial.println("Unable to get the time, so making the start date \"" + strDate + "\" up.");
         return strDate;
@@ -815,7 +815,7 @@ void handlePins(WiFiClient* client) {
 }
 
 /// <summary>
-/// Read from client untill beginning of body.
+/// Read from client until beginning of body.
 /// Body is suppose to be after "\r\n\r\n"
 /// </summary>
 /// <param name="client"></param>
@@ -841,7 +841,7 @@ void readHeaderUntilStarOfBody(WiFiClient* client) {
 /// Gets the body from client.
 /// </summary>
 /// <param name="client"></param>
-/// <returns>Success: Body of the incomming message as a String.  Fail: returns an empty string.</returns>
+/// <returns>Success: Body of the incoming message as a String.  Fail: returns an empty string.</returns>
 String getBody(WiFiClient* client) {
     readHeaderUntilStarOfBody(client);
     while (client->available()) {
@@ -945,7 +945,7 @@ void handleCustom(WiFiClient* client, unsigned int postMethod, String callingUrl
                                 tellServerToSaveLog(true);
                         } else if (pCommand->getValueAsString() == "stop") {
                                 httpResponseCode = 200;
-                                strSend =  "{\"message\":\"Stoppig flow to and from the hot tub\"}";
+                                strSend =  "{\"message\":\"Stopping flow to and from the hot tub\"}";
                                 water.stop();
                                 tellServerToSaveLog(true);
                         } else if (pCommand->getValueAsString() == "flow") {
@@ -991,7 +991,7 @@ void handleCustom(WiFiClient* client, unsigned int postMethod, String callingUrl
                                     }
                                 }
                             } else {
-                                //there is not temperature parameter, let's use the current desired tempeature.
+                                //there is not temperature parameter, let's use the current desired temperature.
                                 httpResponseCode = 200;
                                 strSend = "{\"message\":\"Filling with currently desired temperature\",\"temperature\":" + String(water.getDesiredTemperature()) +"}";
                                 water.fillDesired();
@@ -1029,7 +1029,7 @@ void handleStatus(WiFiClient* client) {
         whiteList.add(voffconServerIp);
     }
 
-    String str = urlTool.makeStatusResponceJson(
+    String str = urlTool.makeStatusResponseJson(
         devicePins.toJson(), 
         whiteList.toJson(), 
         startTime.toJson(), 
@@ -1250,8 +1250,8 @@ bool connectWifi() {
 // /// <summary>
 // /// This function is only run once in the beginning of the device startup
 // /// </summary>
-// void printHeapSize(String strAddInfront = String("")) {
-//     Serial.println(strAddInfront + " ESP32 SDK version:" + String(system_get_sdk_version()) + ", RAM left " + String(esp_get_free_heap_size()) + "\n");
+// void printHeapSize(String strAddInFront = String("")) {
+//     Serial.println(strAddInFront + " ESP32 SDK version:" + String(system_get_sdk_version()) + ", RAM left " + String(esp_get_free_heap_size()) + "\n");
 // }
 
 static bool sta_was_connected = true;
@@ -1294,19 +1294,19 @@ void drawLinkedButtonsAndLabels() {
             return;
     }
 
-    DisplayPage *pVisable = menu.getVisablePage();
+    DisplayPage *pVisible = menu.getVisablePage();
 
         
     DisplayButton *pButton;
     DisplayLabel *pLabel;
-    for(int i = 0; i < pVisable->buttonCount(); i++){
-        pButton = pVisable->getButton(i);
+    for(int i = 0; i < pVisible->buttonCount(); i++){
+        pButton = pVisible->getButton(i);
         if(pButton->getLinkedValue() || pButton->_values.onDrawDisplayButton)
             pButton->draw();
     }
 
-    for(int i = 0; i < pVisable->labelCount(); i++){
-        pLabel = pVisable->getLabel(i);
+    for(int i = 0; i < pVisible->labelCount(); i++){
+        pLabel = pVisible->getLabel(i);
         if(pLabel->getLinkedValue() || pLabel->_values.onDrawDisplayLabel)
             pLabel->draw();
     }
@@ -1316,7 +1316,7 @@ void drawLinkedButtonsAndLabels() {
     switch (water.update())
     {
     case SYSTEM_RECORDING_IN_PROGRESS:
-        pLabel = pVisable->getLastLabel();
+        pLabel = pVisible->getLastLabel();
 
         if (pLabel)
         {
@@ -1326,14 +1326,14 @@ void drawLinkedButtonsAndLabels() {
         }
         break;
     case SYSTEM_RECORDING_FINISHED:
-        pButton = pVisable->getButtonByText("Menu");
+        pButton = pVisible->getButtonByText("Menu");
         if (pButton) {
             pButton->show();
-        pButton = pVisable->getButtonByText("Stop scan");
+        pButton = pVisible->getButtonByText("Stop scan");
         if (pButton)
             pButton->setText("Scan system", true);
         }
-         pLabel = pVisable->getLastLabel();
+         pLabel = pVisible->getLastLabel();
          pLabel->setText("System scan complete", true);
         break;
     }
@@ -1446,7 +1446,7 @@ void setup() {
     pLabelHeading->setText("Fetching monitors", true);
     tellServerToSendMonitors();
 
-    //Let's wait for two seconds before starting allowing voltage to stabelize after power on
+    //Let's wait for two seconds before starting allowing voltage to stabilize after power on
     delay(2000);
     Serial.println("reading sensors");
     if (checkAndUpdateSensors())
@@ -1483,7 +1483,7 @@ void loop() {
     if (client) {
         Serial.println("New client");
         memset(linebuf, 0, sizeof(linebuf));
-        charcount = 0;
+        charCount = 0;
         // an http request ends with a blank line
         boolean currentLineIsBlank = true;
         while (client.connected()) {
@@ -1492,8 +1492,8 @@ void loop() {
                 char c = client.read();
                 Serial.write(c);
                 //read char by char HTTP request
-                linebuf[charcount] = c;
-                if (charcount < sizeof(linebuf) - 1) charcount++;
+                linebuf[charCount] = c;
+                if (charCount < sizeof(linebuf) - 1) charCount++;
                 // if you've gotten to the end of the line (received a newline
                 // character) and the line is blank, the http request has ended,
                 // so you can send a reply
@@ -1509,7 +1509,6 @@ void loop() {
                                 linebuf[ix] = ch;
                             }
                             Serial.println(linebuf);
-                            //if ( command == COMMANDS_POST_PINS && lib.extractAndSetPinsAndValues(linebuf, &pinnar)) {
                             if (command == COMMANDS_POST_PINS) {
                                 setPinValues(linebuf, &devicePins);
                                 handlePins(&client);
@@ -1542,7 +1541,7 @@ void loop() {
                         String itemJson = startTime.toJson();
                         str += itemJson;
                         str += "}";
-                        Serial.println("timi");
+                        Serial.println("time");
                         Serial.println(str);
                         client.println(makeJsonResponseString(200, str));
                         break;
@@ -1619,7 +1618,7 @@ void loop() {
                     // you're starting a new line
                     currentLineIsBlank = true;
                     memset(linebuf, 0, sizeof(linebuf));
-                    charcount = 0;
+                    charCount = 0;
                 }
                 else if (c != '\r') {
                     // you've gotten a character on the current line
@@ -1646,7 +1645,7 @@ void loop() {
 /// The deconstructor, which cleans up when the list is no longer needed.
 /// </summary>
 IPAddressList::~IPAddressList() { 
-    destory();
+    destroy();
 }
 
 /// <summary>
@@ -1656,7 +1655,7 @@ IPAddressList::~IPAddressList() {
 ///     a string with a valid IP address.  
 ///     The ip address "0.0.0.0" will be considered as an invalid ipaddress
 /// </param>
-/// <returns>True if the add succeded, otherwise false</returns>
+/// <returns>True if the add succeeded, otherwise false</returns>
 bool IPAddressList::add(const char *strIpAddress) {
     IPAddress *p = new IPAddress();
     p->fromString(strIpAddress);
@@ -1668,7 +1667,7 @@ bool IPAddressList::add(const char *strIpAddress) {
 }
 
 /// <summary>
-/// Add an ip address by providing four numbers of the IP addres each in the range of 0 - 255
+/// Add an ip address by providing four numbers of the IP address each in the range of 0 - 255
 /// </summary>
 /// <param name="first_octet">First number of the ip address </param>
 /// <param name="second_octet">Second number of the ip address</param>
@@ -1788,7 +1787,7 @@ String IPAddressList::toJson() {
 /// <summary>
 /// //The cleanup function used by the list's deconstructor;
 /// </summary>
-void IPAddressList::destory() {
+void IPAddressList::destroy() {
     IPAddress *p;
     for (int i = 0; i < size(); i++) {
         p = get(i);
@@ -1829,7 +1828,7 @@ void GPin::analogWriteEsp32() {
 
 /// <summary>
 /// Constructor for the GPin object
-/// You will need to porovide name, type, number and a starting value of the pin
+/// You will need to provide name, type, number and a starting value of the pin
 /// </summary>
 /// <param name="strPinName">Name of the pin</param>
 /// <param name="pinType">Type of the pin
@@ -1842,7 +1841,7 @@ void GPin::analogWriteEsp32() {
 /// </param>
 /// <param name="pinNumber">Number of the pin.  That is the GPIO number</param>
 /// <param name="pinValue">The value to set the pin to</param>
-/// <param name="pinChannel">Pin channel is needed only for the esp32.  todo: provide more decription</param>
+/// <param name="pinChannel">Pin channel is needed only for the esp32.  todo: provide more description</param>
 GPin::GPin(const char*strPinName, PINTYPE pinType, int pinNumber, int pinValue, uint8_t pinChannel) {
     mChannel = pinChannel;
     init(strPinName, pinType, pinNumber, pinValue);
@@ -1851,7 +1850,7 @@ GPin::GPin(const char*strPinName, PINTYPE pinType, int pinNumber, int pinValue, 
 
 /// <summary>
 /// Constructor for the GPin object
-/// You will need to porovide name, type, number and a starting value of the pin
+/// You will need to provide name, type, number and a starting value of the pin
 /// </summary>
 /// <param name="strPinName">Name of the pin</param>
 /// <param name="pinType">Type of the pin
@@ -1967,7 +1966,7 @@ void GPin::setValue(int value) {
 /// <summary>
 /// Read a pin value.
 /// If input type is PINTYPE_INPUT_DIGITAL or PINTYPE_INPUT_ANALOG and readValueFromHardware is true
-/// then a read will be maid directly to the hardwarepin. otherwise the old member value will be returned.
+/// then a read will be maid directly to the hardware pin. otherwise the old member value will be returned.
 /// </summary>
 /// <param name="readValueFromHardware"></param>
 /// <returns>The value as an int</returns>
@@ -2060,7 +2059,7 @@ GPins::GPins() {
 boolean GPins::setValue(int pinNumber, int newValue) {
     int i = indexOf(pinNumber);
     if (i < 0) return false;
-    Serial.println("setting value of pin " + String(pinNumber) + " to " + String(newValue));
+    // Serial.println("setting value of pin " + String(pinNumber) + " to " + String(newValue));
     mPins[i]->setValue(newValue);
     return true;
 }
@@ -2172,7 +2171,7 @@ int GPins::count() {
 /// <summary>
 /// Returns all pin values in a json array
 /// a key-value Json object with the '{' and '}' around it.
-/// where first key is the first in the indexf with the key as the GPO key
+/// where first key is the first in the index with the key as the GPO key
 /// and the value is the last value set to that key.
 /// </summary>
 /// <returns>A Json object string containing status of all pins in the GPins object</returns>
@@ -2188,7 +2187,7 @@ String GPins::toJson() {
     return str + "]";
 }
 /// <summary>
-/// Creates a JSON object containg all pins name and their number.
+/// Creates a JSON object containing all pins name and their number.
 /// </summary>
 /// <returns>A string formatted as a JSON object which contains all pin names and number. </returns>
 String GPins::JsonPinout() {
@@ -2279,7 +2278,7 @@ GTime::GTime(unsigned long milliSeconds) {
 /// Fri, 15 Jul 2016 11:08:12 GMT
 /// </param>
 /// <returns>Success: returns true if time was set successfully.  Fail: returns false.</returns>
-boolean GTime::setTime(String strTime) {
+bool GTime::setTime(String strTime) {
     String str;
     String num;
     int i;
@@ -2323,6 +2322,8 @@ boolean GTime::setTime(String strTime) {
     num = str.substring(0, i - 1);
     mSeconds = toNumber(num);
     str = str.substring(i);
+
+    return true;
 }
 
 /// <summary>
@@ -2490,7 +2491,7 @@ String GUrl::jsonObjectType(unsigned int uiType) {
     return jsonKeyValue("type", str);
 }
 
-String GUrl::makeStatusResponceJson(String jsonPins, String jsonWhitelist, String jsonDate, String macAddress, String deviceId, String hostName, String deviceIpAddress, int port, String jsonMixer) {
+String GUrl::makeStatusResponseJson(String jsonPins, String jsonWhitelist, String jsonDate, String macAddress, String deviceId, String hostName, String deviceIpAddress, int port, String jsonMixer) {
     String str = "{" +
         jsonObjectType(OBJECTTYPE_STATUS)                + "," +
         jsonKeyValue("pins", jsonPins)                   + "," +
@@ -2591,7 +2592,7 @@ String Json::toString() const
 }
 
 /// <summary>
-/// Showing objects and sub-objects In a treeview.
+/// Showing objects and sub-objects In a tree view.
 /// That is child objects have additional tabs relative to parent objects.
 /// </summary>
 /// <returns>The json object as a tree view string.</returns>
@@ -2800,7 +2801,7 @@ char JsonData::getClosingToken(const char openingToken) {
     case '"':   return '"';
     case ':':   return '+';
 
-    case '-':/*Fyrir integer or float*/
+    case '-':/*For integer or float*/
     case '1':
     case '2':
     case '3':
@@ -2810,11 +2811,11 @@ char JsonData::getClosingToken(const char openingToken) {
     case '7':
     case '8':
     case '9':
-        //todo hvað með
-    case '0': /*Fyrir floating point*/
-    case 'f': /*Fyrir bool*/
+        //todo What about?
+    case '0': /* For floating point*/
+    case 'f': /* For bool*/
     case 't':
-    case 'n': /*Fyrir null*/
+    case 'n': /* For null*/
         return '+';
 
     default:   return ' ';
@@ -2825,7 +2826,7 @@ char JsonData::getClosingToken(const char openingToken) {
 /// Searches for end of string.
 /// </summary>
 /// <param name="searchMe">a pointer to the string to search</param>
-/// <param name="startAt">index of the first carater in the string.  That is first character afthe the "</param>
+/// <param name="startAt">index of the first charater in the string.  That is first character after the "</param>
 /// <param name="length">length of the searchMe.</param>
 /// <returns>Index of where the string ends (index of the ")</returns>
 int getIndexOfClosingString(String* searchMe, int startAt, int length) {
@@ -2873,7 +2874,7 @@ int JsonData::getIndexOfClosingToken(String* string, bool ignoreStrings = true) 
         endToken = cEnd;
 
     if (!ignoreStrings && string->charAt(0) == '\"') {
-        //read untill end of string
+        //read until end of string
         return getIndexOfClosingString(string, 1, length);
     };
 
@@ -3057,7 +3058,7 @@ JsonData* JsonData::members(String* pairs, JsonData* parent)
 
     JsonData* pLast;
 
-    //hér þarf að finna út hvort object fari í child eða next
+    //Here we need to find out if object goes to child or next
 
     int keyIndexOfFirstChar, keyLength, valueIndexOfFirstChar,
         valueLength, pairLength;
@@ -3166,7 +3167,7 @@ bool JsonData::getPairIndexes(String* pairs, bool& thereIsAnotherPair,
         if (iComma > -1)
             endOfValue = iComma - 1;
         else
-            endOfValue = strValue.length() - 1; //-1 hér er munur á parse
+            endOfValue = strValue.length() - 1; //-1 Here is a difference with parse
         JSONTYPE type = getType(strValue.substring(0, endOfValue + 1));
         if (type == JSONTYPE_INVALID) {
             return false;
@@ -3183,7 +3184,7 @@ bool JsonData::getPairIndexes(String* pairs, bool& thereIsAnotherPair,
     if (endOfPair + 1 < len) {
         morePares = pairs->charAt(endOfPair + 1) == ',';
     }
-    ///////////// endir /////////////////
+    ///////////// ENDING /////////////////
     keyIndexOfFirstChar = 1;
     keyLength = indexOfKeyEnd - keyIndexOfFirstChar;
     valueIndexOfFirstChar = startOfValue;
@@ -3783,7 +3784,7 @@ JsonData* JsonData::getChildAt(unsigned int index)
 
 /// <summary>
 /// Searches for a child with a specific value.  Good for searching 
-/// for a spesific JSONTYPE_KEY_VALUE f.example
+/// for a specific JSONTYPE_KEY_VALUE f.example
 /// </summary>
 /// <param name="value">Value to search for.  the search is case sensitive</param>
 /// <returns>Pointer to the object.  If no object is found NULL is returned</returns>
@@ -3856,7 +3857,7 @@ float JsonData::getValueAsFloat()
 /// Note the type of the value must be a positive number (JSONTYPE_ULONG). 
 /// If the object is a JSONTYPE_KEY_VALUE then the child object value is returned as a number 
 /// </summary>
-/// <returns>Succsess: A unsinged long number.  Fail:  999999999</returns>
+/// <returns>Success: A unsigned long number.  Fail:  999999999</returns>
 unsigned long JsonData::getValueAsULong()
 {
     bool     useChild = mType == JSONTYPE_KEY_VALUE && mFirstChild;
@@ -3876,7 +3877,7 @@ unsigned long JsonData::getValueAsULong()
 /// Converts the value of an object from string to a long number.
 /// If the object is a JSONTYPE_KEY_VALUE then the child object value is returned as a number 
 /// </summary>
-/// <returns>Succsess: A long number.  Fail:  999999999</returns>
+/// <returns>Success: A long number.  Fail:  999999999</returns>
 long JsonData::getValueAsLong()
 {
     bool     useChild = mType == JSONTYPE_KEY_VALUE && mFirstChild;
@@ -3896,7 +3897,7 @@ long JsonData::getValueAsLong()
 /// Converts the value of an object from string to a integer number.
 /// If the object is a JSONTYPE_KEY_VALUE then the child object value is returned as a number 
 /// </summary>
-/// <returns>Succsess: A integer number.  Fail:  999999999</returns>
+/// <returns>Success: A integer number.  Fail:  999999999</returns>
 int JsonData::getValueAsInt()
 {
     bool     useChild = mType == JSONTYPE_KEY_VALUE && mFirstChild;
@@ -3922,10 +3923,10 @@ int JsonData::getValueAsInt()
 /// Constructor for a PinWatch
 /// </summary>
 /// <param name="gPin">Valid GPin to watch</param>
-/// <param name="pinValueMargin">How much must a value of a pin change to recive a positive check</param>
+/// <param name="pinValueMargin">How much must a value of a pin change to receive a positive check</param>
 /// <param name="sampleTotalCount">How many samples of a pin value should be averaged</param>
 /// <param name="sampleInterval">How many milliseconds must pass between a sample is taken from a pin value</param>
-/// <param name="minLogInterval">How many milliseconds between forsed positive checks (f.example how many milliseconds between logs)  Pin values are not taken into account here</param>
+/// <param name="minLogInterval">How many milliseconds between forced positive checks (f.example how many milliseconds between logs)  Pin values are not taken into account here</param>
 /// <returns>True if a PinWatch is added to the list, otherwise false</returns>
 PinWatch::PinWatch(GPin* gPin, unsigned int pinValueMargin, int sampleTotalCount, unsigned long sampleInterval, unsigned long minLogInterval)
 {
@@ -3951,7 +3952,7 @@ void PinWatch::resetAllValues() {
 }
 
 /// <summary>
-/// A helper function for constructers
+/// A helper function for constructor
 /// </summary>
 /// <param name="gPin"></param>
 /// <param name="pinValueMargin"></param>
@@ -3987,7 +3988,7 @@ PinWatch::PinWatch(const PinWatch& pinWatch) {
 }
 
 /// <summary>
-/// Checks if enough time has passed sinse the last check
+/// Checks if enough time has passed since the last check
 /// </summary>
 /// <param name="currentTimeInMillis">The time that must pass before a check returns true</param>
 /// <returns>true if enough time has passed.  false if not.  </returns>
@@ -4021,7 +4022,7 @@ bool PinWatch::check(unsigned long currentTimeInMillis) {
 }
 
 /// <summary>
-/// Resets the timer sampleInterva
+/// Resets the timer sampleInterval
 /// and if update parameters are both true, update the last pin value and the minLogInterval timer as well.
 /// </summary>
 /// <param name="currentTimeInMillis">Current time usually gotten with the millis() function</param>
@@ -4119,7 +4120,7 @@ void PinWatch::serialPrintLnValues() {
 /// The deconstructor, which cleans up when the list is no longer needed.
 /// </summary>
 PinWatchList::~PinWatchList() {
-    destory();
+    destroy();
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ///                                             PinWatchList
@@ -4135,10 +4136,10 @@ bool PinWatchList::add(GPin* gPin, int pinValueMargin, int sampleTotalCount, uns
 /// is specified in the pinValueMargin parameter
 /// </summary>
 /// <param name="gPin">Valid GPin to watch</param>
-/// <param name="pinValueMargin">How mutch must a value of a pin change to recive a positive check</param>
+/// <param name="pinValueMargin">How much must a value of a pin change to receive a positive check</param>
 /// <param name="sampleTotalCount">How many samples of a pin value should be averaged</param>
 /// <param name="sampleInterval">How many milliseconds must pass between a sample is taken from a pin value</param>
-/// <param name="minLogInterval">How many milliseconds between forsed positive checks (f.example how many milliseconds between logs)  Pin values are not taken into account here</param>
+/// <param name="minLogInterval">How many milliseconds between forced positive checks (f.example how many milliseconds between logs)  Pin values are not taken into account here</param>
 /// <returns>true if a PinWatch is added to the list, otherwise false</returns>
 bool PinWatchList::addPinValueMonitoringAndTimer(GPin* gPin, int pinValueMargin, int sampleTotalCount, unsigned long sampleInterval, unsigned long minLogInterval) {
     if (gPin == NULL || exists(gPin->getNumber()))
@@ -4162,8 +4163,8 @@ bool PinWatchList::addTimer(unsigned long minLogInterval) {
 /// is specified in the pinValueMargin parameter
 /// </summary>
 /// <param name="gPin">Valid GPin to watch</param>
-/// <returns>True if the add succeded, otherwise false</returns>
-/// <param name="pinValueMargin">How mutch must a value of a pin change to recive a positive check</param>
+/// <returns>True if the add succeeded, otherwise false</returns>
+/// <param name="pinValueMargin">How much must a value of a pin change to receive a positive check</param>
 /// <param name="sampleTotalCount">How many samples of a pin value should be averaged</param>
 /// <param name="sampleInterval">How many milliseconds must pass between a sample is taken from a pin value</param>
 /// <returns>True if a PinWatch is added to the list, otherwise false</returns>
@@ -4177,7 +4178,7 @@ bool PinWatchList::addPinValueMonitoring(GPin* gPin, int pinValueMargin, int sam
 /// Add an pinWatch to the list
 /// </summary>
 /// <param name="pinWatch">The PinWatch object to be added to the list</param>
-/// <returns>True if the add succeded, otherwise false</returns>
+/// <returns>True if the add succeeded, otherwise false</returns>
 bool PinWatchList::add(PinWatch pinWatch) {
     return LinkedList<PinWatch*>::add(new PinWatch(pinWatch));
 }
@@ -4242,7 +4243,7 @@ bool PinWatchList::removePin(int pinNumber) {
 
 /// <summary>
 /// Checks if the value of of any pin in the list has changed enough.
-/// Checks also if any PinWatch for a pin has reached minimum time beetween checks.
+/// Checks also if any PinWatch for a pin has reached minimum time between checks.
 /// The function stops checking after the first PinWatch is do.
 /// </summary>
 /// <returns>
@@ -4257,7 +4258,7 @@ bool PinWatchList::isAnyPinWatchDo()
 
 /// <summary>
 /// Checks if the value of of any pin in the list has changed enough.
-/// Checks also if any PinWatch for a pin has reached minimum time beetween checks.
+/// Checks also if any PinWatch for a pin has reached minimum time between checks.
 /// The function stops checking after the first PinWatch is do and returns 
 /// the index of that pin.
 /// </summary>
@@ -4272,7 +4273,7 @@ int PinWatchList::getFirstPinWatchDo()
 
 /// <summary>
 /// Checks if the value of of any pin in the list has changed enough.
-/// Checks also if any PinWatch for a pin has reached minimum time beetween checks.
+/// Checks also if any PinWatch for a pin has reached minimum time betweens checks.
 /// The function stops checking after the first PinWatch is do and returns 
 /// the index of that pin.
 /// </summary>
@@ -4296,7 +4297,7 @@ int PinWatchList::getNextPinWatchDo(int index)
 }
 
 /// <summary>
-/// Resets all checks by updateing timers and resetting sampleSum and sampleCounts
+/// Resets all checks by updating timers and resetting sampleSum and sampleCounts
 /// </summary>
 void PinWatchList::resetAllChecks()
 {
@@ -4346,7 +4347,7 @@ int PinWatchList::indexOfPin(int pinNumber) {
 /// The cleanup function used by the list's deconstructor;
 /// Remove all PinWatch items from memory
 /// </summary>
-void PinWatchList::destory() {
+void PinWatchList::destroy() {
     PinWatch* p;
     for (int i = 0; i < size(); i++) {
         p = get(i);
@@ -4436,7 +4437,7 @@ bool PinWatchList::addJsonPinWatchToList(JsonData* jsonObject, GPins *devicePins
 /// <summary>
 /// Extracts PinWatch values from a JsonData object.
 /// Note: if the function does not return NULL then you will need to call
-/// delete to free the object returned.  If you don't you will experiance memory leaks.
+/// delete to free the object returned.  If you don't you will experience memory leaks.
 /// </summary>
 /// <param name="jsonObject">A JsonData object containing PinWatch values</param>
 /// <returns>Success: Returns a pointer to a PinWatch object. Fail: Returns NULL.</returns>

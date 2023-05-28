@@ -19,7 +19,7 @@
 
 #define CALIBRATION_FILE "/TouchCalData3"
 
-// Decleration of global variables
+// Deceleration of global variables
 
 
 /**
@@ -27,13 +27,14 @@
  * 
  */
 struct GLOBAL_STRUCT {
-    float temperature = 0;   // Current temperature read from the Temperature sensor.
-    float desiredTemp = 36;  // The desired temperature which should be fed as the setPoint to the PID controller.
-    float coldValveFlow = 0; // A number from 0 to 100 describing the opening of the COLD valve, 0 is fully closed and 100 fully open.
-    float hotValveFlow = 0;  // A number from 0 to 100 describing the opening of the HOT  valve, 0 is fully closed and 100 fully open.
-    PidController pid = PidController(); // The PID controller used to calculate the opening of the valves.
+    double temperature = 0;   // Current temperature read from the Temperature sensor.
+    double desiredTemp = 36;  // The desired temperature which should be fed as the setPoint to the PID controller.
+    double coldValveFlow = 0; // A number from 0 to 100 describing the opening of the COLD valve, 0 is fully closed and 100 fully open.
+    double hotValveFlow = 0;  // A number from 0 to 100 describing the opening of the HOT  valve, 0 is fully closed and 100 fully open.
+    double pidOutput = 0;     // The output from the PID controller, this is the suggested temperature.
     bool pressureSensorIsActive = false;
 } values;
+    PidController pid = PidController(); // The PID controller used to calculate the opening of the valves.
 
 const int PIN_TEMPERATURE = 25;
 
@@ -79,7 +80,7 @@ void touch_calibrate(bool REPEAT_CAL)
   // check file system exists
   if (!SPIFFS.begin())
   {
-    Serial.println("Formating file system");
+    Serial.println("Formatting file system");
     SPIFFS.format();
     SPIFFS.begin();
   }
