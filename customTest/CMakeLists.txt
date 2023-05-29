@@ -6,3 +6,7 @@ add_subdirectory(glib)
 
 # Add the glibTester application
 add_subdirectory(glibTester)
+
+# # Add the simulator application
+add_subdirectory(simulator)
+
