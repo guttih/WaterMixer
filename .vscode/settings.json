@@ -78,5 +78,6 @@
     "cSpell.ignoreWords": [
         "mosi",
         "sd"
-    ]
+    ],
+    "cmake.sourceDirectory": "C:/Users/gutti/source/repos/WaterMixer/.pio/libdeps/esp32dev/Unity"
 }
